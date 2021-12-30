@@ -1,7 +1,16 @@
 # wangEditor5 for vue3
 
-> 当前并未发布 `npm` 包，如果要使用此插件直接拿取 [`src/wangeditor.ts`](./src/wangeditor.ts) 文件放在自己项目中，然后安装 `lodash.debounce` 库。
-> 如果你是 `js` 用户，那么你需要手动将 `.ts` 文件构建成 `.js` 文件，同样需要安装 `lodash.debounce` 库。
+> 当前并未发布 `npm` 包，如果要使用此插件直接拿取 [`src/wangeditor.ts`](./src/wangeditor.ts) 文件放在自己项目中，然后在你自己的项目中安装 `lodash.debounce` 库。
+> 如果你是 `js` 用户，那么你需要手动将 `.ts` 文件构建成 `.js` 文件，同样需要在你自己的项目中安装 `lodash.debounce` 库。
+
+功能点：
+
+- 支持动态配置编辑器参数（编辑器创建后修改配置项任生效）
+- 支持 `v-model` 和 `v-model:html` 两种形式的双向绑定
+- 支持动态显示默认内容而不会存在旧文档的历史记录
+- 同时默认内容的配置项支持 `json array`、`json string` 和 `html string` 三种格式的数据
+
+## install lodash.debounce
 
 ```sh
 npm i lodash.debounce
@@ -10,7 +19,7 @@ npm i lodash.debounce
 npm i @types/lodash.debounce -D
 ```
 
-## 构建 .js 文件
+## 手动构建 .js 文件
 
 ```sh
 git clone https://github.com/clinfc/wangeditor5-for-vue3.git
@@ -24,6 +33,8 @@ npm run build
 
 ## 运行 demo
 
+demo 文件放在 [example/src/view](./example/src/view/) 目录下
+
 ```sh
 git clone https://github.com/clinfc/wangeditor5-for-vue3.git
 
@@ -32,14 +43,28 @@ npm install
 npm run dev
 ```
 
-## 全局注册组件
+## 组件注册
+
+此组件默认提供了全局注册的函数，可以直接进行注册使用
 
 ```ts
 import { createApp } from 'vue'
-import wangeditor from 'xxx/wangeditor'
+// 从你自己存放 wangeditor.ts 文件的路径下引入
+import wangeditor from 'xxx/wangeditor.ts'
 
 // 全局注册 EditorToolbar, EditorEditable 两个组件
 createApp(App).use(wangeditor).mount('#app')
+```
+
+你也可以局部进行组件注册
+
+```ts
+import { defineComponent } from 'vue'
+import { EditorEditable, EditorToolbar } from 'xxx/wangeditor.ts'
+
+export default defineComponent({
+  components: { EditorToolbar, EditorEditable },
+})
 ```
 
 ## 快速开始
@@ -70,7 +95,7 @@ createApp(App).use(wangeditor).mount('#app')
     EditorToolbar,
     EditorToolbarOption,
     useWangEditor,
-  } from 'xxx/wangeditor'
+  } from 'xxx/wangeditor.ts'
   import { defineComponent, shallowReactive } from 'vue'
 
   export default defineComponent({
@@ -253,7 +278,7 @@ reloadEditor()
 <script lang="ts">
   import axios from 'axiios'
   import { Descendant } from 'slate'
-  import { EditorEditable, EditorToolbar, useWangEditor } from 'xxx/wangeditor'
+  import { EditorEditable, EditorToolbar, useWangEditor } from 'xxx/wangeditor.ts'
   import { defineComponent, shallowReactive } from 'vue'
 
   export default defineComponent({
@@ -334,7 +359,7 @@ if (editableInstance) {
 
 <script lang="ts">
   import { Descendant } from 'slate'
-  import { useWangEditor } from '@we/wangeditor'
+  import { useWangEditor } from 'xxx/wangeditor.ts'
   import { defineComponent, shallowReactive } from 'vue'
 
   export default defineComponent({
@@ -361,7 +386,7 @@ if (editableInstance) {
 
 <script lang="ts">
   import { Descendant } from 'slate'
-  import { useWangEditor } from '@we/wangeditor'
+  import { useWangEditor } from 'xxx/wangeditor.ts'
   import { defineComponent, shallowRef } from 'vue'
 
   export default defineComponent({
@@ -377,3 +402,5 @@ if (editableInstance) {
   })
 </script>
 ```
+
+> 好用不迷路，不妨给作者一个 `star` 打打气
