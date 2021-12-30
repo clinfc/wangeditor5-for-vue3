@@ -1,0 +1,10 @@
+node_modules
+.DS_Store
+dist
+dist-ssr
+*.local
+*.lock
+example/node_modules
+example/dist
+example/dist-ssr
+example/*.lock

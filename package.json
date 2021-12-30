@@ -1,0 +1,22 @@
+{
+  "name": "wangeditor-vue3",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "cd example && npm run dev",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "lodash.debounce": "^4.0.8"
+  },
+  "devDependencies": {
+    "@types/lodash.debounce": "^4.0.6",
+    "@types/node": "^17.0.4",
+    "@wangeditor/editor": "^0.13.4",
+    "typescript": "^4.4.4",
+    "vue": "^3.2.26"
+  },
+  "peerDependencies": {
+    "@wangeditor/editor": "^0.13.4",
+    "vue": "^3.2.26"
+  }
+}
