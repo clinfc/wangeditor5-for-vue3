@@ -12,7 +12,7 @@ export default defineConfig({
   plugins: [vue(), ElementPlus()],
   resolve: {
     alias: {
-      '@we': path.resolve(__dirname, '../src'),
+      '@we': path.resolve(__dirname, '../dist'),
       '@assets': path.resolve(__dirname, 'src/assets'),
       '@router': path.resolve(__dirname, 'src/router'),
       '@view': path.resolve(__dirname, 'src/view'),

@@ -13,11 +13,11 @@
     "types": ["vue-router", "prismjs", "element-plus/global"],
     "baseUrl": ".",
     "paths": {
-      "@we/*": ["../src/*"],
+      "@we/*": ["../dist/*"],
       "@assets/*": ["src/assets/*"],
       "@router/*": ["src/router/*"],
       "@view/*":["src/vuew/*"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "../../src/*.ts"]
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "../dist/*.ts"]
 }

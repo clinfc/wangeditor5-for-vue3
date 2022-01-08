@@ -15,6 +15,9 @@
         <span v-if="editable.extendCache">
           切换前先
           <span style="cursor: pointer; color: red" @click="clearContent">清除缓存</span>
+          <span v-show="editable.config.readOnly" style="color: #cccccc; padding: 0 5px">
+            （只读模式下，无法清除缓存）
+          </span>
         </span>
       </el-form-item>
     </el-form>

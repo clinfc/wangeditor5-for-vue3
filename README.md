@@ -1,46 +1,45 @@
 # wangEditor5 for vue3
 
-> 当前并未发布 `npm` 包，如果要使用此插件直接拿取 [`src/wangeditor.ts`](./src/wangeditor.ts) 文件放在自己项目中，然后在你自己的项目中安装 `lodash.debounce` 库。
-> 如果你是 `js` 用户，那么你需要手动将 `.ts` 文件构建成 `.js` 文件，同样需要在你自己的项目中安装 `lodash.debounce` 库。
+当前并未发布 `npm` 包，如果要使用此插件直接拿取 [`src/wangeditor.ts`](./src/wangeditor.ts) 或 [`dist/wangeditor.js`](./dist/wangeditor.js) 文件放在自己项目中即可。
+
+> 如果你是 `TypeScript` 用户，你可能需要执行 `npm i -D @types/lodash.debounce` 进行 `lodash.debounce` 库的声明文件安装才不会报错。无需安装 `lodash.debounce` 库，因为 `@wangeditor/editor` 本身就依赖该库。_此组件不支持直接在浏览器环境使用，只支持 `webpack/rollup/vite` 等构建环境下使用！_
 
 功能点：
 
-- 支持动态配置编辑器参数（编辑器创建后修改配置项任生效）
-- 支持 `v-model` 和 `v-model:html` 两种形式的双向绑定
+- 支持动态配置编辑器参数（编辑器创建后修改配置项仍生效）
+- 支持 `v-model` 和 `v-model:html` 两种形式的双向绑定，分别绑定 `json array` 和 `html string` 两种形式的数据
 - 支持动态显示默认内容而不会存在旧文档的历史记录
 - 同时默认内容的配置项支持 `json array`、`json string` 和 `html string` 三种格式的数据
 
-## install lodash.debounce
+## 运行 example
 
-```sh
-npm i lodash.debounce
-
-// 如果你是 ts 用户还需要安装 lodash.debounce 声明文件
-npm i @types/lodash.debounce -D
-```
-
-## 手动构建 .js 文件
+`example` 文件放在 [example/src/view](./example/src/view/) 目录下
 
 ```sh
 git clone https://github.com/clinfc/wangeditor5-for-vue3.git
 
-// 安装依赖
-npm install
-
-// 构建 js（生成的 js 文件会在 dist 目录下）
-npm run build
-```
-
-## 运行 demo
-
-demo 文件放在 [example/src/view](./example/src/view/) 目录下
-
-```sh
-git clone https://github.com/clinfc/wangeditor5-for-vue3.git
+cd example
 
 npm install
 
 npm run dev
+```
+
+## 二次开发
+
+先运行以下命令，然后修改 `src/wangeditor.ts` 文件内容即可边开发边调试
+
+```sh
+git clone https://github.com/clinfc/wangeditor5-for-vue3.git
+
+// 分别在 `./` 目录和 `./example` 目录下执行
+npm install
+
+// 终端一。在 `./` 目录下执行
+npm run dev
+
+// 终端二。在 `./` 目录下执行
+npm run example
 ```
 
 ## 组件注册
@@ -311,6 +310,8 @@ reloadEditor()
 ## 清除内容
 
 不仅会清除编辑器内容，还会同步 `v-model/v-model:html` 数据
+
+> `readOnly` 为 `true` 时，执行 `clearContent()` 是无效的
 
 ```ts
 const { clearContent } = useWangEditor()

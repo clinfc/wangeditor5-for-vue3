@@ -1,8 +1,8 @@
 /**
  * use @wangeditor/editor@^0.13.4 in vue3。
- * @author 翠林 <https://github.com/clinfc>
+ * @author 翠林 <clinfc@qq.com>
  * @description 支持动态配置的 wangEditor5 for vue3 组件。
- * @see {@link https://github.com/clinfc/wangeditor5-for-vue3.git|Github}
+ * @see {@link https://github.com/clinfc/wangeditor5-for-vue3/tree/model-json-array|Github}
  */
 
 import debounce from 'lodash.debounce'
@@ -10,6 +10,7 @@ import { Descendant } from 'slate'
 import { createEditor, createToolbar, IDomEditor, IEditorConfig, IToolbarConfig, Toolbar } from '@wangeditor/editor'
 import {
   App,
+  computed,
   defineComponent,
   h,
   isProxy,
@@ -70,15 +71,40 @@ interface ToolbarHandle {
   reload?: () => void
 }
 
-const EDITOR: WeakMap<EditorEditableOption, EditorEditableHandle> = new WeakMap()
+const EDITABLE_HANDLE: WeakMap<EditorEditableOption, EditorEditableHandle> = new WeakMap()
 
-const TOOLBAR: WeakMap<EditorToolbarOption, ToolbarHandle> = new WeakMap()
+const TOOLBAR_HANDLE: WeakMap<EditorToolbarOption, ToolbarHandle> = new WeakMap()
 
 /** 编辑器 与 Toolbar 间的映射关系 */
-const INSTANCE_ET: WeakMap<EditorEditableOption, EditorToolbarOption> = new WeakMap()
+const EDITABLE_TOOLBAR: WeakMap<EditorEditableOption, EditorToolbarOption> = new WeakMap()
 
 /** Toolbar 与 编辑器 间的映射关系 */
-const INSTANCE_TE: WeakMap<EditorToolbarOption, EditorEditableOption> = new WeakMap()
+const TOOLBAR_EDITABLE: WeakMap<EditorToolbarOption, EditorEditableOption> = new WeakMap()
+
+const TIMER: WeakMap<EditorToolbarOption | EditorEditableOption, [number, null | NodeJS.Timeout]> = new WeakMap()
+
+const enum DELAY {
+  RELOAD = 365,
+  UPDATE = 3650,
+}
+
+function setTimer(option: EditorToolbarOption | EditorEditableOption, fn?: () => void) {
+  let timer = TIMER.get(option)
+  if (timer) {
+    if (timer[1]) {
+      clearTimeout(timer[1])
+      timer[1] = null
+    }
+  } else {
+    TIMER.set(option, (timer = [DELAY.RELOAD, null]))
+  }
+  if (fn) {
+    timer[1] = setTimeout(() => {
+      timer![1] = null
+      fn()
+    }, timer[0])
+  }
+}
 
 /**
  * vue hook，在 EditorEditable 组件中使用
@@ -88,21 +114,21 @@ function injectEditor(option: EditorEditableOption, reload: EditorEditableReload
     const instance = reload()
     if (!instance) return
 
-    const temp = EDITOR.get(option)
+    const temp = EDITABLE_HANDLE.get(option)
     if (!temp) {
-      EDITOR.set(option, { instance, reload: reset })
+      EDITABLE_HANDLE.set(option, { instance, reload: reset })
     } else {
       temp.instance = instance
     }
 
     // 自动重载 toolbar
-    const toolbar = INSTANCE_ET.get(option)
+    const toolbar = EDITABLE_TOOLBAR.get(option)
     if (toolbar) {
-      TOOLBAR.get(toolbar)?.reload?.()
+      TOOLBAR_HANDLE.get(toolbar)?.reload?.()
     }
   }
 
-  EDITOR.set(option, { clearContent, reload: reset })
+  EDITABLE_HANDLE.set(option, { clearContent, reload: reset })
 
   return reset
 }
@@ -112,24 +138,24 @@ function injectEditor(option: EditorEditableOption, reload: EditorEditableReload
  */
 function injectToolbar(option: EditorToolbarOption, reload: ToolbarReload) {
   function reset() {
-    const editableOptions = INSTANCE_TE.get(option)
+    const editableOptions = TOOLBAR_EDITABLE.get(option)
     if (!editableOptions) return
 
-    const editable = EDITOR.get(editableOptions)
+    const editable = EDITABLE_HANDLE.get(editableOptions)
     if (!editable || !editable.instance) return
 
     const instance = reload(editable.instance)
     if (!instance) return
 
-    const temp = TOOLBAR.get(option)
+    const temp = TOOLBAR_HANDLE.get(option)
     if (!temp) {
-      TOOLBAR.set(option, { instance, reload: reset })
+      TOOLBAR_HANDLE.set(option, { instance, reload: reset })
     } else {
       temp.instance = instance
     }
   }
 
-  TOOLBAR.set(option, { reload: reset })
+  TOOLBAR_HANDLE.set(option, { reload: reset })
 
   return reset
 }
@@ -177,16 +203,12 @@ export const EditorEditable = defineComponent({
     /**
      * 判断用户是否 v-model:html
      */
-    function modelHtml() {
-      return typeof html.value === 'string'
-    }
+    const modelHtml = computed(() => typeof html.value === 'string')
 
     /**
      * 判断用户是否 v-model
      */
-    function modelJson() {
-      return Array.isArray(json.value)
-    }
+    const modelJson = computed(() => Array.isArray(json.value))
 
     /**
      * 更新数据，将编辑器内容（json）同步到父组件。实现 v-model。
@@ -218,12 +240,12 @@ export const EditorEditable = defineComponent({
     // 封装 change 事件，实现数据 v-model 和 v-model:html
     const changes: ((e: IDomEditor) => void)[] = []
 
-    function initChangeCallback() {
+    function watchOptionOnChange() {
       changes.length = 0
 
       const { delay, config } = props.option
-      modelJson() && changes.push(debounce(updateJson, delay))
-      modelHtml() && changes.push(debounce(updateHtml, delay))
+      modelJson.value && changes.push(debounce(updateJson, delay))
+      modelHtml.value && changes.push(debounce(updateHtml, delay))
       if (config && config.onChange) {
         changes.push(config.onChange)
       }
@@ -261,15 +283,15 @@ export const EditorEditable = defineComponent({
 
       if (instance) {
         // 强制更新数据，避免数据丢失
-        modelJson() && updateJson(instance) // 初始化/clear函数/组件销毁 的使用频率没有数据更新的使用频率高，因此将 modeJson 从 updateJson 中剔除，置于 updateJson 执行前执行。
-        modelHtml() && updateHtml(instance) // 初始化/clear函数/组件销毁 的使用频率没有数据更新的使用频率高，因此将 modeHtml 从 updateHtml 中剔除，置于 updateHtml 执行前执行。
+        modelJson.value && updateJson(instance) // 初始化/clear函数/组件销毁 的使用频率没有数据更新的使用频率高，因此将 modeJson 从 updateJson 中剔除，置于 updateJson 执行前执行。
+        modelHtml.value && updateHtml(instance) // 初始化/clear函数/组件销毁 的使用频率没有数据更新的使用频率高，因此将 modeHtml 从 updateHtml 中剔除，置于 updateHtml 执行前执行。
 
         // 发布 reloadbefore 事件
         emit('reloadbefore', instance)
         instance.destroy()
+      } else {
+        watchOptionOnChange()
       }
-
-      initChangeCallback()
 
       // 解除 vue 副作用，否则将意外不断
       const { mode, config, defaultContent, extendCache } = toRaw(props.option)
@@ -307,8 +329,8 @@ export const EditorEditable = defineComponent({
             instance.dangerouslyInsertHtml(content)
           }
         }
-        modelJson() && updateJson(instance)
-        modelHtml() && updateHtml(instance)
+        modelJson.value && updateJson(instance)
+        modelHtml.value && updateHtml(instance)
         return instance
       }
 
@@ -320,12 +342,14 @@ export const EditorEditable = defineComponent({
      * 清除组件中的富文本内容和缓存
      */
     function clearContent() {
-      if (!instance || instance.isEmpty()) return
+      // 只读模式 || 为初始 || 无内容
+      if (props.option.config.readOnly || !instance || instance.isEmpty()) return
+
       instance.clear()
-      // debugger
+
       // 强制进行数据同步，避免延迟机制导致数据异常
-      modelJson() && updateJson(instance)
-      modelHtml() && updateHtml(instance)
+      modelJson.value && updateJson(instance)
+      modelHtml.value && updateHtml(instance)
     }
 
     const reload = injectEditor(props.option, initialize, clearContent)
@@ -335,8 +359,8 @@ export const EditorEditable = defineComponent({
     onBeforeUnmount(() => {
       if (instance) {
         // 强制进行数据更新，避免延迟机制导致数据丢失
-        modelJson() && updateJson(instance)
-        modelHtml() && updateHtml(instance)
+        modelJson.value && updateJson(instance)
+        modelHtml.value && updateHtml(instance)
         instance.blur()
         setTimeout(() => {
           instance?.destroy()
@@ -345,11 +369,31 @@ export const EditorEditable = defineComponent({
       }
     })
 
+    function watchOptionReload() {
+      // 编辑器变更会自动更新 toolbar
+      const toolbar = EDITABLE_TOOLBAR.get(props.option)
+      if (toolbar) {
+        setTimer(toolbar)
+        setTimer(props.option, () => {
+          setTimer(toolbar)
+          reload()
+        })
+      } else {
+        setTimer(props.option, reload)
+      }
+    }
+
+    // 编辑器支持重载的配置项
+    watch(() => props.option.mode, watchOptionReload)
+    watch(() => props.option.config.maxLength, watchOptionReload)
+    watch(() => props.option.config.customPaste, watchOptionReload)
+    watch(() => props.option.config.hoverbarKeys, watchOptionReload, { deep: true })
+
     // 监听 v-model
     watch(
       json,
       () => {
-        if (!modelJson()) return
+        if (!modelJson.value) return
 
         const value = unref(json)!
 
@@ -374,11 +418,11 @@ export const EditorEditable = defineComponent({
       html,
       () => {
         // 以 v-model 为主，无 v-model 时才会继续操作
-        if (modelJson()) return
+        if (modelJson.value) return
 
         const value = unref(html)!
 
-        if (!modelHtml() || value === cache.html) return
+        if (!modelHtml.value || value === cache.html) return
 
         if (!instance) {
           cache.html = value
@@ -393,7 +437,7 @@ export const EditorEditable = defineComponent({
     )
 
     // 监听 v-model 延迟
-    watch(() => props.option.delay, initChangeCallback)
+    watch(() => props.option.delay, watchOptionOnChange)
 
     // readOnly
     watch(
@@ -461,6 +505,19 @@ export const EditorToolbar = defineComponent({
 
     const reload = injectToolbar(props.option, initialize)
 
+    watch(
+      () => props.option,
+      () => {
+        const editable = TOOLBAR_EDITABLE.get(props.option)
+
+        // 编辑器变更会自动更新 toolbar
+        if (!editable || TIMER.get(editable)?.[1] !== null) return
+
+        setTimer(props.option, reload)
+      },
+      { deep: true }
+    )
+
     onMounted(reload)
 
     onBeforeUnmount(() => {
@@ -484,13 +541,13 @@ export const EditorToolbar = defineComponent({
 export function useWangEditor(
   editableOption: EditorEditableOption | null = null,
   toolbarOption: EditorToolbarOption | null = null,
-  reloadDelay: number = 365
+  reloadDelay: number = DELAY.RELOAD
 ) {
   const editable = reactive<Required<EditorEditableOption>>({
     mode: 'default',
     defaultContent: null,
     config: {},
-    delay: 3650,
+    delay: DELAY.UPDATE,
     extendCache: true,
     ...(isProxy(editableOption) ? toRaw(editableOption) : editableOption), // 配置项可能被复用，解除与之前依赖的关联
   })
@@ -501,93 +558,40 @@ export function useWangEditor(
     ...(isProxy(toolbarOption) ? toRaw(toolbarOption) : toolbarOption), // 配置项可能被复用，解除与之前依赖的关联
   })
 
-  INSTANCE_ET.set(editable, toolbar)
-  INSTANCE_TE.set(toolbar, editable)
-
-  const timer = {
-    editable: null as null | NodeJS.Timeout,
-    toolbar: null as null | NodeJS.Timeout,
-  }
-
-  function clearTimer(type: 'editable' | 'toolbar') {
-    if (timer[type]) {
-      clearTimeout(timer[type]!)
-      timer[type] = null
-    }
-  }
-
-  function editableChange() {
-    // 编辑器变更会自动更新 toolbar
-    clearTimer('toolbar')
-    clearTimer('editable')
-
-    // 节流处理
-    timer.editable = setTimeout(() => {
-      clearTimer('toolbar')
-      timer.editable = null
-
-      EDITOR.get(editable)?.reload?.()
-    }, reloadDelay)
-  }
-
-  /** 编辑器支持重载的配置项 */
-  const targets = [
-    () => editable.mode,
-    () => editable.config.hoverbarKeys,
-    () => editable.config.maxLength,
-    () => editable.config.customPaste,
-  ]
-
-  targets.forEach((target) => {
-    watch(target, editableChange)
-  })
-
-  watch(
-    () => toolbar,
-    () => {
-      // 编辑器变更会自动更新 toolbar
-      if (timer.editable) return
-
-      clearTimer('toolbar')
-
-      // 节流处理
-      timer.toolbar = setTimeout(() => {
-        timer.toolbar = null
-        TOOLBAR.get(toolbar)?.reload?.()
-      }, reloadDelay)
-    },
-    { deep: true }
-  )
+  EDITABLE_TOOLBAR.set(editable, toolbar)
+  TOOLBAR_EDITABLE.set(toolbar, editable)
+  TIMER.set(editable, [reloadDelay, null])
+  TIMER.set(toolbar, [reloadDelay, null])
 
   /**
    * 获取编辑器实例
    */
   function getEditable() {
-    return EDITOR.get(editable)?.instance
+    return EDITABLE_HANDLE.get(editable)?.instance
   }
 
   /**
    * 获取菜单栏实例
    */
   function getToolbar() {
-    return TOOLBAR.get(toolbar)?.instance
+    return TOOLBAR_HANDLE.get(toolbar)?.instance
   }
 
   /**
    * 清除富文本内容缓存
    */
   function clearContent() {
-    EDITOR.get(editable)?.clearContent?.()
+    EDITABLE_HANDLE.get(editable)?.clearContent?.()
   }
 
   /**
    * 重载编辑器（销毁重建)
    */
   function reloadEditor() {
-    const reload = EDITOR.get(editable)?.reload
+    const reload = EDITABLE_HANDLE.get(editable)?.reload
     if (reload) {
-      clearTimer('toolbar')
-      clearTimer('editable')
+      setTimer(toolbar)
+      setTimer(editable)
       reload()
     }
   }
@@ -601,7 +605,7 @@ export function useWangEditor(
  * @example
  *  import App from './App.vue'
  *  import { createApp } from 'vue'
- *  createApp(App).use(wangeditor)
+ *  createApp(App).use(wangeditor).mount('#app')
  */
 export default function wangeditor(app: App) {
   app.component(EditorToolbar.name, EditorToolbar)

@@ -1,12 +1,23 @@
 {
   "name": "wangeditor-vue3",
   "version": "0.0.0",
+  "description": "支持动态配置的 wangEditor5 for vue3 组件",
+  "author": "翠林 <clinfc@qq.com>",
+  "main": "dist/wangeditor.js",
+  "types": "dist/wangeditor.d.ts",
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "wangeditor",
+    "@wangedirot/editor",
+    "vue",
+    "vue3"
+  ],
   "scripts": {
-    "dev": "cd example && npm run dev",
-    "build": "tsc"
-  },
-  "dependencies": {
-    "lodash.debounce": "^4.0.8"
+    "dev": "tsc -w",
+    "build": "tsc",
+    "example": "cd example && npm run dev"
   },
   "devDependencies": {
     "@types/lodash.debounce": "^4.0.6",
