@@ -2,7 +2,7 @@
  * use @wangeditor/editor@^0.13.4 in vue3。
  * @author 翠林 <clinfc@qq.com>
  * @description 支持动态配置的 wangEditor5 for vue3 组件。
- * @see {@link https://github.com/clinfc/wangeditor5-for-vue3/tree/model-json-array|Github}
+ * @see {@link https://github.com/clinfc/wangeditor5-for-vue3|Github}
  */
 import { Descendant } from 'slate';
 import { IDomEditor, IEditorConfig, IToolbarConfig, Toolbar } from '@wangeditor/editor';
@@ -46,20 +46,25 @@ export declare const EditorEditable: import("vue").DefineComponent<{
     modelValue: PropType<Descendant[]>;
     /** v-model:html */
     html: StringConstructor;
+    /** v-model:json */
+    json: StringConstructor;
 }, {
     elem: Ref<HTMLDivElement>;
-}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("update:modelValue" | "update:html" | "reloadbefore")[], "update:modelValue" | "update:html" | "reloadbefore", import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<{
+}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("update:modelValue" | "update:html" | "update:json" | "reloadbefore")[], "update:modelValue" | "update:html" | "update:json" | "reloadbefore", import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<{
     option?: unknown;
     modelValue?: unknown;
     html?: unknown;
+    json?: unknown;
 } & {
     option: Required<EditorEditableOption>;
 } & {
     html?: string | undefined;
+    json?: string | undefined;
     modelValue?: Descendant[] | undefined;
 }> & {
     "onUpdate:modelValue"?: ((...args: any[]) => any) | undefined;
     "onUpdate:html"?: ((...args: any[]) => any) | undefined;
+    "onUpdate:json"?: ((...args: any[]) => any) | undefined;
     onReloadbefore?: ((...args: any[]) => any) | undefined;
 }, {
     option: Required<EditorEditableOption>;

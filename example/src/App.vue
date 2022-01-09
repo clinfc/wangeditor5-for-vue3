@@ -138,6 +138,14 @@
           router: '/reloadbofore',
         },
         {
+          title: 'v-model',
+          router: '/model-json-array',
+        },
+        {
+          title: 'v-model:json',
+          router: '/model-json-string',
+        },
+        {
           title: '在弹窗/抽屉中使用',
           router: '/async',
         },

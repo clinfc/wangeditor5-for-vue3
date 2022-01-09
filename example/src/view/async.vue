@@ -3,11 +3,11 @@
     <el-button @click="dialogVisible = true">open dialog</el-button>
     <el-button @click="drawerVisible = true">open drawer</el-button>
   </div>
-  <el-dialog v-model="dialogVisible" title="in dialog" width="1000px" append-to-body>
+  <el-dialog v-model="dialogVisible" title="In Dialog" width="1000px" append-to-body>
     <editor-toolbar style="border-bottom: 1px solid var(--bg-color)" :option="dialogToolbar" />
     <editor-editable style="height: 500px" :option="dialogEditable" />
   </el-dialog>
-  <el-drawer v-model="drawerVisible" title="in drawer" direction="rtl" size="75%" append-to-body>
+  <el-drawer v-model="drawerVisible" title="In Drawer" direction="rtl" size="75%" append-to-body>
     <editor-toolbar style="border-bottom: 1px solid var(--bg-color)" :option="drawerToolbar" />
     <editor-editable style="height: 750px" :option="drawerEditable" />
   </el-drawer>
@@ -22,13 +22,13 @@
       const dialogVisible = ref(false)
 
       const { editable: dialogEditable, toolbar: dialogToolbar } = useWangEditor({
-        config: { placeholder: 'in dialog' },
+        config: { placeholder: 'In Dialog' },
       })
 
       const drawerVisible = ref(false)
 
       const { editable: drawerEditable, toolbar: drawerToolbar } = useWangEditor({
-        config: { placeholder: 'in drawer' },
+        config: { placeholder: 'In Drawer' },
       })
 
       return { dialogVisible, dialogEditable, dialogToolbar, drawerVisible, drawerEditable, drawerToolbar }

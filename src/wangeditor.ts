@@ -2,7 +2,7 @@
  * use @wangeditor/editor@^0.13.4 in vue3。
  * @author 翠林 <clinfc@qq.com>
  * @description 支持动态配置的 wangEditor5 for vue3 组件。
- * @see {@link https://github.com/clinfc/wangeditor5-for-vue3/tree/model-json-array|Github}
+ * @see {@link https://github.com/clinfc/wangeditor5-for-vue3|Github}
  */
 
 import debounce from 'lodash.debounce'
@@ -124,7 +124,11 @@ function injectEditor(option: EditorEditableOption, reload: EditorEditableReload
     // 自动重载 toolbar
     const toolbar = EDITABLE_TOOLBAR.get(option)
     if (toolbar) {
-      TOOLBAR_HANDLE.get(toolbar)?.reload?.()
+      const treload = TOOLBAR_HANDLE.get(toolbar)?.reload
+      if (treload) {
+        setTimer(toolbar)
+        treload()
+      }
     }
   }
 
@@ -173,7 +177,7 @@ export const EditorEditable = defineComponent({
         ({
           mode: 'default',
           config: {},
-          delay: 3650,
+          delay: DELAY.UPDATE,
           defaultContent: null,
           extendCache: true,
         } as Required<EditorEditableOption>),
@@ -182,12 +186,15 @@ export const EditorEditable = defineComponent({
     modelValue: Array as PropType<Descendant[]>,
     /** v-model:html */
     html: String,
+    /** v-model:json */
+    json: String,
   },
-  emits: ['update:modelValue', 'update:html', 'reloadbefore'],
+  emits: ['update:modelValue', 'update:html', 'update:json', 'reloadbefore'],
   setup(props, { emit }) {
     const elem = ref<any>(null) as Ref<HTMLDivElement>
-    const json = toRef(props, 'modelValue')
+    const mval = toRef(props, 'modelValue')
     const html = toRef(props, 'html')
+    const json = toRef(props, 'json')
 
     let instance: IDomEditor | null = null
 
@@ -195,10 +202,20 @@ export const EditorEditable = defineComponent({
      * 编辑器内容缓存
      */
     const cache = shallowReactive({
-      json: [] as Descendant[],
-      jsonStr: '[]',
+      mval: [] as Descendant[],
+      json: '[]',
       html: '',
     })
+
+    /**
+     * 判断用户是否 v-model
+     */
+    const modelMval = computed(() => Array.isArray(mval.value))
+
+    /**
+     * 判断用户是否 v-model:json
+     */
+    const modelJson = computed(() => typeof json.value === 'string')
 
     /**
      * 判断用户是否 v-model:html
@@ -206,21 +223,30 @@ export const EditorEditable = defineComponent({
     const modelHtml = computed(() => typeof html.value === 'string')
 
     /**
-     * 判断用户是否 v-model
+     * 更新数据，将编辑器内容（json）同步到父组件。实现 v-model + v-model:json。
      */
-    const modelJson = computed(() => Array.isArray(json.value))
+    function updateMval(e: IDomEditor) {
+      // 异步执行时，编辑器可能已销毁重建
+      if (e != instance) return
+      cache.mval = e.isEmpty() ? [] : e.children
+      const jsonStr = JSON.stringify(cache.mval)
+      if (cache.json !== jsonStr) {
+        cache.json = jsonStr
+        emit('update:modelValue', cache.mval)
+        if (modelJson.value) emit('update:json', jsonStr)
+      }
+    }
 
     /**
-     * 更新数据，将编辑器内容（json）同步到父组件。实现 v-model。
+     * 更新数据，将编辑器内容（html）同步到父组件。实现 v-model:html。
      */
     function updateJson(e: IDomEditor) {
       // 异步执行时，编辑器可能已销毁重建
       if (e != instance) return
-      cache.json = e.isEmpty() ? [] : e.children
-      const jsonStr = JSON.stringify(cache.json)
-      if (cache.jsonStr !== jsonStr) {
-        cache.jsonStr = jsonStr
-        emit('update:modelValue', cache.json)
+      const jsonStr = JSON.stringify(e.isEmpty() ? [] : e.children)
+      if (cache.json !== jsonStr) {
+        cache.json = jsonStr
+        emit('update:json', jsonStr)
       }
     }
 
@@ -237,15 +263,26 @@ export const EditorEditable = defineComponent({
       }
     }
 
-    // 封装 change 事件，实现数据 v-model 和 v-model:html
+    /** 手动更新数据 */
+    function executeUpdate(instance: IDomEditor) {
+      if (modelMval.value) updateMval(instance)
+      else if (modelJson.value) updateJson(instance)
+
+      modelHtml.value && updateHtml(instance)
+    }
+
+    /** 封装 change 事件，实现数据 v-model v-model:json 和 v-model:html */
     const changes: ((e: IDomEditor) => void)[] = []
 
     function watchOptionOnChange() {
       changes.length = 0
 
       const { delay, config } = props.option
-      modelJson.value && changes.push(debounce(updateJson, delay))
+
+      if (modelMval.value) changes.push(debounce(updateMval, delay))
+      else if (modelJson.value) changes.push(debounce(updateJson, delay))
       modelHtml.value && changes.push(debounce(updateHtml, delay))
+
       if (config && config.onChange) {
         changes.push(config.onChange)
       }
@@ -283,8 +320,7 @@ export const EditorEditable = defineComponent({
 
       if (instance) {
         // 强制更新数据，避免数据丢失
-        modelJson.value && updateJson(instance) // 初始化/clear函数/组件销毁 的使用频率没有数据更新的使用频率高，因此将 modeJson 从 updateJson 中剔除，置于 updateJson 执行前执行。
-        modelHtml.value && updateHtml(instance) // 初始化/clear函数/组件销毁 的使用频率没有数据更新的使用频率高，因此将 modeHtml 从 updateHtml 中剔除，置于 updateHtml 执行前执行。
+        executeUpdate(instance)
 
         // 发布 reloadbefore 事件
         emit('reloadbefore', instance)
@@ -308,9 +344,10 @@ export const EditorEditable = defineComponent({
       let content: EditorEditableOption['defaultContent']
 
       if (extendCache) {
-        content = cache.json.length
-          ? cache.json
-          : cache.html || (Array.isArray(defaultContent) ? JSON.stringify(defaultContent) : defaultContent)
+        content =
+          cache.json.length > 2
+            ? cache.json
+            : cache.html || (Array.isArray(defaultContent) ? JSON.stringify(defaultContent) : defaultContent)
       } else {
         content = Array.isArray(defaultContent)
           ? JSON.stringify(defaultContent)
@@ -329,7 +366,7 @@ export const EditorEditable = defineComponent({
             instance.dangerouslyInsertHtml(content)
           }
         }
-        modelJson.value && updateJson(instance)
+        modelMval.value && updateMval(instance)
         modelHtml.value && updateHtml(instance)
         return instance
       }
@@ -342,14 +379,14 @@ export const EditorEditable = defineComponent({
      * 清除组件中的富文本内容和缓存
      */
     function clearContent() {
+      // 如果不进行只读模式拦截，那么只需时将报错
       // 只读模式 || 为初始 || 无内容
       if (props.option.config.readOnly || !instance || instance.isEmpty()) return
 
       instance.clear()
 
       // 强制进行数据同步，避免延迟机制导致数据异常
-      modelJson.value && updateJson(instance)
-      modelHtml.value && updateHtml(instance)
+      executeUpdate(instance)
     }
 
     const reload = injectEditor(props.option, initialize, clearContent)
@@ -359,8 +396,8 @@ export const EditorEditable = defineComponent({
     onBeforeUnmount(() => {
       if (instance) {
         // 强制进行数据更新，避免延迟机制导致数据丢失
-        modelJson.value && updateJson(instance)
-        modelHtml.value && updateHtml(instance)
+        executeUpdate(instance)
+
         instance.blur()
         setTimeout(() => {
           instance?.destroy()
@@ -372,15 +409,8 @@ export const EditorEditable = defineComponent({
     function watchOptionReload() {
       // 编辑器变更会自动更新 toolbar
       const toolbar = EDITABLE_TOOLBAR.get(props.option)
-      if (toolbar) {
-        setTimer(toolbar)
-        setTimer(props.option, () => {
-          setTimer(toolbar)
-          reload()
-        })
-      } else {
-        setTimer(props.option, reload)
-      }
+      toolbar && setTimer(toolbar)
+      setTimer(props.option, reload)
     }
 
     // 编辑器支持重载的配置项
@@ -391,24 +421,47 @@ export const EditorEditable = defineComponent({
 
     // 监听 v-model
     watch(
-      json,
+      mval,
       () => {
-        if (!modelJson.value) return
+        if (!modelMval.value) return
 
-        const value = unref(json)!
+        const value = unref(mval)!
 
         const jsonStr = JSON.stringify(value)
-        if (jsonStr === cache.jsonStr) return
+        if (jsonStr === cache.json) return
 
-        if (!instance) {
-          cache.json = value
-          cache.jsonStr = jsonStr
-          return
+        if (instance) {
+          instance.clear()
+          instance.insertFragment(value)
+        } else {
+          cache.mval = value
+          cache.json = jsonStr
         }
+      },
+      { immediate: true }
+    )
 
-        instance.select([])
-        instance.deleteFragment()
-        instance.insertFragment(value)
+    watch(
+      json,
+      () => {
+        // 以 v-model 为主，无 v-model 时才会继续操作
+        if (modelMval.value) return
+
+        const jsonStr = unref(json) || '[]'
+        if (jsonStr === cache.json) return
+
+        try {
+          const temp = JSON.parse(jsonStr)
+
+          if (instance) {
+            instance.clear()
+            instance.insertFragment(temp)
+          } else {
+            cache.json = jsonStr
+          }
+        } catch (e) {
+          console.error(Error(`v-model:json's value is not a json string!`))
+        }
       },
       { immediate: true }
     )
@@ -417,21 +470,19 @@ export const EditorEditable = defineComponent({
     watch(
       html,
       () => {
-        // 以 v-model 为主，无 v-model 时才会继续操作
-        if (modelJson.value) return
+        // 以 v-model/v-model:json 为主，无 v-model/v-model:json 时才会继续操作
+        if (modelMval.value || modelJson.value) return
 
         const value = unref(html)!
 
         if (!modelHtml.value || value === cache.html) return
 
-        if (!instance) {
+        if (instance) {
+          instance.clear()
+          instance.dangerouslyInsertHtml(value)
+        } else {
           cache.html = value
-          return
         }
-
-        instance.select([])
-        instance.deleteFragment()
-        instance.dangerouslyInsertHtml(value)
       },
       { immediate: true }
     )
@@ -442,9 +493,7 @@ export const EditorEditable = defineComponent({
     // readOnly
     watch(
       () => props.option.config.readOnly,
-      (nv) => {
-        if (instance) nv ? instance.disable() : instance.enable()
-      }
+      (nv) => instance && (nv ? instance.disable() : instance.enable())
     )
 
     // placeholder

@@ -28,6 +28,16 @@ const routes: RouteRecordRaw[] = [
     path: '/reloadbofore',
     component: () => import('@view/reloadbofore.vue'),
   },
+  {
+    name: 'modelJsonArray',
+    path: '/model-json-array',
+    component: () => import('@view/model-json-array.vue'),
+  },
+  {
+    name: 'modelJsonString',
+    path: '/model-json-string',
+    component: () => import('@view/model-json-string.vue'),
+  },
 ]
 
 const router = createRouter({

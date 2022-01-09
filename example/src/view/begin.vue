@@ -4,16 +4,18 @@
     class="editable"
     :option="editable"
     v-model="formData.json"
+    v-model:json="formData.jsonStr"
     v-model:html="formData.html"
     @reloadbefore="onReloadBefore"
   />
   <div class="preview">
     <div class="preview-types">
-      <el-button :disabled="modelType === 'json'" @click="onPreview('json')">预览 JSON</el-button>
-      <el-button :disabled="modelType === 'html'" @click="onPreview('html')">预览 HTML</el-button>
+      <el-button :disabled="modelType === 'json'" @click="modelType = 'json'">预览 JSON Array</el-button>
+      <el-button :disabled="modelType === 'jstr'" @click="modelType = 'jstr'">预览 JSON String</el-button>
+      <el-button :disabled="modelType === 'html'" @click="modelType = 'html'">预览 HTML String</el-button>
     </div>
     <div class="preview-content">
-      <u-prism :lang="modelType" :content="preview" />
+      <u-prism :lang="modelType === 'html' ? 'html' : 'json'" :content="preview" />
     </div>
   </div>
 </template>
@@ -47,22 +49,26 @@
       // 注意：是 shallowReactive 而不是 reactive
       const formData = shallowReactive({
         json: [] as Descendant[],
+        jsonStr: '',
         html: '',
       })
 
-      const modelType = ref<'json' | 'html'>('json')
+      const modelType = ref<'json' | 'jstr' | 'html'>('json')
 
       const preview = computed(() => {
-        return modelType.value === 'json' ? JSON.stringify(formData.json, null, 2) : formData.html
+        switch (modelType.value) {
+          case 'json':
+            return JSON.stringify(formData.json, null, 2)
+          case 'jstr':
+            return formData.jsonStr
+          default:
+            return formData.html
+        }
       })
-
-      function onPreview(value: 'json' | 'html') {
-        modelType.value = value
-      }
 
       function onReloadBefore(e: IDomEditor) {}
 
-      return { editable, toolbar, formData, modelType, preview, onPreview, onReloadBefore }
+      return { editable, toolbar, formData, modelType, preview, onReloadBefore }
     },
   })
 </script>

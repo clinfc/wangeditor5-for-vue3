@@ -2,14 +2,14 @@
 
 当前并未发布 `npm` 包，如果要使用此插件直接拿取 [`src/wangeditor.ts`](./src/wangeditor.ts) 或 [`dist/wangeditor.js`](./dist/wangeditor.js) 文件放在自己项目中即可。
 
-> 如果你是 `TypeScript` 用户，你可能需要执行 `npm i -D @types/lodash.debounce` 进行 `lodash.debounce` 库的声明文件安装才不会报错。无需安装 `lodash.debounce` 库，因为 `@wangeditor/editor` 本身就依赖该库。_此组件不支持直接在浏览器环境使用，只支持 `webpack/rollup/vite` 等构建环境下使用！_
+> 如果你是 `TypeScript` 用户，你可能需要执行 `npm i -D @types/lodash.debounce` 进行 `lodash.debounce` 库的声明文件安装才不会报错。但是无需安装 `lodash.debounce` 库，因为 `@wangeditor/editor` 本身就依赖该库。_此组件不支持直接在浏览器环境使用，只支持 `webpack/rollup/vite` 等构建环境下使用！_
 
 功能点：
 
 - 支持动态配置编辑器参数（编辑器创建后修改配置项仍生效）
-- 支持 `v-model` 和 `v-model:html` 两种形式的双向绑定，分别绑定 `json array` 和 `html string` 两种形式的数据
-- 支持动态显示默认内容而不会存在旧文档的历史记录
-- 同时默认内容的配置项支持 `json array`、`json string` 和 `html string` 三种格式的数据
+- 支持 `v-model`、`v-model:json` 和 `v-model:html` 三种形式的双向绑定，分别对应 `json array`、`json string` 和 `html string` 三种形式的数据
+- 支持动态配置默认内容而不会存在旧文档的历史记录
+- 默认内容的配置项支持 `json array`、`json string` 和 `html string` 三种格式的数据
 
 ## 运行 example
 
@@ -62,7 +62,7 @@ import { defineComponent } from 'vue'
 import { EditorEditable, EditorToolbar } from 'xxx/wangeditor.ts'
 
 export default defineComponent({
-  components: { EditorToolbar, EditorEditable },
+  components: { EditorEditable, EditorToolbar },
 })
 ```
 
@@ -80,7 +80,8 @@ export default defineComponent({
   <editor-editable
     class="border"
     :option="editable"
-    v-model="formData.json"
+    v-model="formData.jarr"
+    v-model:json="formData.jstr"
     v-model:html="formData.html"
     @reloadbefore="onEditableReloadBefore"
   />
@@ -118,9 +119,10 @@ export default defineComponent({
       // 开启只读模式
       editable.config.readOnly = true
 
-      // 不要使用 reactive/ref，应该使用 shallowReactive/shallowRef 来接收 json 数据
+      // 不要使用 reactive/ref，应该使用 shallowReactive/shallowRef 来接收 json array 数据
       const formData = shallowReactive({
-        json: [] as Descendant[],
+        jarr: [] as Descendant[],
+        jstr: '',
         html: '',
       })
 
@@ -140,7 +142,7 @@ export default defineComponent({
 
 ## useWangEditor
 
-经过 `useWangEditor` 处理后，返回的 `editable` 和 `toolbar` 分别对应**编辑器**和**菜单栏**的配置项，不过此时的配置项对象具备了响应式特性，我们可以直接修改 `editable`/`toolbar` 对应属性来 **_更新_** 或 **_重载_** 编辑器。
+经过 `useWangEditor` 处理后，返回的 `editable` 和 `toolbar` 分别对应**编辑器**和**菜单栏**的配置项，不过此时的配置项对象具备了响应式特性，我们可以直接修改 `editable`/`toolbar` 对应属性来**更新**或**重载**编辑器。
 
 如果传入的 `editableOption` 和 `toolbarOption` 是响应式数据，内部将自动解除与之前的关联，也就意味着经过 `useWangEditor` 处理后得到的 `editable` 和 `toolbar` 配置对象，即使内容发生变化也不会触发之前的依赖更新！！！
 
@@ -182,8 +184,8 @@ interface EditorEditableOption {
   delay?: number
   /**
    * 编辑器创建时默认内容的优先级排序，默认值：true。
-   * true：v-model > v-model:html > defaultContent。
-   * false: defaultContent > v-model > v-model:html。
+   * true：v-model > v-model:json > v-model:html > defaultContent。
+   * false: defaultContent > v-model > v-model:json > v-model:html。
    */
   extendCache?: boolean
 }
@@ -201,43 +203,31 @@ interface EditorToolbarOption {
 }
 ```
 
-## 动态修改配置
-
-```ts
-const { editable, toolbar } = useWangEditor()
-
-editable.config.placeholder = '新的 placeholder'
-
-// 切换为只读模式
-editable.config.readOnly = true
-
-toolbar.mode = 'simple'
-```
-
 ### EditorEditableOption.extendCache
 
-当 `v-model/v-model:html` 与 `defaultContent` 同时使用的时候，我们可以使用 `extendCache` 配置项来控制重载后编辑器的默认内容。
+当 `v-model`/`v-model:json`/`v-model:html` 与 `defaultContent` 同时使用的时候，我们可以使用 `extendCache` 配置项来控制重载后编辑器的默认内容。
 
-当 `extendCahce` 为 `true` 时，编辑器**创建**/**重载**时显示内容的优先级为：`v-model > v-model:html > defaultContent`。
+当 `EditorEditableOption.extendCahce` 为 `true` 时，编辑器**创建**/**重载**时显示内容的优先级为：`v-model` > `v-model:json` > `v-model:html` > `defaultContent`。
 
-当 `extendCache` 为 `false` 时，编辑器**创建**/**重载**时显示内容的优先级为：`defaultContent > v-model > v-model:html`。`false` 模式下可能会造成数据的丢失，因此在编辑器重载前一定要做好数据的保存工作，我们可以配置 `reloadbefore` 事件来进行数据的保存。
+当 `EditorEditableOption.extendCache` 为 `false` 时，编辑器**创建**/**重载**时显示内容的优先级为：`defaultContent` > `v-model` > `v-model:json` > `v-model:html`。`false` 模式下可能会造成数据的丢失，因此在编辑器重载前一定要做好数据的保存工作，我们可以配合 `reloadbefore` 事件来进行数据的保存。
 
 ### EditorEditableOption.defaultContent
 
-`defaultContent` 的变更默认情况下是不会触发编辑器的重载的，如果需要将 `defaultContent` 内容直接显示出来，我们需要通过 `reloadEditor` 来强制重载编辑器。并且我们需要注意 `extendCache` 对重载后编辑器默认内容的影响。
+`EditorEditableOption.defaultContent` 的变更默认情况下是不会触发编辑器的重载的，如果需要将 `EditorEditableOption.defaultContent` 内容直接显示出来，我们需要通过 `reloadEditor` 来强制重载编辑器。并且我们需要注意 `EditorEditableOption.extendCache` 对重载后编辑器默认内容的影响。
 
 ```ts
 const { editable, toolbar, reloadEditor } = useWangEditor()
 
 onMounted(() => {
   setTimeout(() => {
-    // 当你进行了 v-model/v-model:html 绑定时，如果你想在编辑器重载后将新设
-    // 置的默认值显示为编辑器的默认内容，那么你需要设置 extendCache 为 false，
-    // 这会导致编辑器内容的丢失，可以合理搭配 reloadbefore 事件进行处理
+    // 当你进行了 v-model/v-model:json/v-model:html 绑定时，
+    // 如果你想在编辑器重载后将 defaultContent 显示为编辑器的默认内容，
+    // 那么你需要设置 extendCache 为 false，这会导致编辑器内容的丢失，
+    // 可以合理搭配 reloadbefore 事件进行处理
     editable.extendCache = false
 
     // 然后再修改配置
-    editable.defaultContent = [{ type: 'header1', children: [{ text: '标题一' }] }]
+    editable. = [{ type: 'header1', children: [{ text: '标题一' }] }]
 
     // 同时还支持字符串形式的 JSON
     editable.defaultContent = '[{"type":"header1","children":[{"text":"标题一"}]}]'
@@ -251,7 +241,20 @@ onMounted(() => {
 })
 ```
 
-## 编辑器/菜单栏 重载
+## 动态修改配置
+
+```ts
+const { editable, toolbar } = useWangEditor()
+
+editable.config.placeholder = '新的 placeholder'
+
+// 切换为只读模式
+editable.config.readOnly = true
+
+toolbar.mode = 'simple'
+```
+
+## reloadEditor：重载编辑器和菜单栏
 
 `EditorEditableOption.mode`、`EditorEditableOption.config.hoverbarKeys`、`EditorEditableOption.config.maxLength`、`EditorEditableOption.config.customPaste` 这几个配置项的变更会触发编辑器的重载，其它的 `EditorEditableOption` 配置项仅支持动态配置，但并不会触发重载，这能避免不必要的资源消耗。如果你需要强制重载编辑器，还提供了 `reloadEditor` API 来供使用者手动触发。
 
@@ -264,7 +267,7 @@ const { reloadEditor } = useWangEditor()
 reloadEditor()
 ```
 
-### reloadbefore 事件
+### reloadbefore：重载前事件
 
 在编辑器重载之前，会触发 `reloadbefore` 事件。
 
@@ -307,11 +310,9 @@ reloadEditor()
 </script>
 ```
 
-## 清除内容
+## clearContent：清除内容
 
 不仅会清除编辑器内容，还会同步 `v-model/v-model:html` 数据
-
-> `readOnly` 为 `true` 时，执行 `clearContent()` 是无效的
 
 ```ts
 const { clearContent } = useWangEditor()
@@ -319,7 +320,24 @@ const { clearContent } = useWangEditor()
 clearContent()
 ```
 
-## 获取菜单栏实例
+受 `@wangeditor/editor` 内部限制，`EditorEditableOption.config.readOnly` 为 `true` 时，执行 `clearContent()` 是无法清除内容的。
+如果你仍希望进行编辑器内容清除，可以考虑使用 `reloadEditor()` 搭配 `EditorEditableOption.defaultContent` 进行实现。
+
+```ts
+const { editable, reloadEditor } = useWangEditor({ config: { readOnly: true } })
+
+function customClearContent() {
+  // 如果使用了 v-model 进行双向绑定，一定要注意此配置项一定要设置为 false
+  editable.extendCache = false
+
+  editable.defaultContent = null
+  reloadEditor()
+}
+
+customClearContent()
+```
+
+## getToolbar：获取菜单栏实例
 
 ```ts
 const { getToolbar } = useWangEditor()
@@ -328,11 +346,11 @@ const toolbarInstance: Toolbar | undefined = getToolbar()
 if (toolbarInstance) {
   // do somthing
 } else {
-  // do somthin
+  // do somthing
 }
 ```
 
-## 获取编辑器实例
+## getEditable：获取编辑器实例
 
 ```ts
 const { getEditable } = useWangEditor()
@@ -345,17 +363,24 @@ if (editableInstance) {
 }
 ```
 
-## 关于对 v-model 的支持
+## v-model、v-model:json、v-model:html
 
-`EditorEditable` 同时支持 `v-model` 和 `v-model:html` 两种形式的数据绑定，分别对应 `json array` 和 `html string` 两种格式的数据。两种格式可以同时绑定，也可以单独只绑定 `v-model` 或 `v-model:html` 之一，亦可以不进行数据绑定。
+`EditorEditable` 组件同时支持 `v-model`、`v-model:json` 和 `v-model:html` 三种形式的双向绑定，分别对应 `json array`、`json string` 和 `html string` 三种格式的数据。不过我们需要注意 **`EditorEditableOption.extendCache`** 可能存在的影响！！！
 
-**不推荐只进行 `v-model:html` 绑定，有无法避免的缺陷！！！** 并且需要注意 **`extendCache`** 可能存在的影响！！！
+不推荐只进行 `v-model:html` 绑定，有无法避免的缺陷！！！
 
-**同时，当我们进行 `v-model` 绑定时，推荐使用 `shallowReactive`/`shallowRef` 来缓存 `json array` 数据。如果你执意使用 `reactive`/`ref` 进行数据缓存，那么在出现未知错误时你可能找不到问题所在。重要！重要！！重要！！！**
+当我们进行 `v-model` 绑定时，推荐使用 `shallowReactive`/`shallowRef` 来缓存 `json array` 数据。如果你执意使用 `reactive`/`ref` 进行数据缓存，那么在出现未知错误时你可能找不到问题所在。**重要！重要！！重要！！！**
+
+> 最优搭配为 `v-html:json` 或 `v-model:json` + `v-model:html`。`v-model:json` 相对 `v-model` 而言，能减少大量内存消耗和计算消耗。
 
 ```html
 <template>
-  <editor-editable :option="editable" v-model="formData.json" v-model:html="formData.html" />
+  <editor-editable
+    :option="editable"
+    v-model="formData.json"
+    v-model:json="formData.jstr"
+    v-model:html="formData.html"
+  />
 </template>
 
 <script lang="ts">
@@ -369,6 +394,7 @@ if (editableInstance) {
 
       const formData = shallowReactive({
         json: [] as Descendant[],
+        jstr: '',
         html: '',
       })
 
@@ -382,7 +408,7 @@ if (editableInstance) {
 
 ```html
 <template>
-  <editor-editable :option="editable" v-model="jsonData" v-model:html="htmlData" />
+  <editor-editable :option="editable" v-model="jsonArray" v-model:json="jsonString" v-model:html="htmlString" />
 </template>
 
 <script lang="ts">
@@ -394,14 +420,16 @@ if (editableInstance) {
     setup() {
       const { editable } = useWangEditor()
 
-      const jsonData = shallowRef<Descendant[]>([])
+      const jsonArray = shallowRef<Descendant[]>([])
 
-      const htmlData = ref('')
+      const jsonString = ref('')
 
-      return { editable, jsonData, htmlData }
+      const htmlString = ref('')
+
+      return { editable, jsonArray, jsonString, htmlString }
     },
   })
 </script>
 ```
 
-> 好用不迷路，不妨给作者一个 `star` 打打气
+> **好用不迷路，不妨给作者一个 `star` 打打气**

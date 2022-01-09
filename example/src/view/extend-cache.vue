@@ -27,16 +27,18 @@
       style="width: 100%; height: 500px"
       :option="editable"
       v-model="formData.json"
+      v-model:json="formData.jstr"
       v-model:html="formData.html"
     />
   </div>
   <div class="preview">
     <div class="preview-types">
-      <button :disabled="modelType === 'json'" @click="togglePreview">预览 JSON</button>
-      <button :disabled="modelType === 'html'" @click="togglePreview">预览 HTML</button>
+      <el-button :disabled="modelType === 'json'" @click="modelType = 'json'">预览 JSON Array</el-button>
+      <el-button :disabled="modelType === 'jstr'" @click="modelType = 'jstr'">预览 JSON String</el-button>
+      <el-button :disabled="modelType === 'html'" @click="modelType = 'html'">预览 HTML String</el-button>
     </div>
     <div class="preview-content">
-      <u-prism :lang="modelType" :content="preview" />
+      <u-prism :lang="modelType === 'html' ? 'html' : 'json'" :content="preview" />
     </div>
   </div>
 </template>
@@ -69,18 +71,22 @@
 
       const formData = shallowReactive({
         json: [] as Descendant[],
+        jstr: '',
         html: '',
       })
 
-      const modelType = ref<'json' | 'html'>('json')
+      const modelType = ref<'json' | 'jstr' | 'html'>('json')
 
       const preview = computed(() => {
-        return modelType.value === 'json' ? JSON.stringify(formData.json, null, 2) : formData.html
+        switch (modelType.value) {
+          case 'json':
+            return JSON.stringify(formData.json, null, 2)
+          case 'jstr':
+            return formData.jstr
+          default:
+            return formData.html
+        }
       })
-
-      function togglePreview() {
-        modelType.value = modelType.value === 'json' ? 'html' : 'json'
-      }
 
       const select = ref(0)
 
@@ -103,7 +109,7 @@
         { immediate: true }
       )
 
-      return { articles, editable, toolbar, clearContent, formData, select, modelType, preview, togglePreview }
+      return { articles, editable, toolbar, clearContent, formData, select, modelType, preview }
     },
   })
 </script>
