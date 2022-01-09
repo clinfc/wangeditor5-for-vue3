@@ -1,4 +1,4 @@
-# wangEditor5 for vue3
+# [wangEditor5](https://www.wangeditor.com/v5/) for [vue3](https://v3.cn.vuejs.org/)
 
 当前并未发布 `npm` 包，如果要使用此插件直接拿取 [`src/wangeditor.ts`](./src/wangeditor.ts) 或 [`dist/wangeditor.js`](./dist/wangeditor.js) 文件放在自己项目中即可。
 
