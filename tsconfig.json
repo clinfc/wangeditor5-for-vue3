@@ -15,5 +15,7 @@
     "outDir": "dist",
     "lib": ["esnext", "dom"]
   },
-  "files": ["./src/wangeditor.ts"]
+  // "files": ["src/core.ts", "src/element-plus.ts", "src/ant-design.ts"],
+  "include": ["src/**/*.ts"],
+  "exclude": ["example/**/*.vue", "example/**/*.ts"]
 }

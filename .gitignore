@@ -3,7 +3,5 @@ node_modules
 dist-ssr
 *.local
 *.lock
-example/node_modules
-example/dist
-example/dist-ssr
-example/*.lock
+.cache
+.temp
