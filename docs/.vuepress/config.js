@@ -12,7 +12,7 @@ module.exports = {
         lang: 'zh-CN',
         selectLanguageName: '简体中文',
         navbar: [
-          { text: '文档', link: '/guide/' },
+          { text: '用户文档', link: '/guide/' },
           { text: 'wangEditor5', link: 'https://www.wangeditor.com/v5' },
           { text: 'Vue3', link: 'https://v3.cn.vuejs.org/' },
           { text: 'Github', link: 'https://github.com/clinfc/wangeditor5-for-vue3' },

@@ -92,7 +92,7 @@ app.mount('#app')
 #### provide
 
 ```ts
-import { provide } from 'vue'
+import { defineComponent, provide } from 'vue'
 import { wangeditorFormFieldInjectionKey } from 'wangeditor5-for-vue3'
 
 export default defineComponent({

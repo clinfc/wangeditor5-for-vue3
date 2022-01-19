@@ -27,7 +27,7 @@ declare function useWangEditor(
 }
 ```
 
-### EditorEditableOption
+## EditorEditableOption
 
 ```ts
 /**
@@ -51,17 +51,19 @@ interface EditorEditableOption {
 }
 ```
 
-#### EditorEditableOption.extendCache
+### EditorEditableOption.extendCache
 
-当 `v-model`/`v-model:json`/`v-model:html` 与 `defaultContent` 同时使用的时候，我们可以使用 `extendCache` 配置项来控制重载后编辑器的默认内容。
+当 `v-model`/`v-model:json`/`v-model:html` 与 `EditorEditableOption.defaultContent` 同时使用的时候，我们可以使用 `EditorEditableOption.extendCache` 配置项来控制重载后编辑器的默认内容。
 
-当 `EditorEditableOption.extendCahce` 为 `true` 时，编辑器**创建**/**重载**时显示内容的优先级为：`v-model` > `v-model:json` > `v-model:html` > `defaultContent`。
+当 `EditorEditableOption.extendCahce` 为 `true` 时，编辑器**创建**/**重载**时显示内容的优先级为：`v-model` > `v-model:json` > `v-model:html` > `EditorEditableOption.defaultContent`。
 
-当 `EditorEditableOption.extendCache` 为 `false` 时，编辑器**创建**/**重载**时显示内容的优先级为：`defaultContent` > `v-model` > `v-model:json` > `v-model:html`。`false` 模式下可能会造成数据的丢失，因此在编辑器重载前一定要做好数据的保存工作，我们可以配合 `reloadbefore` 事件来进行数据的保存。
+当 `EditorEditableOption.extendCache` 为 `false` 时，编辑器**创建**/**重载**时显示内容的优先级为：`EditorEditableOption.defaultContent` > `v-model` > `v-model:json` > `v-model:html`。
 
-#### EditorEditableOption.defaultContent
+> `false` 模式下可能会造成数据的丢失，因此在编辑器重载前一定要做好数据的保存工作，我们可以配合 `reloadbefore` 事件来进行数据的保存。
 
-`EditorEditableOption.defaultContent` 的变更默认情况下是不会触发编辑器的重载的，如果需要将 `EditorEditableOption.defaultContent` 内容直接显示出来，我们需要通过 `reloadEditor` 来强制重载编辑器。并且我们需要注意 `EditorEditableOption.extendCache` 对重载后编辑器默认内容的影响。
+### EditorEditableOption.defaultContent
+
+`EditorEditableOption.defaultContent` 的变更默认情况下是不会触发编辑器的重载的。在编辑器已创建的情况下，如果需要将 `EditorEditableOption.defaultContent` 内容直接显示出来，我们需要通过 `reloadEditor` API 来强制重载编辑器。并且我们需要注意 `EditorEditableOption.extendCache` 对编辑器创建时默认内容的影响。
 
 ```ts
 const { editable, toolbar, reloadEditor } = useWangEditor()
@@ -89,7 +91,7 @@ onMounted(() => {
 })
 ```
 
-### EditorToolbarOption
+## EditorToolbarOption
 
 ```ts
 /**
@@ -143,6 +145,10 @@ function customClearContent() {
 customClearContent()
 ```
 
+> **为什么不通过修改 v-model/v-model:json/v-model:html 来清空数据**：
+>
+> 不是每一个用户都对富文本数据格式了如指掌，也不是每个用户都能区分不同响应式 API 间的区别 _（本作者也不敢说自己每个响应式 API 都懂）_ ，总会出现千奇百怪的问题。
+
 ### getToolbar
 
 获取菜单栏实例
@@ -175,11 +181,21 @@ if (editableInstance) {
 
 ### reloadEditor
 
-重载编辑器和菜单栏
+重载编辑器（销毁并重新创建）。
 
-`EditorEditableOption.mode`、`EditorEditableOption.config.hoverbarKeys`、`EditorEditableOption.config.maxLength`、`EditorEditableOption.config.customPaste` 这几个配置项的变更会触发编辑器的重载，其它的 `EditorEditableOption` 配置项仅支持动态配置，但并不会触发重载，这能避免不必要的资源消耗。如果你需要强制重载编辑器，还提供了 `reloadEditor` API 来供使用者手动触发。
+> 重载分为编辑器重载和菜单栏重载，编辑器重载会自动触发菜单栏重载，而菜单栏重载却不会触发编辑器重载。
 
-和 `EditorEditableOption` 不同的是，`EditorToolbarOption` 的的任意选项发生变化，都会触发菜单栏的重载。
+**会触发重载的配置项：**
+
+- 菜单栏
+  - `EditorToolbarOption` 的所有属性
+- 编辑器
+  - `EditorEditableOption.mode`
+  - `EditorEditableOption.config.hoverbarKeys`
+  - `EditorEditableOption.config.maxLength`
+  - `EditorEditableOption.config.customPaste`
+
+> `EditorEditableOption` 的其它配置项虽不会触发重载，但是支持动态配置
 
 ```ts
 const { reloadEditor } = useWangEditor()

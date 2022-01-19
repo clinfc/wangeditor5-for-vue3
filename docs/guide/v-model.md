@@ -22,7 +22,7 @@
 
 <script lang="ts">
   import { Descendant } from 'slate'
-  import { useWangEditor } from 'xxx/wangeditor.ts'
+  import { useWangEditor } from 'wangeditor5-for-vue3'
   import { defineComponent, shallowReactive } from 'vue'
 
   export default defineComponent({
@@ -50,7 +50,7 @@
 
 <script lang="ts">
   import { Descendant } from 'slate'
-  import { useWangEditor } from 'xxx/wangeditor.ts'
+  import { useWangEditor } from 'wangeditor5-for-vue3'
   import { defineComponent, shallowRef } from 'vue'
 
   export default defineComponent({

@@ -1,6 +1,6 @@
 # TypeScript
 
-为了更好的支持 `TypeScript`，可以在 `tsconfig.json` 的 `types` 中添加 `wangeditor5-for-vue3`。
+`wangeditor5-for-vue3` 天然支持 `TypeScript`。如果你的项目无法自动识别，你也可以在 `tsconfig.json` 中手动添加。
 
 ```json
 {
