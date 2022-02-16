@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "target": "esnext",
+    "target": "ES6",
     "useDefineForClassFields": true,
-    "module": "esnext",
+    "module": "ES6",
     "moduleResolution": "node",
     "strict": true,
     "jsx": "preserve",
@@ -12,10 +12,9 @@
     "skipLibCheck": true,
     "declaration": true,
     "rootDir": "./src",
-    "outDir": "dist",
-    "lib": ["esnext", "dom"]
+    "outDir": "es",
+    "lib": ["ES6", "DOM"]
   },
-  // "files": ["src/core.ts", "src/element-plus.ts", "src/ant-design.ts"],
   "include": ["src/**/*.ts"],
   "exclude": ["example/**/*.vue", "example/**/*.ts"]
 }

@@ -17,7 +17,7 @@ features:
   - title: 初始内容
     details: 编辑器创建时的默认内容配置项支持 json array、json string 和 html string 三种格式的数据
   - title: 优雅切换
-    details: defaultContent + reloadEditor() 可优雅的实现在不同文章间的来回切换
+    details: defaultContent/defaultHtml + reloadEditor() 可优雅的实现在不同文章间的来回切换
   - title: TypeScript
     details: 以 TypeScript 开发，更好的类型提示
 ---

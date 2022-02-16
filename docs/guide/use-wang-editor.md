@@ -14,12 +14,12 @@
  * @param {Number} reloadDelay 防抖时长，用于重载的延迟控制，单位：毫秒
  */
 declare function useWangEditor(
-  editableOption: EditorEditableOption | null = null,
-  toolbarOption: EditorToolbarOption | null = null,
+  editableOption: EditableOption | null = null,
+  toolbarOption: ToolbarOption | null = null,
   reloadDelay: number = 365
 ): {
-  editable: Required<EditorEditableOption>
-  toolbar: Required<EditorToolbarOption>
+  editable: Required<EditableOption>
+  toolbar: Required<ToolbarOption>
   getEditable: () => IDomEditor | undefined
   getToolbar: () => Toolbar | undefined
   clearContent: () => void
@@ -27,13 +27,13 @@ declare function useWangEditor(
 }
 ```
 
-## EditorEditableOption
+## EditableOption
 
 ```ts
 /**
  * 编辑器配置项
  */
-interface EditorEditableOption {
+interface EditableOption {
   /** 编辑器模式 */
   mode?: 'default' | 'simple'
   /** 编辑器初始化的默认内容 */
@@ -51,19 +51,19 @@ interface EditorEditableOption {
 }
 ```
 
-### EditorEditableOption.extendCache
+### EditableOption.extendCache
 
-当 `v-model`/`v-model:json`/`v-model:html` 与 `EditorEditableOption.defaultContent` 同时使用的时候，我们可以使用 `EditorEditableOption.extendCache` 配置项来控制重载后编辑器的默认内容。
+当 `v-model`/`v-model:json`/`v-model:html` 与 `EditableOption.defaultContent` 同时使用的时候，我们可以使用 `EditableOption.extendCache` 配置项来控制重载后编辑器的默认内容。
 
-当 `EditorEditableOption.extendCahce` 为 `true` 时，编辑器**创建**/**重载**时显示内容的优先级为：`v-model` > `v-model:json` > `v-model:html` > `EditorEditableOption.defaultContent`。
+当 `EditableOption.extendCahce` 为 `true` 时，编辑器**创建**/**重载**时显示内容的优先级为：`v-model` > `v-model:json` > `v-model:html` > `EditableOption.defaultContent`。
 
-当 `EditorEditableOption.extendCache` 为 `false` 时，编辑器**创建**/**重载**时显示内容的优先级为：`EditorEditableOption.defaultContent` > `v-model` > `v-model:json` > `v-model:html`。
+当 `EditableOption.extendCache` 为 `false` 时，编辑器**创建**/**重载**时显示内容的优先级为：`EditableOption.defaultContent` > `v-model` > `v-model:json` > `v-model:html`。
 
 > `false` 模式下可能会造成数据的丢失，因此在编辑器重载前一定要做好数据的保存工作，我们可以配合 `reloadbefore` 事件来进行数据的保存。
 
-### EditorEditableOption.defaultContent
+### EditableOption.defaultContent
 
-`EditorEditableOption.defaultContent` 的变更默认情况下是不会触发编辑器的重载的。在编辑器已创建的情况下，如果需要将 `EditorEditableOption.defaultContent` 内容直接显示出来，我们需要通过 `reloadEditor` API 来强制重载编辑器。并且我们需要注意 `EditorEditableOption.extendCache` 对编辑器创建时默认内容的影响。
+`EditableOption.defaultContent` 的变更默认情况下是不会触发编辑器的重载的。在编辑器已创建的情况下，如果需要将 `EditableOption.defaultContent` 内容直接显示出来，我们需要通过 `reloadEditor` API 来强制重载编辑器。并且我们需要注意 `EditableOption.extendCache` 对编辑器创建时默认内容的影响。
 
 ```ts
 const { editable, toolbar, reloadEditor } = useWangEditor()
@@ -91,13 +91,13 @@ onMounted(() => {
 })
 ```
 
-## EditorToolbarOption
+## ToolbarOption
 
 ```ts
 /**
  * 菜单栏的配置项
  */
-interface EditorToolbarOption {
+interface ToolbarOption {
   mode?: 'default' | 'simple'
   config?: Partial<IToolbarConfig>
 }
@@ -128,8 +128,8 @@ const { clearContent } = useWangEditor()
 clearContent()
 ```
 
-受 `@wangeditor/editor` 内部限制，`EditorEditableOption.config.readOnly` 为 `true` 时，执行 `clearContent()` 是无法清除内容的。
-如果你仍希望进行编辑器内容清除，可以考虑使用 `reloadEditor()` 搭配 `EditorEditableOption.defaultContent` 进行实现。
+受 `@wangeditor/editor` 内部限制，`EditableOption.config.readOnly` 为 `true` 时，执行 `clearContent()` 是无法清除内容的。
+如果你仍希望进行编辑器内容清除，可以考虑使用 `reloadEditor()` 搭配 `EditableOption.defaultContent` 进行实现。
 
 ```ts
 const { editable, reloadEditor } = useWangEditor({ config: { readOnly: true } })
@@ -188,14 +188,14 @@ if (editableInstance) {
 **会触发重载的配置项：**
 
 - 菜单栏
-  - `EditorToolbarOption` 的所有属性
+  - `ToolbarOption` 的所有属性
 - 编辑器
-  - `EditorEditableOption.mode`
-  - `EditorEditableOption.config.hoverbarKeys`
-  - `EditorEditableOption.config.maxLength`
-  - `EditorEditableOption.config.customPaste`
+  - `EditableOption.mode`
+  - `EditableOption.config.hoverbarKeys`
+  - `EditableOption.config.maxLength`
+  - `EditableOption.config.customPaste`
 
-> `EditorEditableOption` 的其它配置项虽不会触发重载，但是支持动态配置
+> `EditableOption` 的其它配置项虽不会触发重载，但是支持动态配置
 
 ```ts
 const { reloadEditor } = useWangEditor()

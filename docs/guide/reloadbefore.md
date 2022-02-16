@@ -1,21 +1,21 @@
 # reloadbefore
 
-在编辑器重载之前，会触发 `reloadbefore` 事件。当 `EditorEditableOption.extendCahce` 为 `false` 时，我们可以配置此事件进行数据提交/缓存以防止数据丢失。
+在编辑器重载之前，会触发 `reloadbefore` 事件。当 `EditableOption.extendCahce` 为 `false` 时，我们可以配置此事件进行数据提交/缓存以防止数据丢失。
 
 ```html
 <template>
-  <editor-toolbar :option="toolbar" @reloadbefore="onToolbarReloadBefore" />
-  <editor-editable v-model="formData.json" :option="editable" @reloadbefore="onEditableReloadBefore" />
+  <we-toolbar :option="toolbar" @reloadbefore="onToolbarReloadBefore" />
+  <we-editable v-model="formData.json" :option="editable" @reloadbefore="onEditableReloadBefore" />
 </template>
 
 <script lang="ts">
   import axios from 'axiios'
   import { Descendant } from 'slate'
-  import { EditorEditable, EditorToolbar, useWangEditor } from 'wangeditor5-for-vue3'
+  import { WeEditable, WeToolbar, useWangEditor } from 'wangeditor5-for-vue3'
   import { defineComponent, shallowReactive } from 'vue'
 
   export default defineComponent({
-    components: { EditorToolbar, EditorEditable },
+    components: { WeToolbar, WeEditable },
     setup() {
       const { editable, toolbar, reloadEditor } = useWangEditor()
 

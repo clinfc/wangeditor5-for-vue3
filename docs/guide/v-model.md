@@ -1,10 +1,10 @@
 # 双向绑定
 
-`EditorEditable` 组件同时支持 `v-model`、`v-model:json` 和 `v-model:html` 三种形式的双向绑定，分别对应 `json array`、`json string` 和 `html string` 三种格式的数据。
+`WeEditable` 组件同时支持 `v-model`、`v-model:json` 和 `v-model:html` 三种形式的双向绑定，分别对应 `json array`、`json string` 和 `html string` 三种格式的数据。
 
 **注意事项：**
 
-- 注意 `EditorEditableOption.extendCache` 可能存在的影响！！！
+- 注意 `EditableOption.extendCache` 可能存在的影响！！！
 - 不推荐只进行 `v-model:html` 绑定，有无法避免的缺陷！！！
 - 当我们进行 `v-model` 绑定时，推荐使用 `shallowReactive`/`shallowRef` 来缓存 `json array` 数据。如果你执意使用 `reactive`/`ref` 进行数据缓存，那么在出现未知错误时你可能找不到问题所在。
 
@@ -12,12 +12,7 @@
 
 ```html
 <template>
-  <editor-editable
-    :option="editable"
-    v-model="formData.json"
-    v-model:json="formData.jstr"
-    v-model:html="formData.html"
-  />
+  <we-editable :option="editable" v-model="formData.json" v-model:json="formData.jstr" v-model:html="formData.html" />
 </template>
 
 <script lang="ts">
@@ -45,7 +40,7 @@
 
 ```html
 <template>
-  <editor-editable :option="editable" v-model="jsonArray" v-model:json="jsonString" v-model:html="htmlString" />
+  <we-editable :option="editable" v-model="jsonArray" v-model:json="jsonString" v-model:html="htmlString" />
 </template>
 
 <script lang="ts">

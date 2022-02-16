@@ -1,0 +1,25 @@
+{
+  "name": "ant_design",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@wangeditor/editor": "^0.14.0",
+    "ant-design-vue": "^3.0.0-beta.7",
+    "prismjs": "^1.26.0",
+    "vue": "^3.2.25",
+    "vue-router": "^4.0.12",
+    "wangeditor5-for-vue3": "^0.0.1"
+  },
+  "devDependencies": {
+    "@types/prismjs": "^1.16.6",
+    "@vitejs/plugin-vue": "^2.0.0",
+    "sass": "^1.48.0",
+    "typescript": "^4.4.4",
+    "vite": "^2.7.2",
+    "vue-tsc": "^0.29.8"
+  }
+}

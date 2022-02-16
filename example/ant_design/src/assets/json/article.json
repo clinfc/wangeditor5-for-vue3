@@ -1,0 +1,186 @@
+[
+  {
+    "title": "空",
+    "content": [],
+    "html": ""
+  },
+  {
+    "title": "闺怨 - 王昌龄[唐]",
+    "content": [
+      { "type": "header1", "children": [{ "text": "闺怨" }], "textAlign": "center" },
+      {
+        "type": "paragraph",
+        "children": [
+          { "text": " 王昌龄", "bold": true },
+          { "text": "   " },
+          { "text": "〔唐代〕", "italic": true },
+          { "text": " " }
+        ],
+        "textAlign": "center"
+      },
+      { "type": "paragraph", "children": [{ "text": "" }], "textAlign": "center" },
+      {
+        "type": "paragraph",
+        "children": [{ "text": "闺中少妇不知愁，春日凝妆上翠楼。(不知 一作：不曾)" }],
+        "textAlign": "center"
+      },
+      { "type": "paragraph", "children": [{ "text": "忽见陌头杨柳色，悔教夫婿觅封侯。" }], "textAlign": "center" },
+      { "type": "paragraph", "children": [{ "text": "" }] },
+      { "type": "paragraph", "children": [{ "text": "" }] },
+      { "type": "header2", "children": [{ "text": "译文及注释" }], "textAlign": "center" },
+      { "type": "header3", "children": [{ "text": "", "bold": true }], "textAlign": "left" },
+      { "type": "header3", "textAlign": "center", "children": [{ "bold": true, "text": "译文一" }] },
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "text": "闺中少妇未曾有过相思离别之愁，在明媚的春日，她精心装扮之后兴高采烈登上翠楼。忽见野外杨柳青青春意浓，真后悔让丈夫从军边塞，建功封侯。"
+          }
+        ]
+      },
+      { "type": "header3", "children": [{ "text": "", "bold": true }], "textAlign": "left" },
+      { "type": "header3", "textAlign": "center", "children": [{ "bold": true, "text": "译文二" }] },
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "text": "闺阁中的少妇从来不知忧愁；初春来临细心装扮，独自登上翠楼。忽然见到路边杨柳新绿，心中一阵忧愁，悔不该叫夫君去从军建功封爵。"
+          }
+        ]
+      },
+      { "type": "header3", "children": [{ "text": "", "bold": true }], "textAlign": "left" },
+      { "type": "header3", "textAlign": "center", "children": [{ "bold": true, "text": "注释" }] },
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "text": "闺怨：少妇的幽怨。闺，女子卧室，借指女子。一般指少女或少妇。古人\"闺怨\"之作，一般是写少女的青春寂寞，或少妇的离别相思之情。以此题材写的诗称“闺怨诗”。\"不知愁\"一作\"不曾愁\"，则诗意大减。"
+          }
+        ]
+      },
+      { "type": "paragraph", "children": [{ "text": "凝妆：盛妆。" }] },
+      { "type": "paragraph", "children": [{ "text": "陌头：路边。" }] },
+      { "type": "paragraph", "children": [{ "text": "觅封侯：为求得封侯而从军。觅，寻求。" }] },
+      { "type": "paragraph", "children": [{ "text": "悔教：后悔让" }] }
+    ],
+    "html": "<h1 style='text-align: center;'>闺怨</h1><p style='text-align: center;'><strong>&nbsp;王昌龄</strong>&nbsp;&nbsp;&nbsp;<em>〔唐代〕</em>&nbsp;</p><p style='text-align: center;'><br></p><p style='text-align: center;'>闺中少妇不知愁，春日凝妆上翠楼。(不知&nbsp;一作：不曾)</p><p style='text-align: center;'>忽见陌头杨柳色，悔教夫婿觅封侯。</p><p><br></p><p><br></p><h2 style='text-align: center;'>译文及注释</h2><h3 style='text-align: left;'></h3><h3 style='text-align: center;'><strong>译文一</strong></h3><p>闺中少妇未曾有过相思离别之愁，在明媚的春日，她精心装扮之后兴高采烈登上翠楼。忽见野外杨柳青青春意浓，真后悔让丈夫从军边塞，建功封侯。</p><h3 style='text-align: left;'></h3><h3 style='text-align: center;'><strong>译文二</strong></h3><p>闺阁中的少妇从来不知忧愁；初春来临细心装扮，独自登上翠楼。忽然见到路边杨柳新绿，心中一阵忧愁，悔不该叫夫君去从军建功封爵。</p><h3 style='text-align: left;'></h3><h3 style='text-align: center;'><strong>注释</strong></h3><p>闺怨：少妇的幽怨。闺，女子卧室，借指女子。一般指少女或少妇。古人'闺怨'之作，一般是写少女的青春寂寞，或少妇的离别相思之情。以此题材写的诗称“闺怨诗”。'不知愁'一作'不曾愁'，则诗意大减。</p><p>凝妆：盛妆。</p><p>陌头：路边。</p><p>觅封侯：为求得封侯而从军。觅，寻求。</p><p>悔教：后悔让</p>"
+  },
+  {
+    "title": "蜀道难 - 李白[唐]",
+    "content": [
+      { "type": "header1", "children": [{ "text": "蜀道难" }], "textAlign": "center" },
+      {
+        "type": "paragraph",
+        "children": [
+          { "text": " " },
+          { "text": "李白 ", "bold": true },
+          { "text": "  " },
+          { "text": "〔唐代〕", "italic": true },
+          { "text": " " }
+        ],
+        "textAlign": "center"
+      },
+      { "type": "paragraph", "children": [{ "text": "" }] },
+      { "type": "paragraph", "children": [{ "text": "噫吁嚱，危乎高哉！" }], "textAlign": "center" },
+      { "type": "paragraph", "children": [{ "text": "蜀道之难，难于上青天！" }], "textAlign": "center" },
+      { "type": "paragraph", "children": [{ "text": "蚕丛及鱼凫，开国何茫然！" }], "textAlign": "center" },
+      { "type": "paragraph", "children": [{ "text": "尔来四万八千岁，不与秦塞通人烟。" }], "textAlign": "center" },
+      { "type": "paragraph", "children": [{ "text": "西当太白有鸟道，可以横绝峨眉巅。" }], "textAlign": "center" },
+      { "type": "paragraph", "children": [{ "text": "地崩山摧壮士死，然后天梯石栈相钩连。" }], "textAlign": "center" },
+      {
+        "type": "paragraph",
+        "children": [{ "text": "上有六龙回日之高标，下有冲波逆折之回川。" }],
+        "textAlign": "center"
+      },
+      { "type": "paragraph", "children": [{ "text": "黄鹤之飞尚不得过，猿猱欲度愁攀援。" }], "textAlign": "center" },
+      { "type": "paragraph", "children": [{ "text": "青泥何盘盘，百步九折萦岩峦。" }], "textAlign": "center" },
+      { "type": "paragraph", "children": [{ "text": "扪参历井仰胁息，以手抚膺坐长叹。" }], "textAlign": "center" },
+      { "type": "paragraph", "children": [{ "text": "问君西游何时还？畏途巉岩不可攀。" }], "textAlign": "center" },
+      { "type": "paragraph", "children": [{ "text": "但见悲鸟号古木，雄飞雌从绕林间。" }], "textAlign": "center" },
+      { "type": "paragraph", "children": [{ "text": "又闻子规啼夜月，愁空山。" }], "textAlign": "center" },
+      {
+        "type": "paragraph",
+        "children": [{ "text": "蜀道之难，难于上青天，使人听此凋朱颜！" }],
+        "textAlign": "center"
+      },
+      { "type": "paragraph", "children": [{ "text": "连峰去天不盈尺，枯松倒挂倚绝壁。" }], "textAlign": "center" },
+      { "type": "paragraph", "children": [{ "text": "飞湍瀑流争喧豗，砯崖转石万壑雷。" }], "textAlign": "center" },
+      {
+        "type": "paragraph",
+        "children": [{ "text": "其险也如此，嗟尔远道之人胡为乎来哉！(也如此 一作：也若此)" }],
+        "textAlign": "center"
+      },
+      { "type": "paragraph", "children": [{ "text": "剑阁峥嵘而崔嵬，一夫当关，万夫莫开。" }], "textAlign": "center" },
+      { "type": "paragraph", "children": [{ "text": "所守或匪亲，化为狼与豺。" }], "textAlign": "center" },
+      {
+        "type": "paragraph",
+        "children": [{ "text": "朝避猛虎，夕避长蛇，磨牙吮血，杀人如麻。" }],
+        "textAlign": "center"
+      },
+      { "type": "paragraph", "children": [{ "text": "锦城虽云乐，不如早还家。" }], "textAlign": "center" },
+      { "type": "paragraph", "children": [{ "text": "蜀道之难，难于上青天，侧身西望长咨嗟！" }], "textAlign": "center" }
+    ],
+    "html": "<h1 style='text-align: center;'>蜀道难</h1><p style='text-align: center;'>&nbsp;<strong>李白&nbsp;</strong>&nbsp;&nbsp;<em>〔唐代〕</em>&nbsp;</p><p><br></p><p style='text-align: center;'>噫吁嚱，危乎高哉！</p><p style='text-align: center;'>蜀道之难，难于上青天！</p><p style='text-align: center;'>蚕丛及鱼凫，开国何茫然！</p><p style='text-align: center;'>尔来四万八千岁，不与秦塞通人烟。</p><p style='text-align: center;'>西当太白有鸟道，可以横绝峨眉巅。</p><p style='text-align: center;'>地崩山摧壮士死，然后天梯石栈相钩连。</p><p style='text-align: center;'>上有六龙回日之高标，下有冲波逆折之回川。</p><p style='text-align: center;'>黄鹤之飞尚不得过，猿猱欲度愁攀援。</p><p style='text-align: center;'>青泥何盘盘，百步九折萦岩峦。</p><p style='text-align: center;'>扪参历井仰胁息，以手抚膺坐长叹。</p><p style='text-align: center;'>问君西游何时还？畏途巉岩不可攀。</p><p style='text-align: center;'>但见悲鸟号古木，雄飞雌从绕林间。</p><p style='text-align: center;'>又闻子规啼夜月，愁空山。</p><p style='text-align: center;'>蜀道之难，难于上青天，使人听此凋朱颜！</p><p style='text-align: center;'>连峰去天不盈尺，枯松倒挂倚绝壁。</p><p style='text-align: center;'>飞湍瀑流争喧豗，砯崖转石万壑雷。</p><p style='text-align: center;'>其险也如此，嗟尔远道之人胡为乎来哉！(也如此&nbsp;一作：也若此)</p><p style='text-align: center;'>剑阁峥嵘而崔嵬，一夫当关，万夫莫开。</p><p style='text-align: center;'>所守或匪亲，化为狼与豺。</p><p style='text-align: center;'>朝避猛虎，夕避长蛇，磨牙吮血，杀人如麻。</p><p style='text-align: center;'>锦城虽云乐，不如早还家。</p><p style='text-align: center;'>蜀道之难，难于上青天，侧身西望长咨嗟！</p>"
+  },
+  {
+    "title": "长相思·其二 - 李白[唐]",
+    "content": [
+      { "type": "header1", "children": [{ "text": "长相思·其二" }], "textAlign": "center" },
+      {
+        "type": "paragraph",
+        "children": [
+          { "text": " " },
+          { "text": "李白", "bold": true },
+          { "text": "   " },
+          { "text": "〔唐代〕", "italic": true },
+          { "text": " " }
+        ],
+        "textAlign": "center"
+      },
+      { "type": "paragraph", "children": [{ "text": "" }], "textAlign": "center" },
+      {
+        "type": "paragraph",
+        "children": [{ "text": "日色欲尽花含烟，月明如素愁不眠。(如素 一作：欲素)" }],
+        "textAlign": "center"
+      },
+      { "type": "paragraph", "children": [{ "text": "赵瑟初停凤凰柱，蜀琴欲奏鸳鸯弦。" }], "textAlign": "center" },
+      { "type": "paragraph", "children": [{ "text": "此曲有意无人传，愿随春风寄燕然。" }], "textAlign": "center" },
+      {
+        "type": "paragraph",
+        "children": [{ "text": "忆君迢迢隔青天。昔日横波目，今作流泪泉。" }],
+        "textAlign": "center"
+      },
+      {
+        "type": "paragraph",
+        "children": [{ "text": "不信妾断肠，归来看取明镜前。(断肠 一作：肠断)" }],
+        "textAlign": "center"
+      },
+      { "type": "paragraph", "textAlign": "left", "children": [{ "text": "" }] },
+      { "type": "header2", "textAlign": "left", "children": [{ "text": "译文及注释" }] },
+      {
+        "type": "paragraph",
+        "textAlign": "left",
+        "children": [
+          { "text": "      韵译", "bold": true },
+          {
+            "text": "夕阳西下暮色朦胧，花蕊笼罩轻烟，月华如练，我思念着情郎终夜不眠。柱上雕饰凤凰的赵瑟，我刚刚停奏，心想再弹奏蜀琴，又怕触动鸳鸯弦。这饱含情意的曲调，可惜无人传递，但愿它随着春风，送到遥远的燕然。忆情郎呵、情郎他迢迢隔在天那边，当年递送秋波的双眼，而今成了流泪的源泉。您若不信贱妾怀思肝肠欲断，请归来看看明镜前我的容颜！"
+          }
+        ]
+      },
+      { "type": "header2", "textAlign": "left", "children": [{ "text": "注释", "bold": true }] },
+      { "type": "paragraph", "textAlign": "left", "children": [{ "text": "赵瑟：相传古代赵国的人善弹瑟。" }] },
+      { "type": "paragraph", "textAlign": "left", "children": [{ "text": "瑟：弦乐器。" }] },
+      { "type": "paragraph", "textAlign": "left", "children": [{ "text": "凤凰柱：或是瑟柱上雕饰凤凰形状。" }] },
+      {
+        "type": "paragraph",
+        "textAlign": "left",
+        "children": [
+          {
+            "text": "蜀琴句：旧注谓蜀琴与司马相如 琴挑故事有关。按： 鲍照 有“蜀琴抽白雪”句。 白居易 也有“蜀琴安膝上，《周易》在床头”句。 李贺 “吴丝蜀桐张高秋”，王琦注云：“蜀中桐木宜为乐器，故曰蜀桐。”蜀桐实即蜀琴。似古人诗中常以蜀琴喻佳琴，恐与司马相如、 卓文君 事无关。鸳鸯弦也只是为了强对凤凰柱。"
+          }
+        ]
+      }
+    ],
+    "html": "<h1 style='text-align: center;'>长相思·其二</h1><p style='text-align: center;'>&nbsp;<strong>李白</strong>&nbsp;&nbsp;&nbsp;<em>〔唐代〕</em>&nbsp;</p><p style='text-align: center;'><br></p><p style='text-align: center;'>日色欲尽花含烟，月明如素愁不眠。(如素&nbsp;一作：欲素)</p><p style='text-align: center;'>赵瑟初停凤凰柱，蜀琴欲奏鸳鸯弦。</p><p style='text-align: center;'>此曲有意无人传，愿随春风寄燕然。</p><p style='text-align: center;'>忆君迢迢隔青天。昔日横波目，今作流泪泉。</p><p style='text-align: center;'>不信妾断肠，归来看取明镜前。(断肠&nbsp;一作：肠断)</p><p style='text-align: left;'><br></p><h2 style='text-align: left;'>译文及注释</h2><p style='text-align: left;'><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;韵译</strong>夕阳西下暮色朦胧，花蕊笼罩轻烟，月华如练，我思念着情郎终夜不眠。柱上雕饰凤凰的赵瑟，我刚刚停奏，心想再弹奏蜀琴，又怕触动鸳鸯弦。这饱含情意的曲调，可惜无人传递，但愿它随着春风，送到遥远的燕然。忆情郎呵、情郎他迢迢隔在天那边，当年递送秋波的双眼，而今成了流泪的源泉。您若不信贱妾怀思肝肠欲断，请归来看看明镜前我的容颜！</p><h2 style='text-align: left;'><strong>注释</strong></h2><p style='text-align: left;'>赵瑟：相传古代赵国的人善弹瑟。</p><p style='text-align: left;'>瑟：弦乐器。</p><p style='text-align: left;'>凤凰柱：或是瑟柱上雕饰凤凰形状。</p><p style='text-align: left;'>蜀琴句：旧注谓蜀琴与司马相如&nbsp;琴挑故事有关。按：&nbsp;鲍照&nbsp;有“蜀琴抽白雪”句。&nbsp;白居易&nbsp;也有“蜀琴安膝上，《周易》在床头”句。&nbsp;李贺&nbsp;“吴丝蜀桐张高秋”，王琦注云：“蜀中桐木宜为乐器，故曰蜀桐。”蜀桐实即蜀琴。似古人诗中常以蜀琴喻佳琴，恐与司马相如、&nbsp;卓文君&nbsp;事无关。鸳鸯弦也只是为了强对凤凰柱。</p>"
+  }
+]

@@ -1,6 +1,6 @@
 # 表单验证
 
-`wangeditor5-for-vue3` 的 `EditorEditable` 组件支持在其它 UI 框架的表单中使用，同时支持 `blur` 和 `change` 两种 `trigger` 模式。
+`wangeditor5-for-vue3` 的 `WeEditable` 组件支持在其它 UI 框架的表单中使用，同时支持 `blur` 和 `change` 两种 `trigger` 模式。
 
 **目前已内置支持的 UI 框架有：**
 
@@ -17,7 +17,7 @@ import '@wangeditor/editor/dist/css/style.css'
 
 const app = createApp(App)
 
-// 注册 EditorToolbar 和 EditorEditable 组件
+// 注册 WeToolbar 和 WeEditable 组件
 app.use(wangeditor)
 // 注册 element-plus 的表单验证模块
 app.use(wangeditorFormField)
@@ -37,7 +37,7 @@ import '@wangeditor/editor/dist/css/style.css'
 
 const app = createApp(App)
 
-// 注册 EditorToolbar 和 EditorEditable 组件
+// 注册 WeToolbar 和 WeEditable 组件
 app.use(wangeditor)
 // 注册 ant-design-vue 的表单验证模块
 app.use(wangeditorFormField)
@@ -52,10 +52,10 @@ app.mount('#app')
 ### 定义表单验证初始化函数
 
 ```ts
-import { EditorFormFields } from 'wangeditor5-for-vue3'
+import { EditorFormField } from 'wangeditor5-for-vue3'
 
 function initialize() {
-  const formField: EditorFormFields = {}
+  const formField: EditorFormField = {}
 
   formFiled.blurField = () => {
     // trigger: blur 的具体逻辑
@@ -69,7 +69,7 @@ function initialize() {
 ```
 
 ```ts
-interface EditorFormFields {
+interface EditorFormField {
   blurField?: () => void
   changeField?: () => void
 }
@@ -84,7 +84,7 @@ import { createApp } from 'vue'
 
 const app = createApp(App)
 
-app.config.globalProperties.$wangeditorFormFieldInitialize = initialize
+app.config.globalProperties.$weFormFieldInitialize = initialize
 
 app.mount('#app')
 ```
@@ -93,12 +93,12 @@ app.mount('#app')
 
 ```ts
 import { defineComponent, provide } from 'vue'
-import { wangeditorFormFieldInjectionKey } from 'wangeditor5-for-vue3'
+import { weFormFieldInjectionKey } from 'wangeditor5-for-vue3'
 
 export default defineComponent({
   components: { UPrism },
   setup() {
-    provide(wangeditorFormFieldInjectionKey, initialize)
+    provide(weFormFieldInjectionKey, initialize)
 
     return {}
   },

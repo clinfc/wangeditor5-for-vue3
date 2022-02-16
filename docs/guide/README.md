@@ -24,33 +24,31 @@ npm install wangeditor5-for-vue3
 
 ```ts
 import { createApp } from 'vue'
-import wangeditor from 'wangeditor5-for-vue3'
+import { WeToolbar, WeEditable } from 'wangeditor5-for-vue3'
 import '@wangeditor/editor/dist/css/style.css'
 
-// 全局注册 EditorToolbar, EditorEditable 两个组件
-createApp(App).use(wangeditor).mount('#app')
+// 全局注册 WeToolbar, WeEditable 两个组件
+createApp(App).component(WeToolbar.name, WeToolbar).component(WeEditable.name, WeEditable).mount('#app')
 ```
 
 ### 局部注册
 
 ```ts
 import { defineComponent } from 'vue'
-import { EditorEditable, EditorToolbar } from 'wangeditor5-for-vue3'
+import { WeEditable, WeToolbar } from 'wangeditor5-for-vue3'
 import '@wangeditor/editor/dist/css/style.css'
 
 export default defineComponent({
-  components: { EditorEditable, EditorToolbar },
+  components: { WeEditable, WeToolbar },
 })
 ```
 
 ## 完全示例
 
-### 编辑区与菜单栏相互独立
-
 ```html
 <template>
-  <editor-toolbar :option="toolbar" @reloadbefore="onToolbarReloadBefore" />
-  <editor-editable
+  <we-toolbar :option="toolbar" @reloadbefore="onToolbarReloadBefore" />
+  <we-editable
     :option="editable"
     v-model="formData.jarr"
     v-model:json="formData.jstr"
@@ -61,25 +59,19 @@ export default defineComponent({
 
 <script lang="ts">
   import { Descendant } from 'slate'
-  import {
-    EditorEditable,
-    EditorEditableOption,
-    EditorToolbar,
-    EditorToolbarOption,
-    useWangEditor,
-  } from 'wangeditor5-for-vue3'
+  import { WeEditable, EditableOption, WeToolbar, ToolbarOption, useWangEditor } from 'wangeditor5-for-vue3'
   import { defineComponent, shallowReactive } from 'vue'
   // 引入 wangeditor5 样式
   import '@wangeditor/editor/dist/css/style.css'
 
   export default defineComponent({
-    components: { EditorToolbar, EditorEditable },
+    components: { WeToolbar, WeEditable },
     setup() {
       // 编辑器配置
-      const editableOption: EditorEditableOption = {}
+      const editableOption: EditableOption = {}
 
       // 菜单栏配置
-      const toolbarOption: EditorToolbarOption = {}
+      const toolbarOption: ToolbarOption = {}
 
       // 防抖时长。当会触发重载的配置项发生变化 365ms 后，编辑器会重载
       const reloadDelary = 365
