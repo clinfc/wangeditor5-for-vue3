@@ -11,10 +11,11 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "declaration": true,
-    "rootDir": "./src",
-    "outDir": "es",
+    "declarationDir": "dist/types",
+    "rootDir": "src",
+    "outDir": "dist/es",
     "lib": ["ES6", "DOM"]
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/*.ts"],
   "exclude": ["example/**/*.vue", "example/**/*.ts"]
 }
