@@ -24,14 +24,13 @@ jobs:
 
       - name: Build Package
         run: yarn run build:es
-        run: yarn run build:lib
+      - run: yarn run build:lib
 
       #- name: Publish To Npm
       #  run: npm publish --access=public
       #  env:
       #    NODE_AUTH_TOKEN: ${{secrets.NPM_PUBLISH}}
-
-        # https://github.com/marketplace/actions/zip-release
+      # https://github.com/marketplace/actions/zip-release
       - name: Archive Release
         uses: thedoctor0/zip-release@master
         with:
