@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES6",
+    "target": "esnext",
     "useDefineForClassFields": true,
     "module": "ES6",
     "moduleResolution": "node",
@@ -16,6 +16,6 @@
     "outDir": "dist/es",
     "lib": ["ES6", "DOM"]
   },
-  "include": ["src/*.ts"],
+  "include": ["src/**/*.ts"],
   "exclude": ["example/**/*.vue", "example/**/*.ts"]
 }

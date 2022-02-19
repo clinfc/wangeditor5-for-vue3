@@ -1,75 +1,38 @@
 # 表单验证
 
-`wangeditor5-for-vue3` 的 `WeEditable` 组件支持在其它 UI 框架的表单中使用，同时支持 `blur` 和 `change` 两种 `trigger` 模式。
+`wangeditor5-for-vue3` 的组件支持在其它 UI 框架的表单中使用，同时支持 `blur` 和 `change` 两种 `trigger` 模式。
 
-**目前已内置支持的 UI 框架有：**
+## 目前已支持的 UI 框架
 
-- [element-plus](https://element-plus.gitee.io/#/zh-CN)
-- [ant-design-vue@^3](https://next.antdv.com/)
+- `element-plus` [查看](https://github.com/clinfc/wangeditor5-for-vue3/tree/main/example/element_plus#表单验证)
+- `ant-design-vue@^3` [查看](https://github.com/clinfc/wangeditor5-for-vue3/tree/main/example/ant_design#表单验证)
+- `naive-ui` [查看](https://github.com/clinfc/wangeditor5-for-vue3/tree/main/example/naive_ui#表单验证)
 
-## element-plus
+> 如果你希望能支持某个 UI 库的表单验证，可以前往 [issues](https://github.com/clinfc/wangeditor5-for-vue3/issues) 提交需求
 
-```ts
-import { createApp } from 'vue'
-import wangeditor from 'wangeditor5-for-vue3'
-import wangeditorFormField from 'wangeditor5-for-vue3/dist/element-plus'
-import '@wangeditor/editor/dist/css/style.css'
-
-const app = createApp(App)
-
-// 注册 WeToolbar 和 WeEditable 组件
-app.use(wangeditor)
-// 注册 element-plus 的表单验证模块
-app.use(wangeditorFormField)
-
-app.mount('#app')
-```
-
-> [element-plus 的表单验证使用示例](https://github.com/clinfc/wangeditor5-for-vue3/tree/main/example/element-plus/src/view/form.vue)
-
-## ant-design-vue@^3
-
-```ts
-import { createApp } from 'vue'
-import wangeditor from 'wangeditor5-for-vue3'
-import wangeditorFormField from 'wangeditor5-for-vue3/dist/ant-design'
-import '@wangeditor/editor/dist/css/style.css'
-
-const app = createApp(App)
-
-// 注册 WeToolbar 和 WeEditable 组件
-app.use(wangeditor)
-// 注册 ant-design-vue 的表单验证模块
-app.use(wangeditorFormField)
-
-app.mount('#app')
-```
-
-> [ant-design-vue 的表单验证使用示例](https://github.com/clinfc/wangeditor5-for-vue3/tree/main/example/ant-design/src/view/form.vue)
-
-## 自定义表单验证
+## 表单验证定义规则
 
 ### 定义表单验证初始化函数
 
 ```ts
-import { EditorFormField } from 'wangeditor5-for-vue3'
+import { WeEditorFormFields } from 'wangeditor5-for-vue3'
 
-function initialize() {
-  const formField: EditorFormField = {}
+function weFormFields() {
+  const formFields: WeEditorFormFields = {}
 
-  formFiled.blurField = () => {
+  formFileds.blurField = () => {
     // trigger: blur 的具体逻辑
   }
-  formFiled.changeField = () => {
+  formFileds.changeField = () => {
     // trigger: change 的具体逻辑
   }
 
-  return formField
+  return formFields
 }
 ```
 
 ```ts
-interface EditorFormField {
+interface WeEditorFormFields {
   blurField?: () => void
   changeField?: () => void
 }
@@ -84,7 +47,7 @@ import { createApp } from 'vue'
 
 const app = createApp(App)
 
-app.config.globalProperties.$weFormFieldInitialize = initialize
+app.config.globalProperties.$weFormFields = weFormFields
 
 app.mount('#app')
 ```
@@ -98,11 +61,9 @@ import { weFormFieldInjectionKey } from 'wangeditor5-for-vue3'
 export default defineComponent({
   components: { UPrism },
   setup() {
-    provide(weFormFieldInjectionKey, initialize)
+    provide(weFormFieldInjectionKey, weFormFields)
 
     return {}
   },
 })
 ```
-
-> 如果你希望能内置支持某个 UI 库的表单验证，可以前往 [issues](https://github.com/clinfc/wangeditor5-for-vue3/issues) 提交需求

@@ -1,5 +1,6 @@
-export type { EditableOption, ToolbarOption, CssRuleList } from './core/types'
+export type { WeEditableOption, WeToolbarOption, WeEditorFormFields, WeCssRuleList } from './core/types'
 export { useWangEditor, weFormFieldInjectionKey } from './core/core'
 export { WeToolbar } from './core/toolbar'
 export { WeEditable } from './core/editable'
-export { WeEditor, shadowCssRule } from './core/shadow'
+export { WeEditor } from './core/editor'
+export { weEditorPlusCssRule, WeEditorPlus } from './core/editor-plus'

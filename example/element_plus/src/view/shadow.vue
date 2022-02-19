@@ -1,9 +1,5 @@
 <template>
   <we-editor-plus
-    container-class="container"
-    container-style="border: 1px solid #d9d9d9"
-    toolbar-class="toolbar"
-    editable-class="editable"
     :toolbar-option="toolbar"
     :editable-option="editable"
     :css-rule="cssRule"

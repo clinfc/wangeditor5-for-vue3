@@ -1,11 +1,11 @@
 # reloadbefore
 
-在编辑器重载之前，会触发 `reloadbefore` 事件。当 `EditableOption.extendCahce` 为 `false` 时，我们可以配置此事件进行数据提交/缓存以防止数据丢失。
+在编辑器重载之前，会调用 `reloadbefore` 回调。当 `WeEditableOption.extendCahce` 为 `false` 时，我们可以配置此事件进行数据提交/缓存以防止数据丢失。
 
 ```html
 <template>
-  <we-toolbar :option="toolbar" @reloadbefore="onToolbarReloadBefore" />
-  <we-editable v-model="formData.json" :option="editable" @reloadbefore="onEditableReloadBefore" />
+  <we-toolbar :option="toolbar" :reloadbefore="onToolbarReloadBefore" />
+  <we-editable v-model="formData.json" :option="editable" :reloadbefore="onEditableReloadBefore" />
 </template>
 
 <script lang="ts">
@@ -40,3 +40,8 @@
   })
 </script>
 ```
+
+## 注意事项
+
+- `WeToolbar` 和 `WeEditable` 的 `reloadbefore` 回调可以通过 `reloadbefore prop` 进行配置
+- `WeEditor`/`WeEditorPlus` 需要通过 `toolbar-reloadbefore prop` 和 `editable-reloadbefore prop` 进行配置。

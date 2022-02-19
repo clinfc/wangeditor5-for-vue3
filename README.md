@@ -21,7 +21,7 @@
 
 - **表单验证**
 
-  目前已支持 `element-plus` 和 `ant-design-vue@^3` 的表单验证，还可以自定义表单验证的执行逻辑
+  目前已支持 `element-plus`、`ant-design-vue@^3` 和 `naive-ui` 的表单验证，还可以自定义表单验证的执行逻辑
 
 - **初始内容**
 
@@ -31,18 +31,21 @@
 
   `defaultContent`/`defaultHtml` + `reloadEditor()` 可优雅的实现在不同文章间的来回切换
 
-- **TypeScript**
+- **增强模式**
 
-  以 `TypeScript` 开发，更好的类型提示
+  `WeEditorPlus` 组件能隔绝全局的样式污染，解决你因样式而造成的困扰
 
 ### 示例代码
 
-- [element-plus](https://github.com/clinfc/wangeditor5-for-vue3/tree/main/example/element-plus/src/view)
-- [ant-design-vue@^3](https://github.com/clinfc/wangeditor5-for-vue3/tree/main/example/ant-design/src/view)
+- [element-plus](./example/element_plus)
+- [ant-design-vue@^3](./example/ant_design)
+- [naive-ui](./example/naive_ui)
 
 ### 兼容性
 
-以 [`Vue3`](https://v3.cn.vuejs.org/) 和 [`wangEditor5`](https://www.wangeditor.com/v5/) 为主。
+- vue@^3
+- @wangeditor/editor@^0.14.0
+- 暂不支持 vue-cli 项目
 
 ### 交流
 

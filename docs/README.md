@@ -13,33 +13,26 @@ features:
   - title: 双向绑定
     details: 支持 v-model、v-model:json 和 v-model:html 三种形式的双向绑定，分别对应 json array、json string 和 html string 三种形式的数据
   - title: 表单验证
-    details: 目前已支持 element-plus 和 ant-design-vue@^3 的表单验证，还可以自定义表单验证的执行逻辑
+    details: 目前已支持 element-plus、ant-design-vue@^3 和 naive-ui 的表单验证，还可以自定义表单验证的执行逻辑
   - title: 初始内容
     details: 编辑器创建时的默认内容配置项支持 json array、json string 和 html string 三种格式的数据
   - title: 优雅切换
     details: defaultContent/defaultHtml + reloadEditor() 可优雅的实现在不同文章间的来回切换
-  - title: TypeScript
-    details: 以 TypeScript 开发，更好的类型提示
+  - title: 增强模式
+    details: WeEditorPlus 组件能隔绝全局的样式污染，解决你因样式而造成的困扰
 ---
-
-### 快速安装
-
-```sh
-// yarn
-yarn add wangeditor5-for-vue3
-
-// npm
-npm install wangeditor5-for-vue3
-```
 
 ### 示例代码
 
-- [element-plus](https://github.com/clinfc/wangeditor5-for-vue3/tree/main/example/element-plus/src/view)
-- [ant-design-vue@^3](https://github.com/clinfc/wangeditor5-for-vue3/tree/main/example/ant-design/src/view)
+- [element-plus](https://github.com/clinfc/wangeditor5-for-vue3/tree/main/example/element_plus)
+- [ant-design-vue@^3](https://github.com/clinfc/wangeditor5-for-vue3/tree/main/example/ant_design)
+- [naive-ui](https://github.com/clinfc/wangeditor5-for-vue3/tree/main/example/naive_ui)
 
 ### 兼容性
 
-具体兼容性请查看 [`Vue3`](https://v3.cn.vuejs.org/) 和 [`wangEditor5`](https://www.wangeditor.com/v5/)。
+- vue@^3
+- @wangeditor/editor@^0.14.0
+- 暂不支持 vue-cli 项目
 
 ### 交流
 
