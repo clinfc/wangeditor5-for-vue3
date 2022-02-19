@@ -13,8 +13,13 @@
         <el-input v-model="ruleForm.title" placeholder="请输入文章标题"></el-input>
       </el-form-item>
       <el-form-item label="文章内容" prop="json">
-        <we-toolbar class="toolbar" :option="toolbar" />
-        <we-editable class="editable" :option="editable" v-model:json="ruleForm.json" />
+        <we-editor
+          toolbar-class="toolbar"
+          editable-class="editable"
+          :toolbar-option="toolbar"
+          :editable-option="editable"
+          v-model:json="ruleForm.json"
+        />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">表单验证并控制台打印</el-button>

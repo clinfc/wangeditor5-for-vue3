@@ -16,8 +16,8 @@
       <a-button @click="reloadEditor">重载编辑器</a-button>
     </a-form-item>
   </a-form>
-  <we-toolbar style="border-bottom: 1px solid var(--bg-color)" :option="toolbar" @reloadbefore="onToolbarloadBefore" />
-  <we-editable style="height: 750px" v-model="jsonData" :option="editable" @reloadbefore="onEditableReloadBefore" />
+  <we-toolbar style="border-bottom: 1px solid var(--bg-color)" :option="toolbar" :reloadbefore="onToolbarloadBefore" />
+  <we-editable style="height: 750px" v-model="jsonData" :option="editable" :reloadbefore="onEditableReloadBefore" />
 </template>
 
 <script lang="ts">

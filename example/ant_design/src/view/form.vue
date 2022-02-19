@@ -1,7 +1,7 @@
 <style lang="scss">
   .toolbar,
   .editable {
-    border: var(--a-input-border, var(--a-border-base));
+    border: 1px solid #d9d9d9;
     line-height: 1;
   }
 </style>
@@ -13,8 +13,13 @@
         <a-input v-model:value="ruleForm.title" placeholder="请输入文章标题"></a-input>
       </a-form-item>
       <a-form-item label="文章内容" name="json">
-        <we-toolbar class="toolbar" :option="toolbar" />
-        <we-editable class="editable" :option="editable" v-model:json="ruleForm.json" />
+        <we-editor
+          toolbar-class="toolbar"
+          editable-class="editable"
+          :toolbar-option="toolbar"
+          :editable-option="editable"
+          v-model:json="ruleForm.json"
+        />
       </a-form-item>
       <a-form-item>
         <a-button type="primary" html-type="submit">表单验证并控制台打印</a-button>

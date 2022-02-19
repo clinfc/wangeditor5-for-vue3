@@ -1,6 +1,6 @@
-# ant-design-vue + wangeditor5-for-vue3
+# element-plus + wangeditor5-for-vue3
 
-`wangeditor5-for-vue3` 的 `ant-design-vue` 使用示例
+`wangeditor5-for-vue3` 的 `element-plus` 使用示例
 
 ## 运行
 
@@ -35,17 +35,22 @@ npm run dev
 [src/plugins/form-fields.ts](./src/plugins/form-fields.ts)
 
 ```ts
-import { Form } from 'ant-design-vue'
+import { inject } from 'vue'
+import { elFormItemKey } from 'element-plus'
 import { WeEditorFormFields } from 'wangeditor5-for-vue3'
 
 export default function weFormFields() {
+  const elFormItem = inject(elFormItemKey)
+
   const formFileds: WeEditorFormFields = {}
 
-  const antFormItem = Form.useInjectFormItemContext()
-
-  if (antFormItem) {
-    formFileds.blurField = antFormItem.onFieldBlur
-    formFileds.changeField = antFormItem.onFieldChange
+  if (elFormItem && typeof elFormItem.validate === 'function') {
+    formFileds.blurField = () => {
+      elFormItem.validate('blur')
+    }
+    formFileds.changeField = () => {
+      elFormItem.validate('change')
+    }
   }
 
   return formFileds

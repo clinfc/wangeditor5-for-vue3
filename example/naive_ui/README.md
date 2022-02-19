@@ -1,11 +1,69 @@
-# Vue 3 + Typescript + Vite
+# naive-ui + wangeditor5-for-vue3
 
-This template should help get you started developing with Vue 3 and Typescript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+`wangeditor5-for-vue3` 的 `naive-ui` 使用示例
 
-## Recommended IDE Setup
+## 运行
 
-- [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar)
+### yarn
 
-## Type Support For `.vue` Imports in TS
+```sh
+// 安装依赖
+yarn
 
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's `.vue` type support plugin by running `Volar: Switch TS Plugin on/off` from VSCode command palette.
+// 安装 wangeditor5-for-vue3
+yarn add wangeditor5-for-vue3
+
+// 运行
+yarn run dev
+```
+
+### npm
+
+```sh
+// 安装依赖
+npm i
+
+// 安装 wangeditor5-for-vue3
+npm i wangeditor5-for-vue3
+
+// 运行
+npm run dev
+```
+
+## 表单验证
+
+[src/plugins/form-fields.ts](./src/plugins/form-fields.ts)
+
+```ts
+// import { useFormItem } from 'naive-ui/lib/_mixins'
+// or
+import { useFormItem } from 'naive-ui/es/_mixins'
+
+import { WeEditorFormFields } from 'wangeditor5-for-vue3'
+
+export default function initialize() {
+  const { nTriggerFormBlur, nTriggerFormChange } = useFormItem({})
+
+  const formFields: WeEditorFormFields = {
+    blurField: nTriggerFormBlur,
+    changeField: nTriggerFormChange,
+  }
+
+  return formFields
+}
+```
+
+[src/main.ts](./src/main.ts)
+
+```ts
+import App from './App.vue'
+
+import { createApp } from 'vue'
+import weFormFields from './plugins/form-fields'
+
+const app = createApp(App)
+
+app.config.globalProperties.$weFormFields = weFormFields
+
+app.mount('#app')
+```

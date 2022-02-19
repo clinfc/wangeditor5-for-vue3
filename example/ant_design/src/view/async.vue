@@ -4,12 +4,20 @@
     <a-button @click="drawerVisible = true">open drawer</a-button>
   </div>
   <a-modal v-model:visible="dialogVisible" title="In Modal" width="1000px">
-    <we-toolbar style="border-bottom: 1px solid var(--bg-color)" :option="dialogToolbar" />
-    <we-editable style="height: 500px" :option="dialogEditable" />
+    <we-editor
+      toolbar-style="border-bottom: 1px solid var(--bg-color)"
+      editable-style="height: 500px"
+      :toolbar-option="dialogToolbar"
+      :editable-option="dialogEditable"
+    />
   </a-modal>
   <a-drawer v-model:visible="drawerVisible" title="In Drawer" placement="right" width="1000px">
-    <we-toolbar style="border-bottom: 1px solid var(--bg-color)" :option="drawerToolbar" />
-    <we-editable style="height: 750px" :option="drawerEditable" />
+    <we-editor
+      toolbar-style="border-bottom: 1px solid var(--bg-color)"
+      editable-style="height: 700px"
+      :toolbar-option="drawerToolbar"
+      :editable-option="drawerEditable"
+    />
   </a-drawer>
 </template>
 

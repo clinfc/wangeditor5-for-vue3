@@ -22,7 +22,7 @@
 
 <script lang="ts">
   import { Descendant } from 'slate'
-  import { EditableOption, ToolbarOption, useWangEditor } from 'wangeditor5-for-vue3'
+  import { WeEditableOption, WeToolbarOption, useWangEditor } from 'wangeditor5-for-vue3'
   import { computed, defineComponent, ref, shallowReactive } from 'vue'
   import UPrism from '../components/u-prism.vue'
   import { IDomEditor } from '@wangeditor/editor'
@@ -31,7 +31,7 @@
     components: { UPrism },
     setup() {
       // 编辑器配置
-      const editableOption: EditableOption = {
+      const editableOption: WeEditableOption = {
         config: {
           placeholder: '请开始你的表演',
         },
@@ -39,7 +39,7 @@
       }
 
       // 菜单栏配置
-      const toolbarOption: ToolbarOption = {}
+      const toolbarOption: WeToolbarOption = {}
 
       // 防抖时长。当配置发生变化 365ms 后，编辑器的销毁重建
       const reloadDelary = 365

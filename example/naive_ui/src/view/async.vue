@@ -3,13 +3,21 @@
     <n-button @click="dialogVisible = true">open dialog</n-button>
     <n-button @click="drawerVisible = true">open drawer</n-button>
   </div>
-  <n-dialog v-model:show="dialogVisible" title="In Dialog" style="width: 1000px">
-    <we-toolbar style="border-bottom: 1px solid var(--bg-color)" :option="dialogToolbar" />
-    <we-editable style="height: 500px" :option="dialogEditable" />
-  </n-dialog>
-  <n-drawer v-model:show="drawerVisible" title="In Drawer" placement="right">
-    <we-toolbar style="border-bottom: 1px solid var(--bg-color)" :option="drawerToolbar" />
-    <we-editable style="height: 750px" :option="drawerEditable" />
+  <n-modal v-model:show="dialogVisible" title="In Dialog" style="width: 1000px">
+    <we-editor
+      toolbar-style="border-bottom: 1px solid var(--bg-color)"
+      editable-style="height: 500px"
+      :toolbar-option="dialogToolbar"
+      :editable-option="dialogEditable"
+    />
+  </n-modal>
+  <n-drawer v-model:show="drawerVisible" title="In Drawer" placement="right" :width="800">
+    <we-editor
+      toolbar-style="border-bottom: 1px solid var(--bg-color)"
+      editable-style="height: 700px"
+      :toolbar-option="drawerToolbar"
+      :editable-option="drawerEditable"
+    />
   </n-drawer>
 </template>
 

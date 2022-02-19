@@ -4,12 +4,20 @@
     <el-button @click="drawerVisible = true">open drawer</el-button>
   </div>
   <el-dialog v-model="dialogVisible" title="In Dialog" width="1000px" append-to-body>
-    <we-toolbar style="border-bottom: 1px solid var(--bg-color)" :option="dialogToolbar" />
-    <we-editable style="height: 500px" :option="dialogEditable" />
+    <we-editor
+      toolbar-style="border-bottom: 1px solid var(--bg-color)"
+      editable-style="height: 500px"
+      :toolbar-option="dialogToolbar"
+      :editable-option="dialogEditable"
+    />
   </el-dialog>
   <el-drawer v-model="drawerVisible" title="In Drawer" direction="rtl" size="75%" append-to-body>
-    <we-toolbar style="border-bottom: 1px solid var(--bg-color)" :option="drawerToolbar" />
-    <we-editable style="height: 750px" :option="drawerEditable" />
+    <we-editor
+      toolbar-style="border-bottom: 1px solid var(--bg-color)"
+      editable-style="height: 700px"
+      :toolbar-option="drawerToolbar"
+      :editable-option="drawerEditable"
+    />
   </el-drawer>
 </template>
 

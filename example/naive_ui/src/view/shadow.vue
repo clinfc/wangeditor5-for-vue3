@@ -1,12 +1,14 @@
 <template>
-  <we-editor
+  <we-editor-plus
+    container-class="container"
+    container-style="border: 1px solid #d9d9d9"
+    toolbar-class="toolbar"
+    editable-class="editable"
     :toolbar-option="toolbar"
     :editable-option="editable"
     :css-rule="cssRule"
     :toolbar-reloadbefore="onToolbarloadBefore"
     :editable-reloadbefore="onEditableReloadBefore"
-    toolbar-class="border"
-    editable-class="border"
     v-model="formData.json"
     v-model:json="formData.jsonStr"
     v-model:html="formData.html"
@@ -25,7 +27,7 @@
 
 <script lang="ts">
   import { Descendant } from 'slate'
-  import { CssRuleList, EditableOption, ToolbarOption, useWangEditor } from 'wangeditor5-for-vue3'
+  import { WeCssRuleList, WeEditableOption, WeToolbarOption, useWangEditor } from 'wangeditor5-for-vue3'
   import { computed, defineComponent, ref, shallowReactive } from 'vue'
   import UPrism from '../components/u-prism.vue'
   import { IDomEditor, Toolbar } from '@wangeditor/editor'
@@ -34,7 +36,7 @@
     components: { UPrism },
     setup() {
       // 编辑器配置
-      const editableOption: EditableOption = {
+      const editableOption: WeEditableOption = {
         config: {
           placeholder: 'shadow 模式',
         },
@@ -42,7 +44,7 @@
       }
 
       // 菜单栏配置
-      const toolbarOption: ToolbarOption = {}
+      const toolbarOption: WeToolbarOption = {}
 
       // 防抖时长。当配置发生变化 365ms 后，编辑器的销毁重建
       const reloadDelary = 365
@@ -69,7 +71,7 @@
         }
       })
 
-      const cssRule: CssRuleList = {
+      const cssRule: WeCssRuleList = {
         '.container': {
           backgroundColor: '#999',
         },
