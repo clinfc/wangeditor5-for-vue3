@@ -15,6 +15,24 @@ module.exports = {
           { text: '快速开始', link: '/guide/' },
           { text: '增强模式', link: '/shadow/' },
           {
+            text: 'keywords',
+            children: [
+              { text: 'WeToolbar', link: '/guide/#wetoolbar-weeditable' },
+              { text: 'WeEditable', link: '/guide/#wetoolbar-weeditable' },
+              { text: 'WeEditor', link: '/guide/#weeditor' },
+              { text: 'WeEditorPlus', link: '/shadow/start.md#使用示例' },
+              { text: 'useWangEditor', link: '/guide/use-wang-editor.md' },
+              { text: 'clearContent', link: '/guide/use-wang-editor.md#clearcontent' },
+              { text: 'getToolbar', link: '/guide/use-wang-editor.md#gettoolbar' },
+              { text: 'getEditable', link: '/guide/use-wang-editor.md#geteditable' },
+              { text: 'reloadEditor', link: '/guide/use-wang-editor.md#reloadeditor' },
+              { text: 'weEditorPlusCssRule', link: '/shadow/css-rule.md#全局样式注入' },
+              { text: 'WeEditableOption', link: '/guide/use-wang-editor.md#weeditableoption' },
+              { text: 'WeToolbarOption', link: '/guide/use-wang-editor.md#wetoolbaroption' },
+              { text: 'WeCssRuleList', link: '/shadow/css-rule.md#组件样式注入' },
+            ],
+          },
+          {
             text: '使用示例',
             children: [
               {
@@ -49,6 +67,7 @@ module.exports = {
             '/guide/form-field.md',
             '/guide/typescript.md',
             '/guide/vue-cli.md',
+            '/guide/relevance.md',
           ],
           '/shadow/': ['/shadow/README.md', '/shadow/start.md', '/shadow/css-rule.md'],
         },

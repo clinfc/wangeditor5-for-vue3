@@ -189,15 +189,18 @@ if (editableInstance) {
 
 > 重载分为编辑器重载和菜单栏重载，编辑器重载会自动触发菜单栏重载，而菜单栏重载却不会触发编辑器重载。
 
-**会触发重载的配置项：**
+#### 会触发重载的配置项
 
 - 菜单栏
   - `WeToolbarOption` 的所有属性
 - 编辑器
   - `WeEditableOption.mode`
+  - `WeEditableOption.config.customPaste`
+  - `WeEditableOption.config.decorate`
   - `WeEditableOption.config.hoverbarKeys`
   - `WeEditableOption.config.maxLength`
-  - `WeEditableOption.config.customPaste`
+  - `WeEditableOption.config.EXTEND_CONF`
+  - `WeEditableOption.config.MENU_CONF`
 
 > `WeEditableOption` 的其它配置项虽不会触发重载，但是支持动态配置
 

@@ -45,3 +45,4 @@
 
 - `WeToolbar` 和 `WeEditable` 的 `reloadbefore` 回调可以通过 `reloadbefore prop` 进行配置
 - `WeEditor`/`WeEditorPlus` 需要通过 `toolbar-reloadbefore prop` 和 `editable-reloadbefore prop` 进行配置。
+- [会触发重载的配置项](../guide/use-wang-editor.md#会触发重载的配置项)

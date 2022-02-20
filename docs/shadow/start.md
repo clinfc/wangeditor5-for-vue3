@@ -106,16 +106,10 @@ export default defineComponent({
 
 ## props
 
-| 参数                   | 描述                                         | 类型                           |
-| :--------------------- | :------------------------------------------- | :----------------------------- |
-| `toolbarOption`        | 菜单栏配置项                                 | `Required<WeToolbarOption>`    |
-| `toolbarClass`         | 菜单栏的 `class attribute`                   | `String`                       |
-| `toolbarStyle`         | 菜单栏的 `style attribute`                   | `String`                       |
-| `toolbarReloadbefore`  | 菜单栏重载前回调函数                         | `(toolbar: Toolbar) => void`   |
-| `editableOption`       | 编辑区配置项                                 | `Required<WeEditableOption>`   |
-| `editableClass`        | 编辑区的 `class attribute`                   | `String`                       |
-| `editableStyle`        | 编辑区的 `style attribute`                   | `String`                       |
-| `editableReloadbefore` | 编辑区重载前回到函数                         | `(editor: IDomEditor) => void` |
-| `cssRule`              | 组件级的样式注入                             | `WeCssRuleList`                |
-| `containerClass`       | 菜单栏与编辑区公共父容器的 `class attribute` | `String`                       |
-| `containerStyle`       | 菜单栏与编辑区公共父容器的 `style attribute` | `String`                       |
+`WeEditorPlus` 继承了 [`WeEditor`](../guide/README.md#weeditor) 的所有 [`props`](../guide/README.md#props) 属性，同时还存在以下 `props` 属性。
+
+| prop             | 描述                                         | 类型            |
+| :--------------- | :------------------------------------------- | :-------------- |
+| `containerClass` | 菜单栏与编辑区公共父容器的 `class attribute` | `String`        |
+| `containerStyle` | 菜单栏与编辑区公共父容器的 `style attribute` | `String`        |
+| `cssRule`        | 组件级的样式注入                             | `WeCssRuleList` |
