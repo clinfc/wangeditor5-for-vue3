@@ -113,3 +113,7 @@ export default defineComponent({
 | `containerClass` | 菜单栏与编辑区公共父容器的 `class attribute` | `String`        |
 | `containerStyle` | 菜单栏与编辑区公共父容器的 `style attribute` | `String`        |
 | `cssRule`        | 组件级的样式注入                             | `WeCssRuleList` |
+
+## 兼容性
+
+`WeEditorPlus` 组件在 `Firefox` 浏览器和 `vue-cli` 项目中无法正常使用。

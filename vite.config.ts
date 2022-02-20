@@ -10,7 +10,7 @@ export default defineConfig({
   },
   build: {
     sourcemap: true,
-    target: 'es6',
+    target: 'esnext',
     outDir: 'dist/lib',
     lib: {
       entry: path.resolve(__dirname, 'src/index.ts'),

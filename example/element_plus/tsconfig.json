@@ -11,7 +11,7 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "lib": ["esnext", "dom"],
-    "types": ["vue-router", "prismjs", "element-plus/global"],
+    "types": ["vue-router", "prismjs", "element-plus/global", "wangeditor5-for-vue3/global"],
     "baseUrl": ".",
     "paths": {
       "@assets/*": ["src/assets/*"],

@@ -47,6 +47,10 @@ module.exports = {
                 text: 'naive-ui',
                 link: 'https://github.com/clinfc/wangeditor5-for-vue3/tree/main/example/naive_ui',
               },
+              {
+                text: 'vue-cli',
+                link: 'https://github.com/clinfc/wangeditor5-for-vue3/tree/main/example/vue_cli',
+              },
             ],
           },
           {

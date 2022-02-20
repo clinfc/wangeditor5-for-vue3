@@ -22,17 +22,10 @@ features:
     details: WeEditorPlus 组件能隔绝全局的样式污染，解决你因样式而造成的困扰
 ---
 
-### 示例代码
-
-- [element-plus](https://github.com/clinfc/wangeditor5-for-vue3/tree/main/example/element_plus)
-- [ant-design-vue@^3](https://github.com/clinfc/wangeditor5-for-vue3/tree/main/example/ant_design)
-- [naive-ui](https://github.com/clinfc/wangeditor5-for-vue3/tree/main/example/naive_ui)
-
 ### 兼容性
 
-- vue@^3
-- @wangeditor/editor@^0.14.0
-- 暂不支持 vue-cli 项目
+- `vue@^3`
+- `@wangeditor/editor@^0.14.0`
 
 ### 交流
 

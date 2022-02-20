@@ -45,7 +45,6 @@
 
 - vue@^3
 - @wangeditor/editor@^0.14.0
-- 暂不支持 vue-cli 项目
 
 ### 交流
 

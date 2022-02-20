@@ -1,11 +1,11 @@
 # TypeScript
 
-`wangeditor5-for-vue3` 天然支持 `TypeScript`。如果你的项目无法自动识别，你也可以在 `tsconfig.json` 中手动添加。
+如果您使用 `Volar`，请在 `tsconfig.json` 中通过 `compilerOptions.type` 指定全局组件类型。
 
 ```json
 {
   "compilerOptions": {
-    "types": ["wangeditor5-for-vue3"]
+    "types": ["wangeditor5-for-vue3/global"]
   }
 }
 ```

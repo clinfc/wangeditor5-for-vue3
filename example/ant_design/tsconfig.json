@@ -10,7 +10,7 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "lib": ["esnext", "dom"],
-    "types": ["vue-router", "prismjs", "ant-design-vue/es", "wangeditor5-for-vue3"],
+    "types": ["vue-router", "prismjs", "ant-design-vue/es", "wangeditor5-for-vue3/global"],
     "baseUrl": ".",
     "paths": {
       "@assets/*": ["src/assets/*"],

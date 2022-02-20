@@ -1,18 +1,32 @@
 {
   "name": "wangeditor5-for-vue3",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "支持动态配置的 wangEditor5 for vue3 组件，同时支持 UI 框架的表单验证",
   "author": "翠林 <clinfc@qq.com>",
-  "main": "dist/es/index.js",
-  "types": "dist/types/index.d.ts",
   "license": "MIT",
   "homepage": "https://clinfc.github.io/wangeditor5-for-vue3/",
   "repository": {
     "type": "git",
     "url": "https://github.com/clinfc/wangeditor5-for-vue3"
   },
+  "main": "dist/lib/index.js",
+  "module": "dist/es/index.js",
+  "types": "dist/types/index.d.ts",
+  "unpkg": "dist/lib/index.js",
+  "jsdelivr": "dist/lib/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/es/index.js",
+      "require": "./dist/lib/index.js"
+    },
+    "./dist/es": "./dist/es/index.js",
+    "./dist/es/*/*.js": "./dist/es/*/*.js",
+    "./dist/lib": "./dist/lib/index.js",
+    "./dist/lib/*.js": "./dist/lib/*.js"
+  },
   "files": [
-    "dist"
+    "dist",
+    "global.d.ts"
   ],
   "keywords": [
     "wangeditor",
