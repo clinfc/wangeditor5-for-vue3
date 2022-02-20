@@ -311,8 +311,11 @@ export const WeEditable = defineComponent({
     // 编辑器支持重载的配置项
     watch(() => option.mode, watchOptionReload)
     watch(() => option.config.maxLength, watchOptionReload)
+    watch(() => option.config.decorate, watchOptionReload)
     watch(() => option.config.customPaste, watchOptionReload)
     watch(() => option.config.hoverbarKeys, watchOptionReload, { deep: true })
+    watch(() => option.config.MENU_CONF, watchOptionReload, { deep: true })
+    watch(() => option.config.EXTEND_CONF, watchOptionReload, { deep: true })
 
     // 监听 v-model
     watch(
