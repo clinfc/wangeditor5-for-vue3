@@ -24,13 +24,13 @@ export const WeEditor = defineComponent({
       default: () => () => {},
     },
     /** 自定义菜单栏 class */
-    toolbarClass: String,
+    toolbarClass: [String, Object, Array],
     /** 自定义编辑区 class */
-    editableClass: String,
+    editableClass: [String, Object, Array],
     /** 自定义菜单栏 style */
-    toolbarStyle: String,
+    toolbarStyle: [String, Object, Array],
     /** 自定义编辑区 style */
-    editableStyle: String,
+    editableStyle: [String, Object, Array],
     /** v-model */
     modelValue: Array as PropType<Descendant[]>,
     /** v-model:html */

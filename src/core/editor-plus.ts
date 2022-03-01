@@ -178,17 +178,17 @@ export const WeEditorPlus = defineComponent({
       default: () => () => {},
     },
     /** 菜单栏与编辑区公共父容器的 class */
-    containerClass: String,
+    containerClass: [String, Object, Array],
     /** 菜单栏与编辑区公共父容器的 style */
-    containerStyle: String,
+    containerStyle: [String, Object, Array],
     /** 自定义菜单栏 class */
-    toolbarClass: String,
+    toolbarClass: [String, Object, Array],
     /** 自定义编辑区 class */
-    editableClass: String,
+    editableClass: [String, Object, Array],
     /** 自定义菜单栏 style */
-    toolbarStyle: String,
+    toolbarStyle: [String, Object, Array],
     /** 自定义编辑区 style */
-    editableStyle: String,
+    editableStyle: [String, Object, Array],
     /** 组件级样式 */
     cssRule: [String, Array, Object] as PropType<WeCssRuleList>,
     /** v-model */

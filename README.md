@@ -4,6 +4,14 @@
 
 > `wangEditor` 是一款开源 `Web` 富文本编辑器，开箱即用，配置简单
 
+## 快速开始
+
+```sh
+yarn add @wangeditor/editor wangeditor5-for-vue3
+// or
+npm install @wangeditor/editor wangeditor5-for-vue3
+```
+
 ## 用户文档
 
 - [wangeditor5](https://www.wangeditor.com/v5/)

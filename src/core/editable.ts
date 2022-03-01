@@ -325,6 +325,8 @@ export const WeEditable = defineComponent({
 
         const value = unref(mval)!
 
+        if (cache.mval === value) return
+
         const jsonStr = JSON.stringify(value)
         if (jsonStr === cache.json) return
 
@@ -350,9 +352,8 @@ export const WeEditable = defineComponent({
         if (jsonStr === cache.json) return
 
         try {
-          const temp = jsonStr.length > 2 ? JSON.parse(jsonStr) : []
-
           if (instance) {
+            const temp = jsonStr.length > 2 ? JSON.parse(jsonStr) : []
             instance.clear()
             instance.insertFragment(temp)
           } else {
@@ -374,7 +375,7 @@ export const WeEditable = defineComponent({
 
         const value = unref(html)!
 
-        if (!modelHtml.value || value === cache.html) return
+        if (value === cache.html) return
 
         if (instance) {
           instance.clear()
@@ -386,8 +387,9 @@ export const WeEditable = defineComponent({
       { immediate: true }
     )
 
-    // 监听 v-model 延迟
+    // change 回调相关
     watch(() => option.delay, watchOptionOnChange)
+    watch(() => option.config.onChange, watchOptionOnChange)
 
     // readOnly
     watch(
