@@ -48,6 +48,7 @@ npm install @wangeditor/editor wangeditor5-for-vue3
 - [element-plus](./example/element_plus)
 - [ant-design-vue@^3](./example/ant_design)
 - [naive-ui](./example/naive_ui)
+- [vue-cli](./example/vue_cli)
 
 ### 兼容性
 
