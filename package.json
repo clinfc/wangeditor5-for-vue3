@@ -36,7 +36,9 @@
     "富文本编辑器"
   ],
   "scripts": {
-    "dev": "tsc -w",
+    "dev": "concurrently npm:dev:*",
+    "dev:build": "tsc -w",
+    "dev:copy": "nodemon node copy.js",
     "build": "npm run build:es && npm run build:lib",
     "build:es": "tsc",
     "build:lib": "vite build",
@@ -46,6 +48,8 @@
   "devDependencies": {
     "@types/lodash.debounce": "^4.0.6",
     "@wangeditor/editor": "^0.15.7",
+    "concurrently": "^7.0.0",
+    "nodemon": "^2.0.15",
     "typescript": "^4.4.4",
     "vite": "^2.8.3",
     "vue": "^3.2.26",

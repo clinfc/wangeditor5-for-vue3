@@ -119,7 +119,7 @@
       const menus = ref<MenuItem[]>([
         { name: '基础案例', path: '/' },
         { name: 'WeEditor', path: '/editor' },
-        { name: 'WeEditorPlus', path: '/editor-plus' },
+        // { name: 'WeEditorPlus', path: '/editor-plus' },
       ])
 
       const router = useRouter()

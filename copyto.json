@@ -1,0 +1,22 @@
+[
+  {
+    "target": "example/ant_design",
+    "node_modules": true,
+    "project_name": true
+  },
+  {
+    "target": "example/element_plus",
+    "node_modules": true,
+    "project_name": true
+  },
+  {
+    "target": "example/naive_ui",
+    "node_modules": true,
+    "project_name": true
+  },
+  {
+    "target": "example/vue_cli",
+    "node_modules": true,
+    "project_name": true
+  }
+]
