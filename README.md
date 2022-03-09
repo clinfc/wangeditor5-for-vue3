@@ -15,6 +15,7 @@ npm install @wangeditor/editor wangeditor5-for-vue3
 ## 用户文档
 
 - [wangeditor5](https://www.wangeditor.com/v5/)
+- [wangeditor5-for-vue2](https://clinfc.github.io/wangeditor5-for-vue2/)
 - [wangeditor5-for-vue3](https://clinfc.github.io/wangeditor5-for-vue3/)
 
 ## 功能亮点
@@ -52,8 +53,8 @@ npm install @wangeditor/editor wangeditor5-for-vue3
 
 ### 兼容性
 
-- vue@^3
-- @wangeditor/editor@^0.14.0
+- `vue@^3`
+- `@wangeditor/editor@^0.14.0`
 
 ### 交流
 

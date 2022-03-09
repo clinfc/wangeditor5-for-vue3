@@ -44,8 +44,8 @@ interface WeEditableOption {
   delay?: number
   /**
    * 编辑器创建时默认内容的优先级排序，默认值：true。
-   * true：v-model > v-model:json > v-model:html > defaultContent。
-   * false: defaultContent > v-model > v-model:json > v-model:html。
+   * true：v-model > v-model:json > v-model:html > defaultContent > defaultHtml。
+   * false: defaultContent > defaultHtml > v-model > v-model:json > v-model:html。
    */
   extendCache?: boolean
 }
@@ -133,7 +133,7 @@ clearContent()
 ```
 
 受 `@wangeditor/editor` 内部限制，`WeEditableOption.config.readOnly` 为 `true` 时，执行 `clearContent()` 是无法清除内容的。
-如果你仍希望进行编辑器内容清除，可以考虑使用 `reloadEditor()` 搭配 `WeEditableOption.defaultContent` 进行实现。
+如果你仍希望进行编辑器内容清除，可以考虑使用 `reloadEditor()` 搭配 `WeEditableOption.defaultContent`/`WeEditableOption.defaultHtml` 进行实现。
 
 ```ts
 const { editable, reloadEditor } = useWangEditor({ config: { readOnly: true } })

@@ -106,7 +106,7 @@ export default defineComponent({
 
 ## props
 
-`WeEditorPlus` 继承了 [`WeEditor`](../guide/README.md#weeditor) 的所有 [`props`](../guide/README.md#props) 属性，同时还存在以下 `props` 属性。
+`WeEditorPlus` 继承了 [`WeEditor`](../guide/props.md#weeditor) 的所有 [`props`](../guide/README.md#props) 属性，同时还存在以下 `props` 属性。
 
 | prop             | 描述                                         | 类型            |
 | :--------------- | :------------------------------------------- | :-------------- |

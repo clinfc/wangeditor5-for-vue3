@@ -17,8 +17,7 @@ module.exports = {
           {
             text: 'keywords',
             children: [
-              { text: 'WeToolbar', link: '/guide/#wetoolbar-weeditable' },
-              { text: 'WeEditable', link: '/guide/#wetoolbar-weeditable' },
+              { text: 'WeToolbar/WeEditable', link: '/guide/#wetoolbar-weeditable' },
               { text: 'WeEditor', link: '/guide/#weeditor' },
               { text: 'WeEditorPlus', link: '/shadow/start.md#使用示例' },
               { text: 'useWangEditor', link: '/guide/use-wang-editor.md' },
@@ -65,6 +64,7 @@ module.exports = {
         sidebar: {
           '/guide/': [
             '/guide/README.md',
+            '/guide/props.md',
             '/guide/use-wang-editor.md',
             '/guide/reloadbefore.md',
             '/guide/v-model.md',
