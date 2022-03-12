@@ -30,17 +30,21 @@ declare function useWangEditor(
 ## WeEditableOption
 
 ```ts
+import { IEditorConfig, SlateDescendant } from '@wangeditor/editor'
+
 /**
  * 编辑器配置项
  */
-interface WeEditableOption {
+export interface WeEditableOption {
   /** 编辑器模式 */
   mode?: 'default' | 'simple'
-  /** 编辑器初始化的默认内容 */
-  defaultContent?: Descendant[] | string | null
-  /** 编辑器配置，具体配置以官方为准 */
+  /** 编辑器初始化的默认内容（json array 或 json string），优先级高于 defaultHtml */
+  defaultContent?: SlateDescendant[] | string | null
+  /** 编辑器初始化的默认内容（html string），优先级低于 defaultContent */
+  defaultHtml?: string | null
+  /** 编辑器配置 */
   config?: Partial<IEditorConfig>
-  /** v-model/v-model:json/v-model:html 数据同步的防抖时长，默认值：3000，单位：毫秒 */
+  /** v-model 数据同步的防抖时长，默认值：3000，单位：毫秒 */
   delay?: number
   /**
    * 编辑器创建时默认内容的优先级排序，默认值：true。
@@ -96,10 +100,12 @@ onMounted(() => {
 ## WeToolbarOption
 
 ```ts
+import { IToolbarConfig } from '@wangeditor/editor'
+
 /**
  * 菜单栏的配置项
  */
-interface WeToolbarOption {
+export interface WeToolbarOption {
   mode?: 'default' | 'simple'
   config?: Partial<IToolbarConfig>
 }

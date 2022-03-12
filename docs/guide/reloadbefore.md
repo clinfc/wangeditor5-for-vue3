@@ -10,7 +10,7 @@
 
 <script lang="ts">
   import axios from 'axiios'
-  import { Descendant } from 'slate'
+  import { SlateDescendant } from '@wangeditor/editor'
   import { WeEditable, WeToolbar, useWangEditor } from 'wangeditor5-for-vue3'
   import { defineComponent, shallowReactive } from 'vue'
 
@@ -20,7 +20,7 @@
       const { editable, toolbar, reloadEditor } = useWangEditor()
 
       const formData = shallowReactive({
-        json: [] as Descendant[],
+        json: [] as SlateDescendant[],
       })
 
       function onEditableReloadBefore(inst: IDomEditor) {

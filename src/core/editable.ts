@@ -1,6 +1,5 @@
-import { createEditor, IDomEditor, IEditorConfig } from '@wangeditor/editor'
+import { createEditor, IDomEditor, IEditorConfig, SlateDescendant } from '@wangeditor/editor'
 import debounce from 'lodash.debounce'
-import { Descendant } from 'slate'
 import {
   computed,
   defineComponent,
@@ -41,7 +40,7 @@ export const WeEditable = defineComponent({
       default: () => () => {},
     },
     /** v-model */
-    modelValue: Array as PropType<Descendant[]>,
+    modelValue: Array as PropType<SlateDescendant[]>,
     /** v-model:html */
     html: String,
     /** v-model:json */

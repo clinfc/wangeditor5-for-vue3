@@ -11,10 +11,9 @@
 </template>
 
 <script lang="ts">
-  import { Descendant } from 'slate'
   import { WeEditableOption, WeToolbarOption, useWangEditor } from 'wangeditor5-for-vue3'
   import { defineComponent, shallowReactive } from 'vue'
-  import { IDomEditor } from '@wangeditor/editor'
+  import { IDomEditor, SlateDescendant } from '@wangeditor/editor'
 
   export default defineComponent({
     setup() {
@@ -36,7 +35,7 @@
 
       // 注意：是 shallowReactive 而不是 reactive
       const formData = shallowReactive({
-        json: [] as Descendant[],
+        json: [] as SlateDescendant[],
         jsonStr: '',
         html: '',
       })

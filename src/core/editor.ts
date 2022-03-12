@@ -1,5 +1,4 @@
-import { Descendant } from 'slate'
-import { IDomEditor, Toolbar } from '@wangeditor/editor'
+import { IDomEditor, SlateDescendant, Toolbar } from '@wangeditor/editor'
 import { defineComponent, h, PropType } from 'vue'
 import { WeEditableOption, WeToolbarOption } from './types'
 import { WeToolbar } from './toolbar'
@@ -32,7 +31,7 @@ export const WeEditor = defineComponent({
     /** 自定义编辑区 style */
     editableStyle: [String, Object, Array],
     /** v-model */
-    modelValue: Array as PropType<Descendant[]>,
+    modelValue: Array as PropType<SlateDescendant[]>,
     /** v-model:html */
     html: String,
     /** v-model:json */

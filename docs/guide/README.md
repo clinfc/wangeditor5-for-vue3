@@ -70,7 +70,7 @@ export default defineComponent({
 </template>
 
 <script lang="ts">
-  import { Descendant } from 'slate'
+  import { SlateDescendant } from '@wangeditor/editor'
   import { WeEditable, WeEditableOption, WeToolbar, WeToolbarOption, useWangEditor } from 'wangeditor5-for-vue3'
   import { defineComponent, shallowReactive } from 'vue'
   // 引入 wangeditor5 样式
@@ -98,7 +98,7 @@ export default defineComponent({
       editable.config.readOnly = true
 
       // 不要使用 reactive/ref，应该使用 shallowReactive/shallowRef 来接收 json array 数据
-      const formData = shallowReactive({ jarr: [] as Descendant[], jstr: '', html: '' })
+      const formData = shallowReactive({ jarr: [] as SlateDescendant[], jstr: '', html: '' })
 
       function onEditableReloadBefore(inst: IDomEditor) {
         console.log('editable 即将重载: ' + new Date().toLocaleString())
@@ -134,7 +134,7 @@ export default defineComponent({
 </template>
 
 <script lang="ts">
-  import { Descendant } from 'slate'
+  import { SlateDescendant } from '@wangeditor/editor'
   import { WeEditable, WeEditableOption, WeToolbar, WeToolbarOption, useWangEditor } from 'wangeditor5-for-vue3'
   import { defineComponent, shallowReactive } from 'vue'
   // 引入 wangeditor5 样式
@@ -162,7 +162,7 @@ export default defineComponent({
       editable.config.readOnly = true
 
       // 不要使用 reactive/ref，应该使用 shallowReactive/shallowRef 来接收 json array 数据
-      const formData = shallowReactive({ jarr: [] as Descendant[], jstr: '', html: '' })
+      const formData = shallowReactive({ jarr: [] as SlateDescendant[], jstr: '', html: '' })
 
       function onEditableReloadBefore(inst: IDomEditor) {
         console.log('editable 即将重载: ' + new Date().toLocaleString())

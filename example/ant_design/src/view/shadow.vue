@@ -26,11 +26,10 @@
 </template>
 
 <script lang="ts">
-  import { Descendant } from 'slate'
   import { WeCssRuleList, WeEditableOption, WeToolbarOption, useWangEditor } from 'wangeditor5-for-vue3'
   import { computed, defineComponent, ref, shallowReactive } from 'vue'
   import UPrism from '../components/u-prism.vue'
-  import { IDomEditor, Toolbar } from '@wangeditor/editor'
+  import { IDomEditor, Toolbar, SlateDescendant } from '@wangeditor/editor'
 
   export default defineComponent({
     components: { UPrism },
@@ -53,7 +52,7 @@
 
       // 注意：是 shallowReactive 而不是 reactive
       const formData = shallowReactive({
-        json: [] as Descendant[],
+        json: [] as SlateDescendant[],
         jsonStr: '',
         html: '',
       })

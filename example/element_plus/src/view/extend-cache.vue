@@ -45,11 +45,11 @@
 
 <script lang="ts">
   import ARTICLES from '@assets/json/article.json'
-  import { Descendant } from 'slate'
   import { useWangEditor } from 'wangeditor5-for-vue3'
   import { computed, defineComponent, ref, shallowReactive, shallowRef, watch } from 'vue'
   import UPrism from '../components/u-prism.vue'
   import { useRoute } from 'vue-router'
+  import { SlateDescendant } from '@wangeditor/editor'
 
   export default defineComponent({
     components: { UPrism },
@@ -70,7 +70,7 @@
       )
 
       const formData = shallowReactive({
-        json: [] as Descendant[],
+        json: [] as SlateDescendant[],
         jstr: '',
         html: '',
       })

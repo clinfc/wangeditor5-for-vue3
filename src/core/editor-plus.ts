@@ -1,5 +1,4 @@
-import { IDomEditor, Toolbar } from '@wangeditor/editor'
-import { Descendant } from 'slate'
+import { IDomEditor, SlateDescendant, Toolbar } from '@wangeditor/editor'
 import { defineComponent, h, onBeforeUnmount, onMounted, PropType, Ref, ref, render, watch } from 'vue'
 import { WeEditor } from './editor'
 import { WeCssRuleList, WeCssRuleMap, WeEditableOption, WeToolbarOption } from './types'
@@ -192,7 +191,7 @@ export const WeEditorPlus = defineComponent({
     /** 组件级样式 */
     cssRule: [String, Array, Object] as PropType<WeCssRuleList>,
     /** v-model */
-    modelValue: Array as PropType<Descendant[]>,
+    modelValue: Array as PropType<SlateDescendant[]>,
     /** v-model:html */
     html: String,
     /** v-model:json */

@@ -15,8 +15,7 @@
 </template>
 
 <script lang="ts">
-  import { Descendant } from 'slate'
-  import { useWangEditor } from 'wangeditor5-for-vue3'
+  import { SlateDescendant, useWangEditor } from 'wangeditor5-for-vue3'
   import { defineComponent, shallowReactive } from 'vue'
 
   export default defineComponent({
@@ -24,7 +23,7 @@
       const { editable } = useWangEditor()
 
       const formData = shallowReactive({
-        json: [] as Descendant[],
+        json: [] as SlateDescendant[],
         jstr: '',
         html: '',
       })
@@ -43,7 +42,7 @@
 </template>
 
 <script lang="ts">
-  import { Descendant } from 'slate'
+  import { SlateDescendant } from '@wangeditor/editor'
   import { useWangEditor } from 'wangeditor5-for-vue3'
   import { defineComponent, shallowRef } from 'vue'
 
@@ -51,7 +50,7 @@
     setup() {
       const { editable } = useWangEditor()
 
-      const jsonArray = shallowRef<Descendant[]>([])
+      const jsonArray = shallowRef<SlateDescendant[]>([])
 
       const jsonString = ref('')
 
