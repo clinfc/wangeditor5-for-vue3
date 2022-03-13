@@ -1,31 +1,23 @@
-<style lang="scss">
-  .toolbar,
-  .editable {
-    border: var(--el-input-border, var(--el-border-base));
-    line-height: 1;
-  }
-</style>
-
 <template>
-  <div style="padding: 20px">
-    <el-form ref="elForm" :model="ruleForm" :rules="rules" label-width="80px">
-      <el-form-item label="文章标题" prop="title">
-        <el-input v-model="ruleForm.title" placeholder="请输入文章标题"></el-input>
-      </el-form-item>
-      <el-form-item label="文章内容" prop="json">
-        <we-editor
-          toolbar-class="toolbar"
-          editable-class="editable"
-          :toolbar-option="toolbar"
-          :editable-option="editable"
-          v-model:json="ruleForm.json"
-        />
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="onSubmit">表单验证并控制台打印</el-button>
-      </el-form-item>
-    </el-form>
-  </div>
+  <el-form ref="elForm" :model="ruleForm" :rules="rules" label-position="top">
+    <el-form-item label="文章标题" prop="title">
+      <el-input v-model="ruleForm.title" placeholder="请输入文章标题"></el-input>
+    </el-form-item>
+    <el-form-item label="文章内容" prop="json">
+      <we-editor
+        class="container"
+        toolbar-class="toolbar"
+        editable-class="editable"
+        :toolbar-option="toolbar"
+        :editable-option="editable"
+        v-model:json="ruleForm.json"
+      />
+    </el-form-item>
+    <el-form-item>
+      <el-button type="primary" @click="onSubmit">表单验证并控制台打印</el-button>
+    </el-form-item>
+  </el-form>
+  <br />
   <u-prism :content="ruleForm.json" lang="json" />
 </template>
 
@@ -88,3 +80,24 @@
     components: { UPrism },
   })
 </script>
+
+<style lang="scss" scoped>
+  .container {
+    border: 1px solid #e5e5e5;
+    border-radius: var(--el-input-border-radius, var(--el-border-radius-base));
+  }
+  .toolbar {
+    border: none;
+    border-bottom: 1px solid #e5e5e5;
+  }
+  .editable {
+    border: none;
+  }
+  :deep.el-form-item {
+    &.is-error {
+      .container {
+        border-color: var(--el-color-danger);
+      }
+    }
+  }
+</style>

@@ -3,6 +3,7 @@
   $trackColor: #eee;
   .u-scroll {
     height: var(--u-scroll-height, auto);
+    max-height: 100%;
     scrollbar-width: thin;
     scrollbar-color: var(--thumb--color, $thumbColor) var(--track--color, $trackColor);
     &::-webkit-scrollbar {

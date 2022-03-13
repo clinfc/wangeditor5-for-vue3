@@ -12,12 +12,16 @@
         <el-option value="simple" />
       </el-select>
     </el-form-item>
-    <el-form-item>
-      <el-button @click="reloadEditor">重载编辑器</el-button>
-    </el-form-item>
   </el-form>
-  <we-toolbar style="border-bottom: 1px solid var(--bg-color)" :option="toolbar" :reloadbefore="onToolbarloadBefore" />
-  <we-editable style="height: 750px" v-model="jsonData" :option="editable" :reloadbefore="onEditableReloadBefore" />
+  <we-editor
+    toolbar-class="toolbar"
+    editable-class="editable"
+    :toolbar-option="toolbar"
+    :editable-option="editable"
+    :toolbar-reloadbefore="onToolbarloadBefore"
+    :editable-reloadbefore="onEditableReloadBefore"
+    v-model="jsonData"
+  />
 </template>
 
 <script lang="ts">

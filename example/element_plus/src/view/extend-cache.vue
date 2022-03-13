@@ -3,8 +3,11 @@
 <template>
   <div class="default-content">
     <el-form :inline="true">
-      <el-form-item>
-        <el-checkbox v-model="editable.config.readOnly" label="readOnly" />
+      <el-form-item label="readOnly：">
+        <el-radio-group v-model="editable.config.readOnly">
+          <el-radio :label="true">true</el-radio>
+          <el-radio :label="false">false</el-radio>
+        </el-radio-group>
       </el-form-item>
       <el-form-item label="defaultContent：">
         <el-select v-model="select">
@@ -21,26 +24,24 @@
         </span>
       </el-form-item>
     </el-form>
-    <we-toolbar class="toolbar" :option="toolbar" />
-    <we-editable
-      class="editable"
-      style="width: 100%; height: 500px"
-      :option="editable"
-      v-model="formData.json"
-      v-model:json="formData.jstr"
-      v-model:html="formData.html"
-    />
   </div>
-  <div class="preview">
-    <div class="preview-types">
-      <el-button :disabled="modelType === 'json'" @click="modelType = 'json'">预览 JSON Array</el-button>
-      <el-button :disabled="modelType === 'jstr'" @click="modelType = 'jstr'">预览 JSON String</el-button>
-      <el-button :disabled="modelType === 'html'" @click="modelType = 'html'">预览 HTML String</el-button>
-    </div>
-    <div class="preview-content">
-      <u-prism :lang="modelType === 'html' ? 'html' : 'json'" :content="preview" />
-    </div>
-  </div>
+  <we-editor
+    toolbar-class="toolbar"
+    editable-class="editable"
+    :toolbar-option="toolbar"
+    :editable-option="editable"
+    v-model="formData.json"
+    v-model:json="formData.jstr"
+    v-model:html="formData.html"
+  />
+  <br />
+  <el-card shadow="never">
+    <el-button :disabled="modelType === 'json'" @click="modelType = 'json'">预览 JSON Array</el-button>
+    <el-button :disabled="modelType === 'jstr'" @click="modelType = 'jstr'">预览 JSON String</el-button>
+    <el-button :disabled="modelType === 'html'" @click="modelType = 'html'">预览 HTML String</el-button>
+  </el-card>
+  <br />
+  <u-prism style="--u-scroll-height: 300px" :lang="modelType === 'html' ? 'html' : 'json'" :content="preview" />
 </template>
 
 <script lang="ts">
@@ -101,9 +102,9 @@
       })
 
       watch(
-        () => route.params.extendCache,
+        () => route.path,
         (nv) => {
-          editable.extendCache = nv === 'true'
+          editable.extendCache = /true$/.test(nv)
         },
         { immediate: true }
       )

@@ -1,8 +1,8 @@
 <template>
-  <div style="padding: 50px; text-align: center">
-    <el-button @click="dialogVisible = true">open dialog</el-button>
-    <el-button @click="drawerVisible = true">open drawer</el-button>
-  </div>
+  <el-card shadow="never">
+    <el-button type="primary" @click="dialogVisible = true">open dialog</el-button>
+    <el-button type="primary" @click="drawerVisible = true">open drawer</el-button>
+  </el-card>
   <el-dialog v-model="dialogVisible" title="In Dialog" width="1000px" append-to-body>
     <we-editor
       toolbar-style="border-bottom: 1px solid var(--bg-color)"

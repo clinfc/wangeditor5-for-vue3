@@ -1,31 +1,29 @@
 <template>
   <we-editor-plus
+    toolbar-class="toolbar border"
+    editable-class="editable border"
+    :css-rule="cssRule"
     :toolbar-option="toolbar"
     :editable-option="editable"
-    :css-rule="cssRule"
-    :toolbar-reloadbefore="onToolbarloadBefore"
-    :editable-reloadbefore="onEditableReloadBefore"
     v-model="formData.json"
     v-model:json="formData.jsonStr"
     v-model:html="formData.html"
   />
-  <div class="preview">
-    <div class="preview-types">
-      <el-button :disabled="modelType === 'json'" @click="modelType = 'json'">预览 JSON Array</el-button>
-      <el-button :disabled="modelType === 'jstr'" @click="modelType = 'jstr'">预览 JSON String</el-button>
-      <el-button :disabled="modelType === 'html'" @click="modelType = 'html'">预览 HTML String</el-button>
-    </div>
-    <div class="preview-content">
-      <u-prism :lang="modelType === 'html' ? 'html' : 'json'" :content="preview" />
-    </div>
-  </div>
+  <br />
+  <el-card shadow="never">
+    <el-button :disabled="modelType === 'json'" @click="modelType = 'json'">预览 JSON Array</el-button>
+    <el-button :disabled="modelType === 'jstr'" @click="modelType = 'jstr'">预览 JSON String</el-button>
+    <el-button :disabled="modelType === 'html'" @click="modelType = 'html'">预览 HTML String</el-button>
+  </el-card>
+  <br />
+  <u-prism :lang="modelType === 'html' ? 'html' : 'json'" :content="preview" />
 </template>
 
 <script lang="ts">
   import { WeCssRuleList, WeEditableOption, WeToolbarOption, useWangEditor } from 'wangeditor5-for-vue3'
   import { computed, defineComponent, ref, shallowReactive } from 'vue'
+  import { SlateDescendant } from '@wangeditor/editor'
   import UPrism from '../components/u-prism.vue'
-  import { IDomEditor, SlateDescendant, Toolbar } from '@wangeditor/editor'
 
   export default defineComponent({
     components: { UPrism },
@@ -67,28 +65,15 @@
       })
 
       const cssRule: WeCssRuleList = {
-        '.container': {
-          backgroundColor: '#999',
-        },
         '.editable': {
           height: '500px',
         },
         '.border': {
-          border: '1px solid #d9d9d9',
+          border: '1px solid #e5e5e5',
         },
       }
 
-      function onEditableReloadBefore(inst: IDomEditor) {
-        window.alert('editable 即将重载: ' + new Date().toLocaleString())
-        console.log('editable 即将重载: ' + new Date().toLocaleString())
-      }
-
-      function onToolbarloadBefore(inst: Toolbar) {
-        window.alert('toolbar 即将重载: ' + new Date().toLocaleString())
-        console.log('toolbar 即将重载: ' + new Date().toLocaleString())
-      }
-
-      return { editable, toolbar, formData, modelType, preview, cssRule, onEditableReloadBefore, onToolbarloadBefore }
+      return { editable, toolbar, formData, modelType, preview, cssRule }
     },
   })
 </script>
