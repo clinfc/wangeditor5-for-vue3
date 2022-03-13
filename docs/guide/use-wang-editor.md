@@ -20,8 +20,14 @@ declare function useWangEditor(
 ): {
   editable: Required<WeEditableOption>
   toolbar: Required<WeToolbarOption>
-  getEditable: () => IDomEditor | undefined
-  getToolbar: () => Toolbar | undefined
+  getEditable: {
+    (): IDomEditor | undefined
+    (timeout: number): Promise<IDomEditor>
+  }
+  getToolbar: {
+    (): Toolbar | undefined
+    (timeout: number): Promise<Toolbar>
+  }
   clearContent: () => void
   reloadEditor: () => void
 }
@@ -166,12 +172,22 @@ customClearContent()
 ```ts
 const { getToolbar } = useWangEditor()
 
+// 同步模式。当我们不传入参数或传入的不是一个数字时，此时为同步模式。
 const toolbarInstance: Toolbar | undefined = getToolbar()
 if (toolbarInstance) {
   // do somthing
 } else {
   // do somthing
 }
+
+// 异步模式。传入的是异步超时时间，单位：毫秒。
+getToolbar(3000)
+  .then((inst: Toolbar) => {
+    // do somthing
+  })
+  .catch((e: Error) => {
+    // do somthing
+  })
 ```
 
 ### getEditable
@@ -181,13 +197,25 @@ if (toolbarInstance) {
 ```ts
 const { getEditable } = useWangEditor()
 
+// 同步模式。当我们不传入参数或传入的不是一个数字时，此时为同步模式。
 const editableInstance: IDomEditor | undefined = getEditable()
 if (editableInstance) {
   console.log(editableInstance.children)
 } else {
   console.error('编辑器未实例化')
 }
+
+// 异步模式。传入的是异步超时时间，单位：毫秒。
+getEditable(3000)
+  .then((inst: IDomEditor) => {
+    // do somthing
+  })
+  .catch((e: Error) => {
+    // do somthing
+  })
 ```
+
+````
 
 ### reloadEditor
 
@@ -215,4 +243,4 @@ const { reloadEditor } = useWangEditor()
 
 // 强制重载编辑器
 reloadEditor()
-```
+````

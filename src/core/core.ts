@@ -1,3 +1,4 @@
+import { IDomEditor, Toolbar } from '@wangeditor/editor'
 import { getCurrentInstance, inject, InjectionKey, isProxy, reactive, toRaw } from 'vue'
 import {
   DELAY,
@@ -147,17 +148,59 @@ export function useWangEditor(
   TIMER.set(toolbar, [reloadDelay, null])
 
   /**
-   * 获取编辑器实例
+   * 获取编辑区实例
+   * @param {Number} timeout 异步获取编辑区实例的超时时长，当不传入 timeout 时，此时为同步模式。单位：毫秒。
    */
-  function getEditable() {
-    return EDITABLE_HANDLE.get(editable)?.instance
+  function getEditable(): IDomEditor | undefined
+  function getEditable(timeout: number): Promise<IDomEditor>
+  function getEditable(timeout?: number): Promise<IDomEditor> | IDomEditor | undefined {
+    if (typeof timeout !== 'number' || Number.isNaN(timeout)) {
+      return EDITABLE_HANDLE.get(editable)?.instance
+    }
+    return new Promise((resolve, reject) => {
+      const end = Date.now() + timeout
+
+      function get() {
+        const inst = getEditable()
+        if (inst) {
+          resolve(inst)
+        } else if (Date.now() < end) {
+          requestAnimationFrame(get)
+        } else {
+          reject(new Error(`unable to get the editable instance!`))
+        }
+      }
+
+      requestAnimationFrame(get)
+    })
   }
 
   /**
    * 获取菜单栏实例
+   * @param {Number} timeout 异步获取菜单栏实例的超时时长，当不传入 timeout 时，此时为同步模式。单位：毫秒。
    */
-  function getToolbar() {
-    return TOOLBAR_HANDLE.get(toolbar)?.instance
+  function getToolbar(): Toolbar | undefined
+  function getToolbar(timeout: number): Promise<Toolbar>
+  function getToolbar(timeout?: number): Promise<Toolbar> | Toolbar | undefined {
+    if (typeof timeout !== 'number' || Number.isNaN(timeout)) {
+      return TOOLBAR_HANDLE.get(toolbar)?.instance
+    }
+    return new Promise((resolve, reject) => {
+      const end = Date.now() + timeout
+
+      function get() {
+        const inst = getToolbar()
+        if (inst) {
+          resolve(inst)
+        } else if (Date.now() < end) {
+          requestAnimationFrame(get)
+        } else {
+          reject(new Error(`unable to get the toolbar instance!`))
+        }
+      }
+
+      requestAnimationFrame(get)
+    })
   }
 
   /**
