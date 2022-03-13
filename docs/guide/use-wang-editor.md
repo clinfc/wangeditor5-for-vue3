@@ -169,18 +169,30 @@ customClearContent()
 
 获取菜单栏实例
 
+#### 同步模式
+
+当我们不传入参数或传入的不是一个数字时，此时为同步模式。
+
 ```ts
 const { getToolbar } = useWangEditor()
 
-// 同步模式。当我们不传入参数或传入的不是一个数字时，此时为同步模式。
 const toolbarInstance: Toolbar | undefined = getToolbar()
 if (toolbarInstance) {
   // do somthing
 } else {
   // do somthing
 }
+```
 
-// 异步模式。传入的是异步超时时间，单位：毫秒。
+#### 异步模式
+
+当我们传入一个数字时，传入的是异步超时时间。单位：毫秒。
+
+> `v0.0.5+` 新增
+
+```ts
+const { getToolbar } = useWangEditor()
+
 getToolbar(3000)
   .then((inst: Toolbar) => {
     // do somthing
@@ -194,18 +206,30 @@ getToolbar(3000)
 
 获取编辑器实例
 
+#### 同步模式
+
+当我们不传入参数或传入的不是一个数字时，此时为同步模式。
+
 ```ts
 const { getEditable } = useWangEditor()
 
-// 同步模式。当我们不传入参数或传入的不是一个数字时，此时为同步模式。
 const editableInstance: IDomEditor | undefined = getEditable()
 if (editableInstance) {
   console.log(editableInstance.children)
 } else {
   console.error('编辑器未实例化')
 }
+```
 
-// 异步模式。传入的是异步超时时间，单位：毫秒。
+#### 异步模式
+
+当我们传入一个数字时，传入的是异步超时时间。单位：毫秒。
+
+> `v0.0.5+` 新增
+
+```ts
+const { getEditable } = useWangEditor()
+
 getEditable(3000)
   .then((inst: IDomEditor) => {
     // do somthing
@@ -214,8 +238,6 @@ getEditable(3000)
     // do somthing
   })
 ```
-
-````
 
 ### reloadEditor
 
@@ -243,4 +265,4 @@ const { reloadEditor } = useWangEditor()
 
 // 强制重载编辑器
 reloadEditor()
-````
+```
