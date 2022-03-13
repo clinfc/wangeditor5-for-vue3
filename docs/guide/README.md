@@ -135,13 +135,13 @@ export default defineComponent({
 
 <script lang="ts">
   import { SlateDescendant } from '@wangeditor/editor'
-  import { WeEditable, WeEditableOption, WeToolbar, WeToolbarOption, useWangEditor } from 'wangeditor5-for-vue3'
+  import { WeEditor, WeEditableOption, WeToolbarOption, useWangEditor } from 'wangeditor5-for-vue3'
   import { defineComponent, shallowReactive } from 'vue'
   // 引入 wangeditor5 样式
   import '@wangeditor/editor/dist/css/style.css'
 
   export default defineComponent({
-    components: { WeToolbar, WeEditable },
+    components: { WeEditor },
     setup() {
       // 编辑器配置
       const editableOption: WeEditableOption = {}
