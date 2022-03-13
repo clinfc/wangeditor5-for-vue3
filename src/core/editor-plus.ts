@@ -3,11 +3,7 @@ import { defineComponent, h, onBeforeUnmount, onMounted, PropType, Ref, ref, ren
 import { WeEditor } from './editor'
 import { WeCssRuleList, WeCssRuleMap, WeEditableOption, WeToolbarOption } from './types'
 
-let STYLES: string = ''
-let IMPORT: string = ''
-const SHEETS: CSSStyleSheet[] = []
-
-const CSS_IMPORT_REG = /\@import url\(.+\.css\);/g
+let GLOBAL_STYLES = ''
 
 function cssFileUrl(css: string) {
   return /.+\.css$/.test(css)
@@ -15,29 +11,6 @@ function cssFileUrl(css: string) {
 
 function cssFullUrl(css: string) {
   return `@import url("${css}");`
-}
-
-function processCSSText(css: string) {
-  const text: string[] = []
-  const url: string[] = []
-  let onlyUrl = false
-  if (cssFileUrl(css)) {
-    url.push(cssFullUrl(css))
-    onlyUrl = true
-  } else {
-    css = css
-      .replace(CSS_IMPORT_REG, function (text) {
-        url.push(text)
-        return ''
-      })
-      .trim()
-    css.length > 3 && text.push(css)
-  }
-  return {
-    onlyUrl,
-    text: text.join(''),
-    url: url.join(''),
-  }
 }
 
 function toLowerCase(str: string) {
@@ -61,70 +34,38 @@ function cssRuleListToString(list: WeCssRuleList) {
   if (!Array.isArray(list)) {
     list = [list]
   }
-  let hasUrl = false
-  const nlist = list.map((item) => {
-    if (typeof item === 'string') {
-      if (cssFileUrl(item)) {
-        hasUrl = true
-        return cssFullUrl(item)
+  return list
+    .map((item) => {
+      if (typeof item === 'string') {
+        if (cssFileUrl(item)) {
+          return cssFullUrl(item)
+        }
+        return item
       }
-      if (CSS_IMPORT_REG.test(item)) {
-        hasUrl = true
-      }
-      return item
-    }
-    return cssRuleMapToString(item)
-  })
-  return {
-    hasUrl,
-    css: nlist.join(''),
-  }
+      return cssRuleMapToString(item)
+    })
+    .join('')
 }
 
 class WangEditorElement extends HTMLDivElement {
-  public sheet: CSSStyleSheet | HTMLStyleElement
-
-  public urlSheet?: HTMLStyleElement
+  public sheet!: HTMLStyleElement
 
   public constructor() {
     super()
 
     const shadow = this.attachShadow({ mode: 'open' })
-    const cssUrl = IMPORT.length ? `<style>${IMPORT}</style>` : ''
 
-    if ('adoptedStyleSheets' in shadow) {
-      this.sheet = new CSSStyleSheet()
-      Reflect.set(shadow, 'adoptedStyleSheets', [...SHEETS, this.sheet])
-      shadow.innerHTML = cssUrl
-    } else {
-      shadow.innerHTML = `${cssUrl}${STYLES.length ? `<style>${STYLES}</style>` : ''}<style id="sheet"></style>`
-      this.sheet = shadow.querySelector('#sheet') as HTMLStyleElement
-    }
+    shadow.innerHTML = `<style>${GLOBAL_STYLES}</style><style id="sheet"></style>`
+
+    this.sheet = shadow.querySelector('#sheet')!
   }
 
   /**
    * 动态修改 css 规则
    * @param list CSS规则
    */
-  public sheetRule(list: WeCssRuleList) {
-    const { css, hasUrl } = cssRuleListToString(list)
-    if (this.sheet instanceof HTMLStyleElement) {
-      this.sheet.textContent = css
-    } else {
-      if (hasUrl) {
-        if (!this.urlSheet) {
-          this.urlSheet = document.createElement('style')
-          this.shadowRoot!.append(this.urlSheet)
-        }
-        this.urlSheet.textContent = css
-        // @ts-ignore
-        this.sheet.replaceSync('')
-      } else {
-        if (this.urlSheet) this.urlSheet.textContent = ''
-        // @ts-ignore
-        this.sheet.replaceSync(css)
-      }
-    }
+  public sheetRule(list?: WeCssRuleList) {
+    this.sheet.textContent = list ? cssRuleListToString(list) : ''
   }
 }
 
@@ -134,24 +75,10 @@ customElements.define(CUSTOM_ELEMENT_NAME, WangEditorElement, { extends: 'div' }
 
 /**
  * 将 css 样式注入 shadow 中
- * @param css {String} css 文本或 css 文件路径
+ * @param css {String|Array|Object} css 文本或 css 文件路径
  */
-export function weEditorPlusCssRule(css: string) {
-  if (css.length < 3) return
-  if ('adoptedStyleSheets' in document) {
-    const { text, url } = processCSSText(css)
-    if (text.length) {
-      const sheet = new CSSStyleSheet()
-      // @ts-ignore
-      sheet.replaceSync(text)
-      SHEETS.push(sheet)
-    }
-    if (url.length) {
-      IMPORT = `${IMPORT}${url}`
-    }
-  } else {
-    STYLES = `${STYLES}${css}`
-  }
+export function weEditorPlusCssRule(css: WeCssRuleList) {
+  GLOBAL_STYLES = `${GLOBAL_STYLES}${cssRuleListToString(css)}`
 }
 
 /**
@@ -206,12 +133,14 @@ export const WeEditorPlus = defineComponent({
     watch(
       () => props.cssRule,
       () => {
-        if (elem.value && props.cssRule !== undefined) elem.value.sheetRule(props.cssRule)
+        if (elem.value) elem.value.sheetRule(props.cssRule)
       },
       { deep: true }
     )
 
     onMounted(() => {
+      elem.value.sheetRule(props.cssRule)
+
       const editor = h(WeEditor, {
         class: props.containerClass,
         style: props.containerStyle,
