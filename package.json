@@ -1,6 +1,6 @@
 {
   "name": "wangeditor5-for-vue3",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "支持动态配置的 wangEditor5 for vue3 组件，同时支持 UI 框架的表单验证",
   "author": "翠林 <clinfc@qq.com>",
   "license": "MIT",
