@@ -45,6 +45,11 @@ export function setTimer(option: WeToolbarOption | WeEditableOption, fn?: () => 
  * vue hook，在 WeEditable 组件中使用
  */
 export function injectEditor(option: WeEditableOption, reload: WeEditableReload, clearContent: () => void) {
+  // 必须是 useWangEditor 函数创建的编辑区配置项
+  if (!EDITABLE_TOOLBAR.has(option)) {
+    throw new Error('You must use the Editable Opiton created by "useWangEditor" function!')
+  }
+
   function reset() {
     const instance = reload()
     if (!instance) return
@@ -76,6 +81,11 @@ export function injectEditor(option: WeEditableOption, reload: WeEditableReload,
  * vue hook，在 WeToolbar 组件中使用
  */
 export function injectToolbar(option: WeToolbarOption, reload: WeToolbarReload) {
+  // 必须是 useWangEditor 函数创建的菜单栏配置项
+  if (!TOOLBAR_EDITABLE.has(option)) {
+    throw new Error('You must use the Toolbar Opiton created by "useWangEditor" function!')
+  }
+
   function reset() {
     const editableOptions = TOOLBAR_EDITABLE.get(option)
     if (!editableOptions) return
