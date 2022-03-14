@@ -127,7 +127,7 @@ export default defineComponent({
     :editable-option="editable"
     :toolbar-reloadbefore="onToolbarReloadBefore"
     :editable-reloadbefore="onEditableReloadBefore"
-    v-model="ruleForm.jarr"
+    v-model="formData.jarr"
     v-model:json="formData.jstr"
     v-model:html="formData.html"
   />
