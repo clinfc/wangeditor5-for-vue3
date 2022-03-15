@@ -84,6 +84,14 @@ const routes: RouteRecordRaw[] = [
     },
   },
   {
+    name: 'SubmitSync',
+    path: '/submit-sync',
+    component: () => import('@view/sync-content.vue'),
+    meta: {
+      title: '强制同步表单数据',
+    },
+  },
+  {
     name: 'Shadow',
     path: '/shadow',
     component: () => import('@view/shadow.vue'),
