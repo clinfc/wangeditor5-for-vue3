@@ -83,7 +83,7 @@ export const WeEditable = defineComponent({
      */
     function updateMval(e: IDomEditor) {
       // 异步执行时，编辑器可能已销毁重建
-      if (e != instance) return
+      if (!e || e != instance) return
       cache.mval = e.isEmpty() ? [] : e.children
       const jsonStr = cache.mval.length ? JSON.stringify(cache.mval) : ''
       if (cache.json !== jsonStr) {
@@ -99,7 +99,7 @@ export const WeEditable = defineComponent({
      */
     function updateJson(e: IDomEditor) {
       // 异步执行时，编辑器可能已销毁重建
-      if (e != instance) return
+      if (!e || e != instance) return
       const jsonStr = e.isEmpty() ? '' : JSON.stringify(e.children)
       if (cache.json !== jsonStr) {
         cache.json = jsonStr
@@ -113,7 +113,7 @@ export const WeEditable = defineComponent({
      */
     function updateHtml(e: IDomEditor) {
       // 异步执行时，编辑器可能已销毁重建
-      if (e != instance) return
+      if (!e || e != instance) return
       const html = e.isEmpty() ? '' : e.getHtml()
       if (cache.html !== html) {
         cache.html = html
@@ -277,7 +277,7 @@ export const WeEditable = defineComponent({
       executeUpdate(instance)
     }
 
-    const reload = injectEditor(option, initialize, clearContent)
+    const reload = injectEditor(option, initialize, clearContent, () => executeUpdate(instance!))
 
     onMounted(reload)
 

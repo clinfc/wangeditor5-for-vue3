@@ -55,6 +55,8 @@ export interface WeEditableHandle {
   reload?: () => void
   /** 清除编辑器内容 */
   clearContent?: () => void
+  /** 强制将数据同步到 v-model 上 */
+  syncContent?: () => void
 }
 
 export type WeToolbarReload = (editable: IDomEditor) => Toolbar | undefined

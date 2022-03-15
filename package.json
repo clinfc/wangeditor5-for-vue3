@@ -36,9 +36,9 @@
     "富文本编辑器"
   ],
   "scripts": {
-    "dev": "concurrently npm:dev:*",
-    "dev:build": "tsc -w",
-    "dev:copy": "nodemon node copy.js",
+    "dev": "tsc -w",
+    "copy": "nodemon node copy.js",
+    "local": "concurrently npm:dev npm:copy",
     "build": "npm run build:es && npm run build:lib",
     "build:es": "tsc",
     "build:lib": "vite build",

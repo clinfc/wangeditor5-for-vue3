@@ -44,7 +44,7 @@ export function setTimer(option: WeToolbarOption | WeEditableOption, fn?: () => 
 /**
  * vue hook，在 WeEditable 组件中使用
  */
-export function injectEditor(option: WeEditableOption, reload: WeEditableReload, clearContent: () => void) {
+export function injectEditor(option: WeEditableOption, reload: WeEditableReload, clearContent: () => void, syncContent: () => void) {
   // 必须是 useWangEditor 函数创建的编辑区配置项
   if (!EDITABLE_TOOLBAR.has(option)) {
     throw new Error('You must use the Editable Opiton created by "useWangEditor" function!')
@@ -72,7 +72,7 @@ export function injectEditor(option: WeEditableOption, reload: WeEditableReload,
     }
   }
 
-  EDITABLE_HANDLE.set(option, { clearContent, reload: reset })
+  EDITABLE_HANDLE.set(option, { clearContent, syncContent, reload: reset })
 
   return reset
 }
@@ -221,6 +221,13 @@ export function useWangEditor(
   }
 
   /**
+   * 强制将数据同步到 v-model 上
+   */
+  function syncContent() {
+    EDITABLE_HANDLE.get(editable)?.syncContent?.()
+  }
+
+  /**
    * 重载编辑器（销毁重建)
    */
   function reloadEditor() {
@@ -232,5 +239,5 @@ export function useWangEditor(
     }
   }
 
-  return { editable, toolbar, getEditable, getToolbar, clearContent, reloadEditor }
+  return { editable, toolbar, getEditable, getToolbar, clearContent, reloadEditor, syncContent }
 }
