@@ -89,19 +89,19 @@ export const WeEditorPlus = defineComponent({
   components: { WeEditor },
   props: {
     toolbarOption: {
-      type: Object as PropType<WeToolbarOption>,
+      type: Object as PropType<Required<WeToolbarOption>>,
+      required: true,
     },
     /** 编辑器初始化的配置 */
     editableOption: {
-      type: Object as PropType<WeEditableOption>,
+      type: Object as PropType<Required<WeEditableOption>>,
+      required: true,
     },
     toolbarReloadbefore: {
       type: Function as PropType<(toolbar: Toolbar) => void>,
-      default: () => () => {},
     },
     editableReloadbefore: {
       type: Function as PropType<(editor: IDomEditor) => void>,
-      default: () => () => {},
     },
     /** 菜单栏与编辑区公共父容器的 class */
     containerClass: [String, Object, Array],

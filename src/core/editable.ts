@@ -27,13 +27,7 @@ export const WeEditable = defineComponent({
     /** 编辑器初始化的配置 */
     option: {
       type: Object as PropType<Required<WeEditableOption>>,
-      default: () => ({
-        mode: 'default',
-        config: {},
-        delay: DELAY.UPDATE,
-        defaultContent: null,
-        extendCache: true,
-      }),
+      required: true,
     },
     reloadbefore: {
       type: Function as PropType<(editor: IDomEditor) => void>,

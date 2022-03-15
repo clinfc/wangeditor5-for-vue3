@@ -10,8 +10,8 @@ export const WeToolbar = defineComponent({
   name: 'WeToolbar',
   props: {
     option: {
-      type: Object as PropType<WeToolbarOption>,
-      default: () => ({}),
+      type: Object as PropType<Required<WeToolbarOption>>,
+      required: true
     },
     reloadbefore: {
       type: Function as PropType<(inst: Toolbar) => void>,
