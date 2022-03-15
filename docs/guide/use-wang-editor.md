@@ -29,6 +29,7 @@ declare function useWangEditor(
     (timeout: number): Promise<Toolbar>
   }
   clearContent: () => void
+  syncContent: () => void
   reloadEditor: () => void
 }
 ```
@@ -165,6 +166,66 @@ customClearContent()
 >
 > 不是每一个用户都对富文本数据格式了如指掌，也不是每个用户都能区分不同响应式 API 间的区别 _（本作者也不敢说自己每个响应式 API 都懂）_ ，总会出现千奇百怪的问题。
 
+### syncContent
+
+> `v0.0.7+` 新增
+
+由于组件内部对 `v-model` 的数据更新做了节流处理（节流时长由 `WeEditableOption.delay` 控制）。当 `delay` 的数值稍大，我们在输入内容后快速点击提交表单，那么此时 `v-model` 的数据将不是最新的，这将得不偿失。因此我们可以在表单提交前执行 `syncContent` 来强制更新 `v-model` 数据，即可防止数据丢失。
+
+以 `element-plus` 为例，在调用 `ElForm.validate` 方法前执行 `syncContent` 方法，即可避免数据丢失。
+
+```vue
+<template>
+  <el-form ref="ruleForm" :model="formData" :rules="formRule">
+    <el-form-item label="文章" prop="json">
+      <we-editor :toolbar-option="toolbar" :editable-option="editable" v-model:json="formData.json" />
+    </el-form-item>
+    <el-form-item>
+      <el-button type="primary" @click="submit">提交表单</el-button>
+    </el-form-item>
+  </el-form>
+</template>
+
+<script lang="ts">
+  import { FormInstance, FormRules } from 'element-plus'
+  import { defineComponent, reactive, Ref, ref } from 'vue'
+  import { useWangEditor } from 'wangeditor5-for-vue3'
+
+  export default defineComponent({
+    setup() {
+      const ruleForm = ref<any>(null) as Ref<FormInstance>
+
+      const formData = reactive({ json: '' })
+
+      const formRule: FormRules = {
+        json: [{ required: true, message: '内容不能为空', trigger: 'change' }],
+      }
+
+      const { editable, toolbar, syncContent } = useWangEditor({
+        delay: 5000, // 无操作 5s 后才会同步表单数据
+        config: {
+          placeholder: '表单提交前使用 syncContent API 强制同步数据，确保数据不被丢失',
+        },
+      })
+
+      // 表单提交
+      function submit() {
+        // 强制同步 v-model 数据
+        syncContent()
+
+        // 表单验证
+        ruleForm.value.validate((valid) => {
+          if (!valid) return
+          console.log({ ...formData })
+        })
+      }
+
+      return { ruleForm, formData, formRule, editable, toolbar, submit }
+    },
+  })
+</script>
+```
+
 ### getToolbar
 
 获取菜单栏实例
@@ -186,9 +247,9 @@ if (toolbarInstance) {
 
 #### 异步模式
 
-当我们传入一个数字时，传入的是异步超时时间。单位：毫秒。
-
 > `v0.0.5+` 新增
+
+当我们传入一个数字时，传入的是异步超时时间。单位：毫秒。
 
 ```ts
 const { getToolbar } = useWangEditor()
@@ -223,9 +284,9 @@ if (editableInstance) {
 
 #### 异步模式
 
-当我们传入一个数字时，传入的是异步超时时间。单位：毫秒。
-
 > `v0.0.5+` 新增
+
+当我们传入一个数字时，传入的是异步超时时间。单位：毫秒。
 
 ```ts
 const { getEditable } = useWangEditor()
