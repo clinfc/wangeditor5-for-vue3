@@ -2,6 +2,8 @@
 
 `wangeditor5-for-vue3` 的组件支持在其它 UI 框架的表单中使用，同时支持 `blur` 和 `change` 两种 `trigger` 模式。
 
+在提交表单前，或手动触发表单验证前，请使用 [`syncContent`](./use-wang-editor.md#synccontent) 来强制同步 `v-model` 数据，避免数据丢失。更多详情请查看 [`syncContent`](./use-wang-editor.md#synccontent)。
+
 ## 目前已支持的 UI 框架
 
 - `element-plus` [查看](https://github.com/clinfc/wangeditor5-for-vue3/tree/main/example/element_plus#表单验证)
