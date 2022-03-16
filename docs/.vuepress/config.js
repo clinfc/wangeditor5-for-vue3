@@ -22,6 +22,7 @@ module.exports = {
               { text: 'WeEditorPlus', link: '/shadow/start.md#使用示例' },
               { text: 'useWangEditor', link: '/guide/use-wang-editor.md' },
               { text: 'clearContent', link: '/guide/use-wang-editor.md#clearcontent' },
+              { text: 'syncContent', link: '/guide/use-wang-editor.md#synccontent' },
               { text: 'getToolbar', link: '/guide/use-wang-editor.md#gettoolbar' },
               { text: 'getEditable', link: '/guide/use-wang-editor.md#geteditable' },
               { text: 'reloadEditor', link: '/guide/use-wang-editor.md#reloadeditor' },
