@@ -4,6 +4,10 @@
 
 > `wangEditor` 是一款开源 `Web` 富文本编辑器，开箱即用，配置简单
 
+## 在线示例
+
+[https://clinfc.github.io/wangeditor5-for-vue3-example/](https://clinfc.github.io/wangeditor5-for-vue3-example/)
+
 ## 快速开始
 
 ```sh

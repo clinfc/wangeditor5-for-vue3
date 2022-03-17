@@ -37,7 +37,7 @@ module.exports = {
             children: [
               {
                 text: 'element-plus',
-                link: 'https://github.com/clinfc/wangeditor5-for-vue3/tree/main/example/element_plus',
+                link: 'https://github.com/clinfc/wangeditor5-for-vue3-example',
               },
               {
                 text: 'ant-design-vue@3',

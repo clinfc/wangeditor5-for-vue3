@@ -6,6 +6,8 @@ tagline: 在 Vue3 中使用 wangEditor v5
 actions:
   - text: 快速开始
     link: /guide/README.md
+  - text: 在线示例
+    link: https://clinfc.github.io/wangeditor5-for-vue3-example/
     type: success
 features:
   - title: 动态配置
