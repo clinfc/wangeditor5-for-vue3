@@ -16,7 +16,7 @@ import {
   watch,
 } from 'vue'
 import { EDITABLE_TOOLBAR, injectEditor, injectFormField, setTimer } from './core'
-import { DELAY, WeEditableCache, WeEditableOption } from './types'
+import {  WeEditableCache, WeEditableOption } from './types'
 
 /**
  * 编辑器

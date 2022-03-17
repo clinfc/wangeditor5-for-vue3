@@ -5,11 +5,6 @@
     "project_name": true
   },
   {
-    "target": "example/element_plus",
-    "node_modules": true,
-    "project_name": true
-  },
-  {
     "target": "example/naive_ui",
     "node_modules": true,
     "project_name": true
