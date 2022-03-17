@@ -6,7 +6,7 @@
 
 ## 目前已支持的 UI 框架
 
-- `element-plus` [查看](https://github.com/clinfc/wangeditor5-for-vue3/tree/main/example/element_plus#表单验证)
+- `element-plus` [查看](https://github.com/clinfc/wangeditor5-for-vue3-example#表单验证)
 - `ant-design-vue@^3` [查看](https://github.com/clinfc/wangeditor5-for-vue3/tree/main/example/ant_design#表单验证)
 - `naive-ui` [查看](https://github.com/clinfc/wangeditor5-for-vue3/tree/main/example/naive_ui#表单验证)
 
