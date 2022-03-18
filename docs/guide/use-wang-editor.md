@@ -170,7 +170,7 @@ customClearContent()
 
 > `v0.0.7+` 新增
 
-由于组件内部对 `v-model` 的数据更新做了节流处理（节流时长由 `WeEditableOption.delay` 控制）。当 `delay` 的数值稍大，我们在输入内容后快速点击提交表单，那么此时 `v-model` 的数据将不是最新的，这将得不偿失。因此我们可以在表单提交前执行 `syncContent` 来解除 `WeEditableOption.delay` 的副作用，强制更新 `v-model` 数据，即可防止数据丢失。
+由于组件内部对 `v-model` 的数据更新做了防抖处理（防抖时长由 `WeEditableOption.delay` 控制）。当 `delay` 的数值稍大，我们在输入内容后快速点击提交表单，那么此时 `v-model` 的数据将不是最新的，这将得不偿失。因此我们可以在表单提交前执行 `syncContent` 来解除 `WeEditableOption.delay` 的副作用，强制更新 `v-model` 数据，即可防止数据丢失。
 
 以 `element-plus` 为例，在调用 `ElForm.validate` 方法前执行 `syncContent` 方法，即可避免数据丢失。
 

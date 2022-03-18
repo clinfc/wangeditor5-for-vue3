@@ -50,7 +50,7 @@ npm install @wangeditor/editor wangeditor5-for-vue3
 
 ### 示例代码
 
-- [element-plus](./example/element_plus)
+- [element-plus](https://github.com/clinfc/wangeditor5-for-vue3-example)
 - [ant-design-vue@^3](./example/ant_design)
 - [naive-ui](./example/naive_ui)
 - [vue-cli](./example/vue_cli)
