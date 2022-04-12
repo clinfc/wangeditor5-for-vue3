@@ -38,6 +38,8 @@ export interface WeEditableOption {
    * false: defaultContent > defaultHtml > v-model > v-model:json > v-model:html。
    */
   extendCache?: boolean
+  /** 对编辑器实例使用 markRaw 进行标记，默认值：true */
+  markRaw?: boolean
 }
 
 /**
@@ -46,6 +48,8 @@ export interface WeEditableOption {
 export interface WeToolbarOption {
   mode?: 'default' | 'simple'
   config?: Partial<IToolbarConfig>
+  /** 对菜单栏实例使用 markRaw 进行标记，默认值：true */
+  markRaw?: boolean
 }
 
 export type WeEditableReload = () => IDomEditor | undefined

@@ -1,5 +1,5 @@
 import { createToolbar, IDomEditor, Toolbar } from '@wangeditor/editor'
-import { defineComponent, h, onBeforeUnmount, onMounted, PropType, ref, Ref, watch } from 'vue'
+import { defineComponent, h, markRaw, onBeforeUnmount, onMounted, PropType, ref, Ref, watch } from 'vue'
 import { injectToolbar, setTimer, TIMER, TOOLBAR_EDITABLE } from './core'
 import { WeToolbarOption } from './types'
 
@@ -11,7 +11,7 @@ export const WeToolbar = defineComponent({
   props: {
     option: {
       type: Object as PropType<Required<WeToolbarOption>>,
-      required: true
+      required: true,
     },
     reloadbefore: {
       type: Function as PropType<(inst: Toolbar) => void>,
@@ -33,6 +33,8 @@ export const WeToolbar = defineComponent({
       }
 
       instance = createToolbar({ ...props.option, editor, selector: elem.value })
+
+      props.option.markRaw && markRaw(instance)
 
       return instance
     }

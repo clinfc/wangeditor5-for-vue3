@@ -44,7 +44,12 @@ export function setTimer(option: WeToolbarOption | WeEditableOption, fn?: () => 
 /**
  * vue hook，在 WeEditable 组件中使用
  */
-export function injectEditor(option: WeEditableOption, reload: WeEditableReload, clearContent: () => void, syncContent: () => void) {
+export function injectEditor(
+  option: WeEditableOption,
+  reload: WeEditableReload,
+  clearContent: () => void,
+  syncContent: () => void
+) {
   // 必须是 useWangEditor 函数创建的编辑区配置项
   if (!EDITABLE_TOOLBAR.has(option)) {
     throw new Error('You must use the Editable Opiton created by "useWangEditor" function!')
@@ -143,11 +148,13 @@ export function useWangEditor(
     config: {},
     delay: DELAY.UPDATE,
     extendCache: true,
+    markRaw: true,
     ...(isProxy(editableOption) ? toRaw(editableOption) : editableOption), // 配置项可能被复用，解除与之前依赖的关联
   })
 
   const toolbar = reactive<Required<WeToolbarOption>>({
     mode: 'default',
+    markRaw: true,
     config: {},
     ...(isProxy(toolbarOption) ? toRaw(toolbarOption) : toolbarOption), // 配置项可能被复用，解除与之前依赖的关联
   })

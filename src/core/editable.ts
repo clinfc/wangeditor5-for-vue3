@@ -1,9 +1,17 @@
-import { createEditor, IDomEditor, IEditorConfig, SlateDescendant } from '@wangeditor/editor'
+import {
+  createEditor,
+  IDomEditor,
+  IEditorConfig,
+  SlateDescendant,
+  SlateEditor,
+  SlateTransforms,
+} from '@wangeditor/editor'
 import debounce from 'lodash.debounce'
 import {
   computed,
   defineComponent,
   h,
+  markRaw,
   onBeforeUnmount,
   onMounted,
   PropType,
@@ -14,9 +22,10 @@ import {
   toRef,
   unref,
   watch,
+  watchEffect,
 } from 'vue'
 import { EDITABLE_TOOLBAR, injectEditor, injectFormField, setTimer } from './core'
-import {  WeEditableCache, WeEditableOption } from './types'
+import { WeEditableCache, WeEditableOption } from './types'
 
 /**
  * 编辑器
@@ -133,19 +142,18 @@ export const WeEditable = defineComponent({
     /** 封装 change 事件，实现数据 v-model v-model:json 和 v-model:html */
     const changes: ((e: IDomEditor) => void)[] = []
 
-    function watchOptionOnChange() {
+    watchEffect(() => {
       changes.length = 0
 
-      const { delay, config } = option
+      const delay = option.delay
+      const onChange = option.config?.onChange
 
-      if (modelMval.value) changes.push(debounce(updateMval, delay))
-      else if (modelJson.value) changes.push(debounce(updateJson, delay))
-      modelHtml.value && changes.push(debounce(updateHtml, delay))
+      if (modelMval.value) changes.push(delay > 0 ? debounce(updateMval, delay) : updateMval)
+      else if (modelJson.value) changes.push(delay > 0 ? debounce(updateJson, delay) : updateJson)
+      modelHtml.value && changes.push(delay > 0 ? debounce(updateHtml, delay) : updateHtml)
 
-      if (config && config.onChange) {
-        changes.push(config.onChange)
-      }
-    }
+      typeof onChange === 'function' && changes.push(onChange)
+    })
 
     const configCallback: Partial<IEditorConfig> = {
       customAlert(info, type) {
@@ -191,8 +199,6 @@ export const WeEditable = defineComponent({
         props.reloadbefore(instance)
         instance.destroy()
         instance = null
-      } else {
-        watchOptionOnChange()
       }
 
       // 解除 vue 副作用，否则将意外不断
@@ -209,7 +215,6 @@ export const WeEditable = defineComponent({
 
       let content = ''
       let htmltemp = ''
-      // debugger
 
       if (extendCache) {
         if (cache.json.length > 2) {
@@ -260,6 +265,8 @@ export const WeEditable = defineComponent({
         modelHtml.value && updateHtml(instance)
       }
 
+      option.markRaw && markRaw(instance)
+
       return instance
     }
 
@@ -268,10 +275,16 @@ export const WeEditable = defineComponent({
      */
     function clearContent() {
       // 如果不进行只读模式拦截，那么只需时将报错
-      // 只读模式 || 为初始 || 无内容
-      if (option.config.readOnly || !instance || instance.isEmpty()) return
+      // 为初始 || 无内容
+      if (!instance || instance.isEmpty()) return
+
+      const disable = instance.isDisabled()
+
+      instance.enable()
 
       instance.clear()
+
+      disable && instance.disable()
 
       // 强制进行数据同步，避免延迟机制导致数据异常
       executeUpdate(instance)
@@ -310,6 +323,34 @@ export const WeEditable = defineComponent({
     watch(() => option.config.MENU_CONF, watchOptionReload, { deep: true })
     watch(() => option.config.EXTEND_CONF, watchOptionReload, { deep: true })
 
+    /**
+     * 设置 v-model 数据
+     * @param inst 编辑器实例
+     * @param insert 执行插入操作
+     */
+    function model(inst: IDomEditor, insert: Function) {
+      const focus = inst.isFocused()
+      const disable = option.config.readOnly
+      const selection = JSON.stringify(inst.selection)
+
+      disable && inst.enable()
+      inst.clear()
+
+      insert()
+
+      if (disable) {
+        inst.disable()
+      } else if (!focus) {
+        inst.blur()
+      } else {
+        try {
+          inst.select(JSON.parse(selection)) // 恢复选区
+        } catch (e) {
+          inst.select(SlateEditor.start(inst, [])) // 选中开头
+        }
+      }
+    }
+
     // 监听 v-model
     watch(
       mval,
@@ -324,8 +365,7 @@ export const WeEditable = defineComponent({
         if (jsonStr === cache.json) return
 
         if (instance) {
-          instance.clear()
-          instance.insertFragment(value)
+          model(instance, () => instance!.insertFragment(value))
         } else {
           cache.mval = value
           cache.json = jsonStr
@@ -347,8 +387,7 @@ export const WeEditable = defineComponent({
         try {
           if (instance) {
             const temp = jsonStr.length > 2 ? JSON.parse(jsonStr) : []
-            instance.clear()
-            instance.insertFragment(temp)
+            model(instance, () => instance!.insertFragment(temp))
           } else {
             cache.json = jsonStr
           }
@@ -371,18 +410,17 @@ export const WeEditable = defineComponent({
         if (value === cache.html) return
 
         if (instance) {
-          instance.clear()
-          instance.dangerouslyInsertHtml(value)
+          model(instance, () => {
+            // @ts-ignore
+            SlateTransforms.setNodes(instance!, { type: 'paragraph' }, { mode: 'highest' })
+            instance!.dangerouslyInsertHtml(value)
+          })
         } else {
           cache.html = value
         }
       },
       { immediate: true }
     )
-
-    // change 回调相关
-    watch(() => option.delay, watchOptionOnChange)
-    watch(() => option.config.onChange, watchOptionOnChange)
 
     // readOnly
     watch(
@@ -408,7 +446,7 @@ export const WeEditable = defineComponent({
       }
     )
 
-    return { elem }
+    return { elem, cache, modelMval, modelJson, modelHtml }
   },
   render() {
     return h('div', { ref: 'elem' })
