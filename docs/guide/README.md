@@ -1,7 +1,5 @@
 # 快速开始
 
-`@wangeditor/editor` 的版本建议在 `0.14.0` 及以上，因为 `0.14.0` 以下的版本不支持 `defaultHtml` 选项配置。
-
 ## 安装
 
 ```sh
@@ -56,6 +54,8 @@ export default defineComponent({
 ## 完全示例
 
 ### WeToolbar + WeEditable
+
+在 `wangeditor5-for-vue3` 组件库中，菜单栏和编辑区分别提供了独立的组件，可供使用者在特殊场景下使用。
 
 ```html
 <template>
@@ -115,6 +115,8 @@ export default defineComponent({
 ```
 
 ### WeEditor
+
+`WeEditor` 组件将 `WeToolbar` 和 `WeEditable` 组件封装在了一个组件中，使用更方便。
 
 ```html
 <template>

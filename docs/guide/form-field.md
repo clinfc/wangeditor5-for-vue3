@@ -57,11 +57,23 @@ app.mount('#app')
 #### provide
 
 ```ts
+import { createApp } from 'vue'
+import { weFormFieldInjectionKey } from 'wangeditor5-for-vue3'
+
+const app = createApp(App)
+
+app.provide(weFormFieldInjectionKey, weFormFields)
+
+app.mount('#app')
+```
+
+或
+
+```ts
 import { defineComponent, provide } from 'vue'
 import { weFormFieldInjectionKey } from 'wangeditor5-for-vue3'
 
 export default defineComponent({
-  components: { UPrism },
   setup() {
     provide(weFormFieldInjectionKey, weFormFields)
 
