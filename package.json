@@ -47,16 +47,16 @@
   },
   "devDependencies": {
     "@types/lodash.debounce": "^4.0.6",
-    "@wangeditor/editor": "^0.15.7",
+    "@wangeditor/editor": "^5.0.0",
     "concurrently": "^7.0.0",
     "nodemon": "^2.0.15",
     "typescript": "^4.4.4",
     "vite": "^2.8.3",
-    "vue": "^3.2.26",
+    "vue": "^3.2.31",
     "vuepress": "^2.0.0-beta.33"
   },
   "peerDependencies": {
-    "@wangeditor/editor": "^0.15.7",
+    "@wangeditor/editor": "^5.0.0",
     "vue": "^3.2.26"
   }
 }
