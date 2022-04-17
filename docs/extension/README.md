@@ -2,4 +2,4 @@
 
 ## 菜单扩展
 
-- [toggle-model](./toggle-mode.md)
+- [toggle-mode](./toggle-mode.md)
