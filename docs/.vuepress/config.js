@@ -33,6 +33,7 @@ module.exports = {
               { text: '触发重载的配置项', link: '/guide/use-wang-editor.md#会触发重载的配置项' },
             ],
           },
+          { text: '扩展', link: '/extension/' },
           {
             text: '使用示例',
             children: [
@@ -79,6 +80,7 @@ module.exports = {
             '/guide/relevance.md',
           ],
           '/shadow/': ['/shadow/README.md', '/shadow/start.md', '/shadow/css-rule.md'],
+          '/extension/': ['/extension/README.md', '/extension/toggle-mode.md'],
         },
       },
     },

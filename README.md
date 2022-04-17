@@ -48,6 +48,10 @@ npm install @wangeditor/editor wangeditor5-for-vue3
 
   `WeEditorPlus` 组件能隔绝全局的样式污染，解决你因样式而造成的困扰
 
+- **toggle mode**
+
+  内置编辑器模式切换菜单，通过简单的配置后，客户便可以在使用时切换喜欢的模式了。
+
 ### 示例代码
 
 - [element-plus](https://github.com/clinfc/wangeditor5-for-vue3-example)
@@ -58,7 +62,7 @@ npm install @wangeditor/editor wangeditor5-for-vue3
 ### 兼容性
 
 - `vue@^3`
-- `@wangeditor/editor@^0.14.0`
+- `@wangeditor/editor@^5.0.0`
 
 ### 交流
 
