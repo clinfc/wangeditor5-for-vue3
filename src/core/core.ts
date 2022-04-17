@@ -15,6 +15,11 @@ const EDITABLE_HANDLE: WeakMap<WeEditableOption, WeEditableHandle> = new WeakMap
 
 const TOOLBAR_HANDLE: WeakMap<WeToolbarOption, WeToolbarHandle> = new WeakMap()
 
+/**
+ * 实例与配置项间的关系
+ */
+export const INSTANCE_OPTION: WeakMap<IDomEditor | Toolbar, WeEditableOption | WeToolbarOption> = new WeakMap()
+
 /** 编辑器 与 Toolbar 间的映射关系 */
 export const EDITABLE_TOOLBAR: WeakMap<WeEditableOption, WeToolbarOption> = new WeakMap()
 
@@ -22,6 +27,15 @@ export const EDITABLE_TOOLBAR: WeakMap<WeEditableOption, WeToolbarOption> = new 
 export const TOOLBAR_EDITABLE: WeakMap<WeToolbarOption, WeEditableOption> = new WeakMap()
 
 export const TIMER: WeakMap<WeToolbarOption | WeEditableOption, [number, null | NodeJS.Timeout]> = new WeakMap()
+
+export function getOption(inst: IDomEditor) {
+  const editable = INSTANCE_OPTION.get(inst) as WeEditableOption
+
+  return {
+    editable,
+    toolbar: EDITABLE_TOOLBAR.get(editable)!,
+  }
+}
 
 export function setTimer(option: WeToolbarOption | WeEditableOption, fn?: () => void) {
   let timer = TIMER.get(option)
@@ -58,6 +72,8 @@ export function injectEditor(
   function reset() {
     const instance = reload()
     if (!instance) return
+
+    INSTANCE_OPTION.set(instance, option)
 
     const temp = EDITABLE_HANDLE.get(option)
     if (!temp) {
@@ -100,6 +116,8 @@ export function injectToolbar(option: WeToolbarOption, reload: WeToolbarReload) 
 
     const instance = reload(editable.instance)
     if (!instance) return
+
+    INSTANCE_OPTION.set(instance, option)
 
     const temp = TOOLBAR_HANDLE.get(option)
     if (!temp) {
