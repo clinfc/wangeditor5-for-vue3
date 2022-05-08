@@ -1,3 +1,5 @@
+const { defaultTheme } = require('vuepress')
+
 module.exports = {
   // 站点配置
   lang: 'zh-CN',
@@ -5,7 +7,7 @@ module.exports = {
   description: '支持动态配置的 wangEditor5 for vue3 组件',
   base: '/wangeditor5-for-vue3/',
 
-  themeConfig: {
+  theme: defaultTheme({
     // logo: 'https://www.wangeditor.com/v5/image/logo.png',
     locales: {
       '/': {
@@ -85,5 +87,5 @@ module.exports = {
         },
       },
     },
-  },
+  }),
 }
