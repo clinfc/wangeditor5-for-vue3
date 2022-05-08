@@ -1,7 +1,8 @@
-import { IDomEditor, SlateDescendant, Toolbar } from '@wangeditor/editor'
-import { defineComponent, h, onBeforeUnmount, onMounted, PropType, Ref, ref, render, watch } from 'vue'
-import { WeEditor } from './editor'
-import { WeCssRuleList, WeCssRuleMap, WeEditableOption, WeToolbarOption } from './types'
+import { defineComponent, h, onMounted, PropType, Ref, ref, watch, render, onBeforeUnmount, toRefs } from 'vue'
+import { WeCssRuleList, WeCssRuleMap } from './types'
+import { editableSetup, WeEditableEmits } from './editable'
+import { WeEditorProps } from './editor'
+import { toolbarSetup } from './toolbar'
 
 let GLOBAL_STYLES = ''
 
@@ -47,32 +48,6 @@ function cssRuleListToString(list: WeCssRuleList) {
     .join('')
 }
 
-class WangEditorElement extends HTMLDivElement {
-  public sheet!: HTMLStyleElement
-
-  public constructor() {
-    super()
-
-    const shadow = this.attachShadow({ mode: 'open' })
-
-    shadow.innerHTML = `<style>${GLOBAL_STYLES}</style><style id="sheet"></style>`
-
-    this.sheet = shadow.querySelector('#sheet')!
-  }
-
-  /**
-   * 动态修改 css 规则
-   * @param list CSS规则
-   */
-  public sheetRule(list?: WeCssRuleList) {
-    this.sheet.textContent = list ? cssRuleListToString(list) : ''
-  }
-}
-
-const CUSTOM_ELEMENT_NAME = 'wangeditor-clinfc'
-
-customElements.define(CUSTOM_ELEMENT_NAME, WangEditorElement, { extends: 'div' })
-
 /**
  * 将 css 样式注入 shadow 中
  * @param css {String|Array|Object} css 文本或 css 文件路径
@@ -86,92 +61,55 @@ export function weEditorPlusCssRule(css: WeCssRuleList) {
  */
 export const WeEditorPlus = defineComponent({
   name: 'WeEditorPlus',
-  components: { WeEditor },
   props: {
-    toolbarOption: {
-      type: Object as PropType<Required<WeToolbarOption>>,
-      required: true,
-    },
-    /** 编辑器初始化的配置 */
-    editableOption: {
-      type: Object as PropType<Required<WeEditableOption>>,
-      required: true,
-    },
-    toolbarReloadbefore: {
-      type: Function as PropType<(toolbar: Toolbar) => void>,
-    },
-    editableReloadbefore: {
-      type: Function as PropType<(editor: IDomEditor) => void>,
-    },
     /** 菜单栏与编辑区公共父容器的 class */
     containerClass: [String, Object, Array],
     /** 菜单栏与编辑区公共父容器的 style */
     containerStyle: [String, Object, Array],
-    /** 自定义菜单栏 class */
-    toolbarClass: [String, Object, Array],
-    /** 自定义编辑区 class */
-    editableClass: [String, Object, Array],
-    /** 自定义菜单栏 style */
-    toolbarStyle: [String, Object, Array],
-    /** 自定义编辑区 style */
-    editableStyle: [String, Object, Array],
     /** 组件级样式 */
     cssRule: [String, Array, Object] as PropType<WeCssRuleList>,
-    /** v-model */
-    modelValue: Array as PropType<SlateDescendant[]>,
-    /** v-model:html */
-    html: String,
-    /** v-model:json */
-    json: String,
+    ...WeEditorProps,
   },
-  emits: ['update:modelValue', 'update:html', 'update:json'],
+  emits: [...WeEditableEmits],
   setup(props, { emit }) {
-    const elem = ref<any>(null) as Ref<WangEditorElement>
+    const selem = ref<any>(null) as Ref<HTMLDivElement> // 开启 shadow 的元素
+    const celem = ref<any>(null) as Ref<HTMLDivElement> // 编辑器的公共父节点
+    const telem = ref<any>(null) as Ref<HTMLDivElement> // 菜单栏节点
+    const eelem = ref<any>(null) as Ref<HTMLDivElement> // 编辑区节点
 
-    const container = document.createElement('div')
+    const { toolbarOption, toolbarReloadbefore, editableOption, editableReloadbefore, modelValue, json, html } =
+      toRefs(props)
+
+    const sheet = document.createElement('style')
 
     watch(
       () => props.cssRule,
-      () => {
-        if (elem.value) elem.value.sheetRule(props.cssRule)
+      (list) => {
+        sheet.textContent = list ? cssRuleListToString(list) : ''
       },
-      { deep: true }
+      { deep: true, immediate: true }
     )
 
     onMounted(() => {
-      elem.value.sheetRule(props.cssRule)
+      const shadow = selem.value.attachShadow({ mode: 'open' })
+      shadow.innerHTML = `<style>${GLOBAL_STYLES}</style>`
+      shadow.append(sheet)
+      shadow.append(celem.value)
 
-      const editor = h(WeEditor, {
-        class: props.containerClass,
-        style: props.containerStyle,
-        toolbarOption: props.toolbarOption,
-        toolbarClass: props.toolbarClass,
-        toolbarStyle: props.toolbarStyle,
-        toolbarReloadbefore: props.toolbarReloadbefore,
-        editableOption: props.editableOption as Required<WeEditableOption>,
-        editableClass: props.editableClass,
-        editableStyle: props.editableStyle,
-        editableReloadbefore: props.editableReloadbefore,
-        modelValue: props.modelValue,
-        json: props.json,
-        html: props.html,
-        'onUpdate:modelValue': (value) => emit('update:modelValue', value),
-        'onUpdate:json': (value) => emit('update:json', value),
-        'onUpdate:html': (value) => emit('update:html', value),
-      })
-
-      render(editor, container)
-
-      elem.value.shadowRoot!.appendChild(container.firstElementChild!)
+      toolbarSetup(telem, toolbarOption, toolbarReloadbefore)
+      editableSetup(eelem, editableOption, editableReloadbefore, modelValue, json, html, emit)()
     })
 
-    onBeforeUnmount(() => {
-      render(null, container)
-    })
-
-    return { elem }
+    return { selem, celem, telem, eelem }
   },
   render() {
-    return h('div', { ref: 'elem', is: CUSTOM_ELEMENT_NAME })
+    return h(
+      'div',
+      { ref: 'selem' },
+      h('div', { ref: 'celem', class: this.containerClass, style: this.containerStyle }, [
+        h('div', { ref: 'telem', class: this.toolbarClass, style: this.toolbarStyle }),
+        h('div', { ref: 'eelem', class: this.editableClass, style: this.editableStyle }),
+      ])
+    )
   },
 })

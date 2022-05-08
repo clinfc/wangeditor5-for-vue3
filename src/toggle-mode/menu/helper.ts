@@ -1,9 +1,14 @@
 import { IDomEditor } from '@wangeditor/editor'
-import { getOption } from '../../core/core'
+import { getOption, tt } from '../../core/core'
 import { Standrad, ToggleTarget } from '../types'
 
 export function execToggle(editor: IDomEditor, type: ToggleTarget, standrad: Standrad) {
   const { toolbar, editable } = getOption(editor)
+
+  if (!editable || !toolbar) {
+    editor.hidePanelOrModal()
+    throw new Error(tt('vcomponent.initialize', !editable ? 'Editable' : 'Toolbar'))
+  }
 
   if (type === 'editor') {
     if (standrad === 'toolbar') {

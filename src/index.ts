@@ -1,5 +1,11 @@
-export type { WeEditableOption, WeToolbarOption, WeEditorFormFields, WeCssRuleList } from './core/types'
-export { useWangEditor, weFormFieldInjectionKey } from './core/core'
+export type {
+  VComponentLanguage,
+  WeEditableOption,
+  WeToolbarOption,
+  WeEditorFormFields,
+  WeCssRuleList,
+} from './core/types'
+export { useWangEditor, weFormFieldInjectionKey, tt } from './core/core'
 export { WeToolbar } from './core/toolbar'
 export { WeEditable } from './core/editable'
 export { WeEditor } from './core/editor'

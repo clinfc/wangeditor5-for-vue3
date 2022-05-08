@@ -1,5 +1,11 @@
+/**
+ * 进行 mode 切换的目标。toolbar：只对菜单栏进行切换；editable：只对编辑区进行切换；editor：对编辑区和菜单栏同时进行切换。
+ */
 export type ToggleTarget = 'toolbar' | 'editable' | 'editor'
 
+/**
+ * 添加到默认菜单栏的 toggle-mode 菜单的关键字（唯一键）
+ */
 export type ToggleModeMenuKey = 'toggleModeButton' | 'toggleModeSelect'
 
 /**

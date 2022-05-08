@@ -1,3 +1,4 @@
+import { ExtractPropTypes } from 'vue'
 import { IDomEditor, IEditorConfig, IToolbarConfig, SlateDescendant, Toolbar } from '@wangeditor/editor'
 
 type CssRule = Record<string, string | number>
@@ -73,4 +74,13 @@ export interface WeToolbarHandle {
 export const enum DELAY {
   RELOAD = 500,
   UPDATE = 3000,
+}
+
+export type EmitFn<T extends ArrayLike<string>> = T extends ArrayLike<infer E> ? (e: E, ...args: any[]) => void : never
+
+export type VComponentLanguage = {
+  vcomponent: {
+    initialize: string
+    instance: string
+  }
 }

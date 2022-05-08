@@ -1,4 +1,5 @@
-import { IDomEditor, Toolbar } from '@wangeditor/editor'
+import './locale'
+import { IDomEditor, Toolbar, t } from '@wangeditor/editor'
 import { getCurrentInstance, inject, InjectionKey, isProxy, reactive, toRaw } from 'vue'
 import {
   DELAY,
@@ -10,6 +11,28 @@ import {
   WeToolbarOption,
   WeToolbarReload,
 } from './types'
+
+const TPL_FN: Map<string, (...args: any[]) => string> = new Map()
+
+/**
+ * 支持模板字面量的多语言函数
+ * @param p 多语言 t 函数的参数
+ * @param args 模板字面量的动态参数
+ */
+export function tt(p: string, ...args: (string | number)[]) {
+  const tpl = t(p)
+
+  if (!tpl) return ''
+
+  if (!TPL_FN.has(tpl)) {
+    const args = (tpl.match(/\${.+?}/g) || []).map((arg) => arg.replace(/(\${\s*|\s*})/g, ''))
+    args.push(`return \`${tpl}\``)
+    const fn = new Function(...args) as (...args: any[]) => string
+    TPL_FN.set(tpl, fn)
+  }
+
+  return TPL_FN.get(tpl)!(...args)
+}
 
 const EDITABLE_HANDLE: WeakMap<WeEditableOption, WeEditableHandle> = new WeakMap()
 
@@ -66,7 +89,7 @@ export function injectEditor(
 ) {
   // 必须是 useWangEditor 函数创建的编辑区配置项
   if (!EDITABLE_TOOLBAR.has(option)) {
-    throw new Error('You must use the Editable Opiton created by "useWangEditor" function!')
+    throw new Error(tt('vcomponent.initialize', 'WeEditable'))
   }
 
   function reset() {
@@ -104,7 +127,7 @@ export function injectEditor(
 export function injectToolbar(option: WeToolbarOption, reload: WeToolbarReload) {
   // 必须是 useWangEditor 函数创建的菜单栏配置项
   if (!TOOLBAR_EDITABLE.has(option)) {
-    throw new Error('You must use the Toolbar Opiton created by "useWangEditor" function!')
+    throw new Error(tt('vcomponent.initialize', 'WeToolbar'))
   }
 
   function reset() {
@@ -202,7 +225,7 @@ export function useWangEditor(
         } else if (Date.now() < end) {
           requestAnimationFrame(get)
         } else {
-          reject(new Error(`unable to get the editable instance!`))
+          reject(new Error(tt('vcomponent.instance', 'IDomEditor')))
         }
       }
 
@@ -230,7 +253,7 @@ export function useWangEditor(
         } else if (Date.now() < end) {
           requestAnimationFrame(get)
         } else {
-          reject(new Error(`unable to get the toolbar instance!`))
+          reject(new Error(tt('vcomponent.instance', 'Toolbar')))
         }
       }
 

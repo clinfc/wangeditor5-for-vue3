@@ -1,6 +1,6 @@
 import { IOption } from '@wangeditor/core'
 import { IDomEditor, ISelectMenu, t } from '@wangeditor/editor'
-import { getOption } from '../../core/core'
+import { getOption, tt } from '../../core/core'
 import { ToggleIcon } from '../icons'
 import { Standrad, ToggleTarget } from '../types'
 import { execToggle } from './helper'
@@ -21,13 +21,15 @@ export class ToggleModeSelectMenu implements ISelectMenu {
   getOptions(editor: IDomEditor) {
     const { toolbar, editable } = getOption(editor)
 
+    if (!editable || !toolbar) throw new Error(tt('vcomponent.initialize', !editable ? 'Editable' : 'Toolbar'))
+
     const mode =
       this.standard === 'editable'
-        ? editable.mode!
+        ? editable.mode
         : this.standard === 'toolbar'
-        ? toolbar.mode!
-        : editable.mode! === toolbar.mode
-        ? editable.mode!
+        ? toolbar.mode
+        : editable.mode === toolbar.mode
+        ? editable.mode
         : ''
 
     const options: IOption[] = [
@@ -42,17 +44,17 @@ export class ToggleModeSelectMenu implements ISelectMenu {
         },
       },
       {
-        text: mode ? t('mode.editor').replace('{mode}', toggle(mode)) : t('mode.standardAuto'),
+        text: mode ? tt('mode.editor', toggle(mode)) : t('mode.standardAuto'),
         value: 'editor',
         styleForRenderMenuList: { padding: '7px 25px' },
       },
       {
-        text: t('mode.toolbar').replace('{mode}', toggle(toolbar.mode!)),
+        text: tt('mode.toolbar', toggle(toolbar.mode!)),
         value: 'toolbar',
         styleForRenderMenuList: { padding: '7px 25px' },
       },
       {
-        text: t('mode.editable').replace('{mode}', toggle(editable.mode!)),
+        text: tt('mode.editable', toggle(editable.mode!)),
         value: 'editable',
         styleForRenderMenuList: { padding: '7px 27px' },
       },
