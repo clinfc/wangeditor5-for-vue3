@@ -1,8 +1,10 @@
 # toggle-mode
 
-> [wangEditor 文档：mode 模式](https://www.wangeditor.com/v5/getting-started.html#mode-%E6%A8%A1%E5%BC%8F)
+> `v0.0.9+` 新增
 
 用于切换编辑器的模式，可以对**编辑器**、**菜单栏**和**编辑区**的 `mode` 进行切换。_在此文中的**编辑器**代指**菜单栏**和**编辑区**的构成的整体。_
+
+> [wangEditor 文档：mode 模式](https://www.wangeditor.com/v5/getting-started.html#mode-%E6%A8%A1%E5%BC%8F)
 
 ## 快速开始
 
@@ -93,4 +95,44 @@ type Standrad = 'toolbar' | 'editable' | 'auto'
 
 ### locale
 
-这是多语言配置，如果你不喜欢默认的配置，那么你可以定义自己想要的，或者在这里添加其它的语言支持。默认支持 `en` 和 `zh-CN` 两种语言。
+这是多语言配置，如果你不喜欢默认的配置，那么你可以定义自己想要的，或者在这里添加其它的语言支持（会与默认配置进行合并）。默认支持 `en` 和 `zh-CN` 两种语言。
+
+## 多语言/国际化
+
+### 声明
+
+```ts
+import type { ToggleModeLanguage } from 'wangeditor5-for-vue3'
+
+const zhTW: ToggleModeLanguage = {
+  mode: {
+    title: '切換模式',
+    editor: '${mode} 編輯器',
+    toolbar: '${mode} 菜單欄',
+    editable: '${mode} 編輯區',
+    standardAuto: '切換編輯器模式',
+  },
+}
+```
+
+### 注册
+
+**方法一**：使用 `@wangeditor/editor` 内置的多语言注册函数进行注册。
+
+```ts
+import { i18nAddResources } from '@wangeditor/editor'
+
+i18nAddResources('zh-tw', zhTW)
+```
+
+**方法二**：使用 `wangeditor5-for-vue3` 的 `registToggleMode` 函数，在我们注册 `toggle-mode` 菜单的时候，将新增的多语言放置在多语言配置项中即可多语言的注册。
+
+```ts
+import { registToggleMode } from 'wangeditor5-for-vue3'
+
+registToggleMode({
+  locale: {
+    'zh-tw': zhTW,
+  },
+})
+```

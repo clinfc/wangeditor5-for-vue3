@@ -78,6 +78,7 @@ module.exports = {
             '/guide/typescript.md',
             '/guide/vue-cli.md',
             '/guide/relevance.md',
+            '/guide/locale.md',
           ],
           '/shadow/': ['/shadow/README.md', '/shadow/start.md', '/shadow/css-rule.md'],
           '/extension/': ['/extension/README.md', '/extension/toggle-mode.md'],
