@@ -26,13 +26,56 @@ weEditorPlusCssRule(`xxx/xxx/xxx.css`)
 
 组件样式注入主要是通过设置 `WeEditorPlus` 组件的 `cssRule` 属性来实现
 
-```html
+```vue
 <template>
   <we-editor :css-rule="rule" />
 </template>
 ```
 
+<CodeGroup>
+  <CodeGroupItem title="JS">
+
+```js
+// 可以是 css 文本
+const rule = `.toolbar { border: 1px solid #d9d9d9; }`
+
+// 可以是一个对象
+const rule = {
+  '.container': {
+    zIndex: 100,
+  },
+  '.toolbar': {
+    color: 'pink',
+  },
+  '.editable': {
+    height: '500px',
+  },
+}
+
+// 还可以是一个数组
+const rule = [
+  `.toolbar { border: 1px solid #d9d9d9; }`,
+  {
+    '.container': {
+      zIndex: 100,
+    },
+    '.toolbar': {
+      color: 'pink',
+    },
+    '.editable': {
+      height: '500px',
+    },
+  },
+]
+```
+
+  </CodeGroupItem>
+
+  <CodeGroupItem title="TS" active>
+
 ```ts
+import { WeCssRuleList } from 'wangeditor5-for-vue3'
+
 // 可以是 css 文本
 const rule: WeCssRuleList = `.toolbar { border: 1px solid #d9d9d9; }`
 
@@ -65,3 +108,6 @@ const rule: WeCssRuleList = [
   },
 ]
 ```
+
+  </CodeGroupItem>
+</CodeGroup>

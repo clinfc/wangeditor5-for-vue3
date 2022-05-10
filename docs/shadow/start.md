@@ -41,7 +41,7 @@ export default defineComponent({
 
 ## 使用示例
 
-```html
+```vue
 <template>
   <we-editor-plus
     container-class="container"
@@ -62,46 +62,100 @@ export default defineComponent({
 </template>
 ```
 
-```ts
-import { WeCssRuleList, WeEditableOption, WeToolbarOption, useWangEditor } from 'wangeditor5-for-vue3'
-import { computed, defineComponent, ref, shallowReactive } from 'vue'
-import { IDomEditor, Toolbar, SlateDescendant } from '@wangeditor/editor'
+<CodeGroup>
+  <CodeGroupItem title="JS">
 
-export default defineComponent({
-  components: { UPrism },
-  setup() {
-    // useWangEditor() 的使用和常规模式下的使用时一样的
-    const { editable, toolbar, getEditable, getToolbar, clearContent, reloadEditor } = useWangEditor()
+```vue
+<script>
+  import { useWangEditor } from 'wangeditor5-for-vue3'
+  import { computed, defineComponent, ref, shallowReactive } from 'vue'
 
-    // 注意：是 shallowReactive 而不是 reactive
-    const formData = shallowReactive({
-      json: [] as SlateDescendant[],
-      jsonStr: '',
-      html: '',
-    })
+  export default defineComponent({
+    components: { UPrism },
+    setup() {
+      // useWangEditor() 的使用和常规模式下的使用时一样的
+      const { editable, toolbar, getEditable, getToolbar, clearContent, reloadEditor } = useWangEditor()
 
-    // 组件级的样式注入
-    const cssRule: WeCssRuleList = {
-      '.editable': {
-        height: '500px',
-      },
-      '.border': {
-        border: '1px solid #999',
-      },
-    }
+      // 注意：是 shallowReactive 而不是 reactive
+      const formData = shallowReactive({
+        json: [],
+        jsonStr: '',
+        html: '',
+      })
 
-    function onEditableReloadBefore(inst: IDomEditor) {
-      console.log('editable 即将重载: ' + new Date().toLocaleString())
-    }
+      // 组件级的样式注入
+      const cssRule = {
+        '.editable': {
+          height: '500px',
+        },
+        '.border': {
+          border: '1px solid #999',
+        },
+      }
 
-    function onToolbarloadBefore(inst: Toolbar) {
-      console.log('toolbar 即将重载: ' + new Date().toLocaleString())
-    }
+      function onEditableReloadBefore(inst) {
+        console.log('editable 即将重载: ' + new Date().toLocaleString())
+      }
 
-    return { editable, toolbar, formData, cssRule, onEditableReloadBefore, onToolbarloadBefore }
-  },
-})
+      function onToolbarloadBefore(inst) {
+        console.log('toolbar 即将重载: ' + new Date().toLocaleString())
+      }
+
+      return { editable, toolbar, formData, cssRule, onEditableReloadBefore, onToolbarloadBefore }
+    },
+  })
+</script>
 ```
+
+  </CodeGroupItem>
+
+  <CodeGroupItem title="TS" active>
+
+```vue
+<script lang="ts">
+  import { WeCssRuleList, WeEditableOption, WeToolbarOption, useWangEditor } from 'wangeditor5-for-vue3'
+  import { computed, defineComponent, ref, shallowReactive } from 'vue'
+  import { IDomEditor, Toolbar, SlateDescendant } from '@wangeditor/editor'
+
+  export default defineComponent({
+    components: { UPrism },
+    setup() {
+      // useWangEditor() 的使用和常规模式下的使用时一样的
+      const { editable, toolbar, getEditable, getToolbar, clearContent, reloadEditor } = useWangEditor()
+
+      // 注意：是 shallowReactive 而不是 reactive
+      const formData = shallowReactive({
+        json: [] as SlateDescendant[],
+        jsonStr: '',
+        html: '',
+      })
+
+      // 组件级的样式注入
+      const cssRule: WeCssRuleList = {
+        '.editable': {
+          height: '500px',
+        },
+        '.border': {
+          border: '1px solid #999',
+        },
+      }
+
+      function onEditableReloadBefore(inst: IDomEditor) {
+        console.log('editable 即将重载: ' + new Date().toLocaleString())
+      }
+
+      function onToolbarloadBefore(inst: Toolbar) {
+        console.log('toolbar 即将重载: ' + new Date().toLocaleString())
+      }
+
+      return { editable, toolbar, formData, cssRule, onEditableReloadBefore, onToolbarloadBefore }
+    },
+  })
+</script>
+```
+
+  </CodeGroupItem>
+</CodeGroup>
 
 ## props
 

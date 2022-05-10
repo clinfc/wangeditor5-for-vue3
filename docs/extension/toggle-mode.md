@@ -99,10 +99,31 @@ type Standrad = 'toolbar' | 'editable' | 'auto'
 
 ## 多语言/国际化
 
+`toggle-mode` 扩展菜单的多语言声明如下
+
 ### 声明
 
+<CodeGroup>
+  <CodeGroupItem title="JS">
+
+```js
+const zhTW = {
+  mode: {
+    title: '切換模式',
+    editor: '${mode} 編輯器',
+    toolbar: '${mode} 菜單欄',
+    editable: '${mode} 編輯區',
+    standardAuto: '切換編輯器模式',
+  },
+}
+```
+
+  </CodeGroupItem>
+
+  <CodeGroupItem title="TS" active>
+
 ```ts
-import type { ToggleModeLanguage } from 'wangeditor5-for-vue3'
+import { ToggleModeLanguage } from 'wangeditor5-for-vue3'
 
 const zhTW: ToggleModeLanguage = {
   mode: {
@@ -114,6 +135,9 @@ const zhTW: ToggleModeLanguage = {
   },
 }
 ```
+
+  </CodeGroupItem>
+</CodeGroup>
 
 ### 注册
 

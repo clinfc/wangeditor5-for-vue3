@@ -16,17 +16,37 @@
 
 ### 定义表单验证初始化函数
 
+<CodeGroup>
+  <CodeGroupItem title="JS">
+
+```js
+function weFormFields() {
+  return {
+    blurField() {
+      // trigger: blur 的具体逻辑
+    },
+    changeField() {
+      // trigger: change 的具体逻辑
+    },
+  }
+}
+```
+
+  </CodeGroupItem>
+
+  <CodeGroupItem title="TS" active>
+
 ```ts
 import { WeEditorFormFields } from 'wangeditor5-for-vue3'
 
 function weFormFields() {
-  const formFields: WeEditorFormFields = {}
-
-  formFileds.blurField = () => {
-    // trigger: blur 的具体逻辑
-  }
-  formFileds.changeField = () => {
-    // trigger: change 的具体逻辑
+  const formFields: WeEditorFormFields = {
+    blurField() {
+      // trigger: blur 的具体逻辑
+    },
+    changeField() {
+      // trigger: change 的具体逻辑
+    },
   }
 
   return formFields
@@ -39,6 +59,9 @@ interface WeEditorFormFields {
   changeField?: () => void
 }
 ```
+
+  </CodeGroupItem>
+</CodeGroup>
 
 ### 注入表单验证初始化函数
 

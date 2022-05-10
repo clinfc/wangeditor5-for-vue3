@@ -11,13 +11,44 @@
 
 > 最优搭配为 `v-html:json` 或 `v-model:json` + `v-model:html`。`v-model:json` 相对 `v-model` 而言，能减少大量内存消耗和计算消耗。
 
-```html
+```vue
 <template>
   <we-editable :option="editable" v-model="formData.json" v-model:json="formData.jstr" v-model:html="formData.html" />
 </template>
+```
 
+<CodeGroup>
+  <CodeGroupItem title="JS">
+
+```vue
+<script>
+  import { useWangEditor } from 'wangeditor5-for-vue3'
+  import { defineComponent, shallowReactive } from 'vue'
+
+  export default defineComponent({
+    setup() {
+      const { editable } = useWangEditor()
+
+      const formData = shallowReactive({
+        json: [],
+        jstr: '',
+        html: '',
+      })
+
+      return { editable, formData }
+    },
+  })
+</script>
+```
+
+  </CodeGroupItem>
+
+  <CodeGroupItem title="TS" active>
+
+```vue
 <script lang="ts">
-  import { SlateDescendant, useWangEditor } from 'wangeditor5-for-vue3'
+  import { SlateDescendant } from '@wangeditor/editor'
+  import { useWangEditor } from 'wangeditor5-for-vue3'
   import { defineComponent, shallowReactive } from 'vue'
 
   export default defineComponent({
@@ -36,13 +67,46 @@
 </script>
 ```
 
+  </CodeGroupItem>
+</CodeGroup>
+
 或
 
 ```html
 <template>
-  <we-editable :option="editable" v-model="jsonArray" v-model:json="jsonString" v-model:html="htmlString" />
+  <we-editable :option="editable" v-model="json" v-model:json="jstr" v-model:html="html" />
 </template>
+```
 
+<CodeGroup>
+  <CodeGroupItem title="JS">
+
+```vue
+<script>
+  import { useWangEditor } from 'wangeditor5-for-vue3'
+  import { defineComponent, shallowRef } from 'vue'
+
+  export default defineComponent({
+    setup() {
+      const { editable } = useWangEditor()
+
+      const json = shallowRef([])
+
+      const jstr = ref('')
+
+      const html = ref('')
+
+      return { editable, json, jstr, html }
+    },
+  })
+</script>
+```
+
+  </CodeGroupItem>
+
+  <CodeGroupItem title="TS" active>
+
+```vue
 <script lang="ts">
   import { SlateDescendant } from '@wangeditor/editor'
   import { useWangEditor } from 'wangeditor5-for-vue3'
@@ -52,14 +116,17 @@
     setup() {
       const { editable } = useWangEditor()
 
-      const jsonArray = shallowRef<SlateDescendant[]>([])
+      const json = shallowRef<SlateDescendant[]>([])
 
-      const jsonString = ref('')
+      const jstr = ref('')
 
-      const htmlString = ref('')
+      const html = ref('')
 
-      return { editable, jsonArray, jsonString, htmlString }
+      return { editable, json, jstr, html }
     },
   })
 </script>
 ```
+
+  </CodeGroupItem>
+</CodeGroup>

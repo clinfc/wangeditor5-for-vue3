@@ -80,8 +80,58 @@ clearContent()
     </el-form-item>
   </el-form>
 </template>
+```
 
+<CodeGroup>
+  <CodeGroupItem title="JS">
+
+```vue
+<script>
+  import { defineComponent, reactive, Ref, ref } from 'vue'
+  import { useWangEditor } from 'wangeditor5-for-vue3'
+
+  export default defineComponent({
+    setup() {
+      const ruleForm = ref(null)
+
+      const formData = reactive({ json: '' })
+
+      const formRule = {
+        json: [{ required: true, message: '内容不能为空', trigger: 'change' }],
+      }
+
+      const { editable, toolbar, syncContent } = useWangEditor({
+        delay: 5000, // 无操作 5s 后才会同步表单数据
+        config: {
+          placeholder: '表单提交前使用 syncContent API 强制同步数据，确保数据不被丢失',
+        },
+      })
+
+      // 表单提交
+      function submit() {
+        // 强制同步 v-model 数据
+        syncContent()
+
+        // 表单验证
+        ruleForm.value.validate((valid) => {
+          if (!valid) return
+          console.log({ ...formData })
+        })
+      }
+
+      return { ruleForm, formData, formRule, editable, toolbar, submit }
+    },
+  })
+</script>
+```
+
+  </CodeGroupItem>
+
+  <CodeGroupItem title="TS" active>
+
+```vue
 <script lang="ts">
+  import { SlateDescendant } from '@wangeditor/editor'
   import { FormInstance, FormRules } from 'element-plus'
   import { defineComponent, reactive, Ref, ref } from 'vue'
   import { useWangEditor } from 'wangeditor5-for-vue3'
@@ -90,7 +140,7 @@ clearContent()
     setup() {
       const ruleForm = ref<any>(null) as Ref<FormInstance>
 
-      const formData = reactive({ json: '' })
+      const formData = reactive({ json: '' as SlateDescendant[] })
 
       const formRule: FormRules = {
         json: [{ required: true, message: '内容不能为空', trigger: 'change' }],
@@ -121,6 +171,9 @@ clearContent()
 </script>
 ```
 
+  </CodeGroupItem>
+</CodeGroup>
+
 ### getToolbar
 
 获取菜单栏实例
@@ -128,6 +181,24 @@ clearContent()
 #### 同步模式
 
 当我们不传入参数或传入的不是一个数字时，此时为同步模式。
+
+<CodeGroup>
+  <CodeGroupItem title="JS">
+
+```ts
+const { getToolbar } = useWangEditor()
+
+const toolbarInstance = getToolbar()
+if (toolbarInstance) {
+  // do somthing
+} else {
+  // do somthing
+}
+```
+
+  </CodeGroupItem>
+
+  <CodeGroupItem title="TS" active>
 
 ```ts
 const { getToolbar } = useWangEditor()
@@ -140,23 +211,48 @@ if (toolbarInstance) {
 }
 ```
 
+  </CodeGroupItem>
+</CodeGroup>
+
 #### 异步模式
 
 > `v0.0.5+` 新增
 
 当我们传入一个数字时，传入的是异步超时时间。单位：毫秒。
 
+<CodeGroup>
+  <CodeGroupItem title="JS">
+
 ```ts
 const { getToolbar } = useWangEditor()
 
 getToolbar(3000)
-  .then((inst: Toolbar) => {
+  .then((toolbarInstance) => {
     // do somthing
   })
-  .catch((e: Error) => {
+  .catch((error) => {
     // do somthing
   })
 ```
+
+  </CodeGroupItem>
+
+  <CodeGroupItem title="TS" active>
+
+```ts
+const { getToolbar } = useWangEditor()
+
+getToolbar(3000)
+  .then((toolbarInstance: Toolbar) => {
+    // do somthing
+  })
+  .catch((error: Error) => {
+    // do somthing
+  })
+```
+
+  </CodeGroupItem>
+</CodeGroup>
 
 ### getEditable
 
@@ -165,6 +261,24 @@ getToolbar(3000)
 #### 同步模式
 
 当我们不传入参数或传入的不是一个数字时，此时为同步模式。
+
+<CodeGroup>
+  <CodeGroupItem title="JS">
+
+```js
+const { getEditable } = useWangEditor()
+
+const editableInstance = getEditable()
+if (editableInstance) {
+  console.log(editableInstance.children)
+} else {
+  console.error('编辑器未实例化')
+}
+```
+
+  </CodeGroupItem>
+
+  <CodeGroupItem title="TS" active>
 
 ```ts
 const { getEditable } = useWangEditor()
@@ -177,23 +291,48 @@ if (editableInstance) {
 }
 ```
 
+  </CodeGroupItem>
+</CodeGroup>
+
 #### 异步模式
 
 > `v0.0.5+` 新增
 
 当我们传入一个数字时，传入的是异步超时时间。单位：毫秒。
 
+<CodeGroup>
+  <CodeGroupItem title="JS">
+
+```js
+const { getEditable } = useWangEditor()
+
+getEditable(3000)
+  .then((editableInstance) => {
+    // do somthing
+  })
+  .catch((error) => {
+    // do somthing
+  })
+```
+
+  </CodeGroupItem>
+
+  <CodeGroupItem title="TS" active>
+
 ```ts
 const { getEditable } = useWangEditor()
 
 getEditable(3000)
-  .then((inst: IDomEditor) => {
+  .then((editableInstance: IDomEditor) => {
     // do somthing
   })
-  .catch((e: Error) => {
+  .catch((error: Error) => {
     // do somthing
   })
 ```
+
+  </CodeGroupItem>
+</CodeGroup>
 
 ### reloadEditor
 
