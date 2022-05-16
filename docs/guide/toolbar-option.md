@@ -20,7 +20,7 @@ export interface WeToolbarOption {
 
 ## config
 
-这是菜单栏的具体配置，详细的配置项以 wangEditor v5 官方文档为准（认准文档中的 toolbarConfig 关键字）。[前往查看](https://www.wangeditor.com/v5/toolbar-config.html)。
+这是菜单栏的具体配置，详细的配置项以 `wangEditor v5` 官方文档为准（认准文档中的 `toolbarConfig` 关键字）。[前往查看](https://www.wangeditor.com/v5/toolbar-config.html)。
 
 ## markRaw
 

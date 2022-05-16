@@ -76,7 +76,7 @@ onMounted(() => {
 
 ## config
 
-这是编辑器的具体配置，详细的配置项以 wangEditor v5 官方文档为准。[前往查看](https://www.wangeditor.com/v5/editor-config.html)。
+这是编辑器的具体配置，详细的配置项以 `wangEditor v5` 官方文档为准（认准文档中的 `editorConfig` 关键字）。[前往查看](https://www.wangeditor.com/v5/editor-config.html)。
 
 ## delay
 
