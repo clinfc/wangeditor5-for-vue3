@@ -1,0 +1,19 @@
+.el-we-toolbar {
+  border: 1px solid var(--we-bc, #e5e5e5);
+
+  & + .el-we-editable {
+    border-top: none;
+  }
+}
+
+.el-we-editable {
+  border: 1px solid var(--we-bc, #e5e5e5);
+  height: 300px;
+}
+
+.el-we-editor {
+}
+
+.el-form-item.is-error {
+  --we-bc: red;
+}

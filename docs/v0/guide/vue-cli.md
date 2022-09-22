@@ -1,0 +1,3 @@
+# vue-cli
+
+`WeEditorPlus` 组件在 `vue-cli` 项目中无法正常使用，正则解决中...

@@ -1,0 +1,62 @@
+{
+  "name": "wangeditor5-for-vue3",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "支持动态配置的 wangEditor5 for vue3 组件，同时支持 UI 框架的表单验证",
+  "author": "翠林 <clinfc@qq.com>",
+  "license": "MIT",
+  "homepage": "https://clinfc.github.io/wangeditor5-for-vue3/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/clinfc/wangeditor5-for-vue3"
+  },
+  "scripts": {
+    "build": "run-s -c clear:dist build:es build:lib build:type clear:types",
+    "build:es": "tsc",
+    "build:lib": "vite build",
+    "build:type": "api-extractor run",
+    "clear:dist": "rimraf dist",
+    "clear:types": "rimraf dist/types"
+  },
+  "keywords": [
+    "wangeditor",
+    "@wangeditor/editor",
+    "vue",
+    "vue3",
+    "富文本编辑器"
+  ],
+  "files": [
+    "dist",
+    "src",
+    "global.d.ts"
+  ],
+  "main": "dist/lib/index.umd.js",
+  "module": "dist/es/index.js",
+  "types": "dist/types.d.ts",
+  "unpkg": "dist/lib/index.umd.cjs",
+  "jsdelivr": "dist/lib/index.umd.cjs",
+  "exports": {
+    ".": {
+      "import": "./dist/es/index.js",
+      "require": "./dist/lib/index.umd.cjs"
+    },
+    "./es": "./dist/es/index.js",
+    "./es/*/*.js": "./dist/es/*/*.js",
+    "./lib": "./dist/lib/index.umd.cjs"
+  },
+  "dependencies": {
+    "lodash.clonedeep": "^4.5.0",
+    "lodash.debounce": "^4.0.8"
+  },
+  "devDependencies": {
+    "@types/lodash.clonedeep": "^4.5.7",
+    "@types/lodash.debounce": "^4.0.7",
+    "@wangeditor/editor": "^5.1.15",
+    "vite": "^3.0.9",
+    "vue": "^3.2.38"
+  },
+  "peerDependencies": {
+    "@wangeditor/editor": "^5.1.15",
+    "vue": "^3.2.38"
+  }
+}
