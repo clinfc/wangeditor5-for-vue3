@@ -1,6 +1,6 @@
 import { defineUserConfig, defaultTheme } from 'vuepress'
 
-import { V1_PATH, V0_URL, V1_URL } from 'shared'
+import { V1_PATH, V0_URL, V1_URL, ELPLUS_URL } from 'shared'
 
 export default defineUserConfig({
   lang: 'zh-CN',
@@ -21,7 +21,7 @@ export default defineUserConfig({
             children: [
               {
                 text: 'element-plus',
-                link: 'https://clinfc.github.io/wangeditor5-for-vue3/element-plus'
+                link: ELPLUS_URL
               }
             ]
           },
