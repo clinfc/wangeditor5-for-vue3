@@ -125,7 +125,7 @@ const Editable = defineComponent({
      * 生成编辑区初始化所需的配置对象
      */
     function createOption() {
-      const { mode, config, defaultContent, defaultHtml, extendCache } = toRaw(opts).editable
+      const { mode, config, defaultContent, extendCache } = toRaw(opts).editable
 
       const option = {
         selector: rootRef.value,
@@ -156,47 +156,24 @@ const Editable = defineComponent({
         } as Partial<IEditorConfig>)
       }
 
-      let jstr = ''
-      let html = ''
+      let data = ''
 
       if (extendCache) {
-        if (content.jstr.length > 2) {
-          jstr = content.jstr
-        } else if (content.html) {
-          html = content.html
-        } else {
-          if (defaultContent) {
-            jstr = Array.isArray(defaultContent) ? JSON.stringify(defaultContent) : defaultContent
-          }
-          if (jstr.length < 3 && typeof defaultHtml === 'string') {
-            html = defaultHtml
-          }
-        }
+        data =
+          content.jstr.length > 2
+            ? content.jstr
+            : Array.isArray(defaultContent)
+            ? JSON.stringify(defaultContent)
+            : defaultContent ?? ''
       } else {
-        if (defaultContent) {
-          jstr = Array.isArray(defaultContent) ? JSON.stringify(defaultContent) : defaultContent
-        }
-        if (jstr.length < 3) {
-          if (typeof defaultHtml === 'string' && defaultHtml.length) {
-            html = defaultHtml
-          } else {
-            if (content.jstr.length > 2) {
-              jstr = content.jstr
-            } else if (content.html) {
-              html = content.html
-            }
-          }
-        }
+        data = Array.isArray(defaultContent) ? JSON.stringify(defaultContent) : defaultContent ?? content.jstr
       }
 
       try {
-        const json = JSON.parse(jstr)
-        if (json.length) {
-          return { content: json, ...option }
-        }
-        return { html, ...option }
+        const json = JSON.parse(data)
+        return { content: json, ...option }
       } catch (e) {
-        return { html, ...option }
+        return { html: data, ...option }
       }
     }
 

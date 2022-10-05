@@ -9,10 +9,8 @@ export type Nullish<T> = T extends undefined | null ? never : T
 export interface WeEditableOption {
   /** 编辑器模式 */
   mode?: 'default' | 'simple'
-  /** 编辑器初始化的默认内容（json array 或 json string），优先级高于 defaultHtml */
+  /** 编辑器初始化的默认内容（json array 或 json string 或 html string） */
   defaultContent?: SlateDescendant[] | string | null
-  /** 编辑器初始化的默认内容（html string），优先级低于 defaultContent */
-  defaultHtml?: string | null
   /** 编辑器配置 */
   config?: Partial<IEditorConfig>
   /** v-model 数据同步的防抖时长，默认值：3000，单位：毫秒 */

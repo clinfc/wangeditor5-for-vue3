@@ -38,7 +38,6 @@ function defaultOptions(): WeOptions {
     editable: {
       mode: 'default',
       defaultContent: null,
-      defaultHtml: null,
       config: {},
       delay: 3000,
       extendCache: true
