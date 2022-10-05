@@ -19,12 +19,12 @@
 <script lang="ts">
   import { useWangEditor } from 'wangeditor5-for-vue3'
   import { defineComponent, ref, shallowRef, watch } from 'vue'
-  import { articleList, IPage, IPrism } from 'example-common'
+  import { articleJsonList, IPage, IPrism } from 'example-common'
 
   export default defineComponent({
     components: { IPage, IPrism },
     setup() {
-      const articles = shallowRef(articleList)
+      const articles = shallowRef(articleJsonList)
 
       const { handle } = useWangEditor({ editable: { delay: 1000, config: { placeholder: 'v-model:json.string' } } })
 

@@ -22,14 +22,6 @@ const routes: RouteRecordRaw[] = [
     }
   },
   {
-    name: 'defaultHtml',
-    path: '/default-html',
-    component: () => import('@views/default-html.vue'),
-    meta: {
-      title: 'defaultHtml'
-    }
-  },
-  {
     name: 'enableExtendCache',
     path: '/extend-cache/true',
     component: () => import('@views/extend-cache.vue'),
@@ -103,8 +95,6 @@ const routes: RouteRecordRaw[] = [
   }
 ]
 
-// export const ComponentFiles: Map<string, string> = new Map()
-
 const router = createRouter({
   routes: routes,
   history: createWebHashHistory()
@@ -119,9 +109,6 @@ router.afterEach((to, from, failure) => {
 export const activeMenu = ref(router.options.history.state.current as string)
 
 export const asideMenus = routes.map((item) => {
-  // ComponentFiles.set(item.path, item.meta!.component as string)
-  // ComponentFiles.set(item.path.replace(/\/$/, ''), item.meta!.component as string)
-
   return {
     key: item.path,
     title: item.meta!.title,

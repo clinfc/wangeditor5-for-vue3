@@ -1,5 +1,5 @@
 <template>
-  <i-page title="JSON 类型的的默认数据">
+  <i-page title="默认内容">
     <el-form :inline="true">
       <el-form-item label="defaultContent：">
         <el-select v-model="select">
@@ -22,7 +22,11 @@
   export default defineComponent({
     components: { IPage },
     setup() {
-      const articles = shallowRef(articleList)
+      const articles = shallowRef(
+        articleList.map(({ title, content, html }, index) => {
+          return { title, content: index % 2 ? content : html }
+        })
+      )
 
       const { opts, handle, reloadEditor } = useWangEditor({
         editable: {

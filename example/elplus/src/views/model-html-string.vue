@@ -19,12 +19,12 @@
 <script lang="ts">
   import { useWangEditor } from 'wangeditor5-for-vue3'
   import { defineComponent, ref, shallowRef, watch } from 'vue'
-  import { articleList, IPage, IPrism } from 'example-common'
+  import { articleHtmlList, IPage, IPrism } from 'example-common'
 
   export default defineComponent({
     components: { IPage, IPrism },
     setup() {
-      const articles = shallowRef(articleList)
+      const articles = shallowRef(articleHtmlList)
 
       const { handle } = useWangEditor({ editable: { delay: 1000, config: { placeholder: 'v-model' } } })
 
@@ -33,7 +33,7 @@
       const select = ref(0)
 
       watch(select, (nv) => {
-        const data = articles.value[nv]?.html
+        const data = articles.value[nv]?.content
         if (data !== undefined) {
           html.value = data
         }

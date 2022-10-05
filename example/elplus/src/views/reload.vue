@@ -49,6 +49,8 @@
   import { useWangEditor, WeEditableReloadEvent, WeReloadEvent, WeToolbarReloadEvent } from 'wangeditor5-for-vue3'
   import { defineComponent, ref, shallowReactive } from 'vue'
   import { IPage } from 'example-common'
+  import { ElMessage } from 'element-plus'
+  import 'element-plus/es/components/message/style/css'
 
   const placeholder =
     '[{"type":"paragraph","children":[{"text":"只要进行了 "},{"text":"v-model:json/v-model:html","code":true},{"text":" 绑定，且 "},{"text":"extendCache","code":true},{"text":" 为 "},{"text":"true","code":true},{"text":"，那么数据就不会丢失！！！"}]}]'
@@ -72,27 +74,39 @@
       }
 
       function onReload(e: WeReloadEvent) {
-        console.log(`${e.type} - 即将重载（${date()}）`, e)
+        const message = `${e.type} - 即将重载（${date()}）`
+        console.log(message, e)
+        ElMessage(message)
       }
 
       function onReloaded(e: WeReloadEvent) {
-        console.log(`${e.type} - 重载结束（${date()}）`, e)
+        const message = `${e.type} - 重载结束（${date()}）`
+        console.log(message, e)
+        ElMessage.success(message)
       }
 
       function onToolbarReload(e: WeToolbarReloadEvent) {
-        console.log(`菜单栏 - 即将重载（${date()}）`, e)
+        const message = `菜单栏 - 即将重载（${date()}）`
+        console.log(message, e)
+        ElMessage(message)
       }
 
       function onToolbarReloaded(e: WeToolbarReloadEvent) {
-        console.log(`菜单栏 - 重载结束（${date()}）`, e)
+        const message = `菜单栏 - 重载结束（${date()}）`
+        console.log(message, e)
+        ElMessage.success(message)
       }
 
       function onEditableReload(e: WeEditableReloadEvent) {
-        console.log(`编辑区 - 即将重载（${date()}）`, e)
+        const message = `编辑区 - 重载结束（${date()}）`
+        console.log(message, e)
+        ElMessage(message)
       }
 
       function onEditableReloaded(e: WeEditableReloadEvent) {
-        console.log(`编辑区 - 重载结束（${date()}）`, e)
+        const message = `编辑区 - 重载结束（${date()}）`
+        console.log(message, e)
+        ElMessage.success(message)
       }
 
       return {

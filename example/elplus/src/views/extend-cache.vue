@@ -95,9 +95,7 @@
       )
 
       const title = computed(() => {
-        return `编辑器重载时，默认内容以 ${
-          opts.editable.extendCache ? 'v-mode' : 'defaultContent/defaultHtml'
-        } 数据为准`
+        return `编辑器重载时，默认内容以 ${opts.editable.extendCache ? 'v-mode' : 'defaultContent'} 数据为准`
       })
 
       return { articles, opts, handle, formData, select, modelType, preview, title, clearContent }
