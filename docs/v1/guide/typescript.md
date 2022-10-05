@@ -49,10 +49,8 @@ import { IEditorConfig, SlateDescendant } from '@wangeditor/editor'
 declare interface WeEditableOption {
   /** 编辑器模式 */
   mode?: 'default' | 'simple'
-  /** 编辑器初始化的默认内容（json array 或 json string），优先级高于 defaultHtml */
+  /** 编辑器初始化的默认内容（json array 或 json string 或 html string） */
   defaultContent?: SlateDescendant[] | string | null
-  /** 编辑器初始化的默认内容（html string），优先级低于 defaultContent */
-  defaultHtml?: string | null
   /** 编辑器配置 */
   config?: Partial<IEditorConfig>
   /** v-model 数据同步的防抖时长，默认值：3000，单位：毫秒 */
@@ -72,19 +70,17 @@ declare interface WeEditableOption {
 
 ### extendCache
 
-当 `v-model:json`/`v-model:json.string`/`v-model:html` 与 `defaultContent`/`defaultHtml` 同时使用的时候，我们可以使用 `extendCache` 配置项来控制重载后编辑器的默认内容。
+当 `v-model:json`/`v-model:json.string`/`v-model:html` 与 `defaultContent` 同时使用的时候，我们可以使用 `extendCache` 配置项来控制重载后编辑器的默认内容。
 
-当 `extendCahce` 为 `true` 时，编辑器**创建**/**重载**时显示内容的优先级为：`v-model:json`/`v-model:json.string` > `v-model:html` > `defaultContent` > `defaultHtml`。
+当 `extendCahce` 为 `true` 时，编辑器**创建**/**重载**时显示内容的优先级为：`v-model:json`/`v-model:json.string` > `v-model:html` > `defaultContent`。
 
-当 `extendCache` 为 `false` 时，编辑器**创建**/**重载**时显示内容的优先级为：`defaultContent` > `defaultHtml` > `v-model:json`/`v-model:json.string` > `v-model:html`。
+当 `extendCache` 为 `false` 时，编辑器**创建**/**重载**时显示内容的优先级为：`defaultContent` > `v-model:json`/`v-model:json.string` > `v-model:html`。
 
 > `false` 模式下可能会造成数据的丢失，因此在编辑器重载前一定要做好数据的保存工作，我们可以配合 `reload` 事件来进行数据的保存。
 
-### defaultContent 和 defaultHtml
+### defaultContent
 
-`defaultContent`/`defaultHtml` 的变更默认情况下是不会触发编辑器的重载的。在编辑器已创建的情况下，如果需要将 `defaultContent`/`defaultHtml` 内容直接显示出来，我们需要通过 [reloadEditor](./use-wang-editor.md#reloadeditor) API 来强制重载编辑器。并且我们需要注意 `extendCache` 对编辑器创建时默认内容的影响。
-
-> `defaultContent` 和 `defaultHtml` 不建议同时使用。如果需要切换使用，可以一个赋值为 `null` 另一个赋值真正的值。如：你需要从 `defaultContent` 切换到 `defaultHtml`，可以先赋值 `defaultContent = null`，然后再赋值 `defaultHtml = '<h1>标题一</h1><p>段落</p>'` 即可。
+`defaultContent` 的变更默认情况下是不会触发编辑器的重载的。在编辑器已创建的情况下，如果需要将 `defaultContent` 内容直接显示出来，我们需要通过 [reloadEditor](./use-wang-editor.md#reloadeditor) API 来强制重载编辑器。并且我们需要注意 `extendCache` 对编辑器创建时默认内容的影响。
 
 ```ts
 const { opts, reloadEditor } = useWangEditor()
@@ -104,7 +100,7 @@ onMounted(() => {
     opts.editable.defaultContent = '[{"type":"header1","children":[{"text":"标题一"}]}]'
 
     // or：配置 HTML 字符串
-    opts.editable.defaultHtml = '<h1>标题一</h1><p>段落</p>'
+    opts.editable.defaultContent = '<h1>标题一</h1><p>段落</p>'
 
     // 最后，你还需要强制重载编辑器
     reloadEditor()

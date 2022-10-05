@@ -109,10 +109,7 @@ clearContent()
     setup() {
       const ruleForm = ref()
 
-      const formData = reactive({
-        json: '',
-        html: ''
-      })
+      const formData = reactive({ json: '', html: '' })
 
       const formRule = {
         json: [{ required: true, message: '内容不能为空', trigger: 'change' }]
@@ -150,17 +147,12 @@ clearContent()
   import { FormInstance, FormRules } from 'element-plus'
   import { defineComponent, reactive, Ref, ref } from 'vue'
   import { useWangEditor } from 'wangeditor5-for-vue3'
-  import { IPage, IPrism } from 'example-common'
 
   export default defineComponent({
-    components: { IPage, IPrism },
     setup() {
       const ruleForm = ref<any>() as Ref<FormInstance>
 
-      const formData = reactive({
-        json: '',
-        html: ''
-      })
+      const formData = reactive({ json: '', html: '' })
 
       const formRule: FormRules = {
         json: [{ required: true, message: '内容不能为空', trigger: 'change' }]

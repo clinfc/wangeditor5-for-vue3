@@ -64,7 +64,7 @@ app.use(
         }
       }
     },
-    // 表单验证逻辑的初始化函数
+    // 表单验证触发函数的初始化函数
     formFieldInit() {
       const { formItem } = useFormItem()
 

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "run-p v0:build v1:build",
+    "build": "run-s v0:build v1:build",
     "v0:dev": "vuepress dev v0",
     "v0:build": "vuepress build v0",
     "v1:dev": "vuepress dev v1",
