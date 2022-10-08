@@ -1,4 +1,4 @@
-import { dest, parallel, src } from 'gulp'
+import { dest, series, src } from 'gulp'
 
 const folder: Record<'from' | 'to', string>[] = [
   { from: 'docs/v1/.vuepress/dist/**/*', to: 'pages' },
@@ -6,7 +6,7 @@ const folder: Record<'from' | 'to', string>[] = [
   { from: 'example/elplus/dist/**/*', to: 'pages/element-plus' }
 ]
 
-export const copyPages = parallel(
+export const copyPages = series(
   ...folder.map(({ from, to }) => {
     return function () {
       return src(from).pipe(dest(to))

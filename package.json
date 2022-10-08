@@ -4,13 +4,14 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "build": "run-s build:core build:shared build:docs build:elplus pages",
+    "build": "run-s build:core build:shared build:docs build:elplus combine:pages",
     "build:core": "pnpm --filter ./core build",
     "build:shared": "pnpm --filter ./shared build",
     "build:elplus": "pnpm --filter ./example/elplus build",
     "build:docs": "pnpm --filter ./docs build",
-    "pages": "rimraf pages && gulp copyPages --require sucrase/register/ts -f gulpfile.ts",
-    "publish": "pnpm publish --filter ./core --no-git-checks --dry-run"
+    "combine:pages": "rimraf pages && gulp copyPages --require sucrase/register/ts -f gulpfile.ts",
+    "docs:v1": "pnpm --filter ./docs v1:dev",
+    "publish": "pnpm publish --filter ./core --access=public"
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.30.0",
