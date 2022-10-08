@@ -1,6 +1,6 @@
 import { defineUserConfig, defaultTheme } from 'vuepress'
 
-import { V0_PATH, V0_URL, V1_URL } from 'shared'
+import { V0_PATH, V1_PATH } from 'shared'
 
 export default defineUserConfig({
   // 站点配置
@@ -70,8 +70,8 @@ export default defineUserConfig({
           {
             text: 'version',
             children: [
-              { text: 'v0.x', link: V0_URL },
-              { text: 'v1.x', link: V1_URL }
+              { text: 'v0.x', link: V0_PATH },
+              { text: 'v1.x', link: V1_PATH }
             ]
           },
           { text: 'Github', link: 'https://github.com/clinfc/wangeditor5-for-vue3' }
