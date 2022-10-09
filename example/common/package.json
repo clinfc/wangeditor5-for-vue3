@@ -6,7 +6,6 @@
   "dependencies": {
     "@types/prismjs": "^1.26.0",
     "prismjs": "^1.29.0",
-    "shared": "workspace:^1.0.0",
     "vue": "^3.2.39"
   },
   "devDependencies": {

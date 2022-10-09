@@ -10,6 +10,8 @@
     "build:elplus": "pnpm --filter ./example/elplus build",
     "build:docs": "pnpm --filter ./docs build",
     "combine:pages": "rimraf pages && gulp copyPages --require sucrase/register/ts -f gulpfile.ts",
+    "elplus": "pnpm --filter ./example/elplus dev",
+    "docs:v0": "pnpm --filter ./docs v0:dev",
     "docs:v1": "pnpm --filter ./docs v1:dev",
     "publish": "pnpm publish --filter ./core --access=public"
   },

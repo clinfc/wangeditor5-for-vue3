@@ -4,7 +4,7 @@
     <div class="i-header-tool">
       <div class="i-tool">
         <div class="i-tool-content">
-          <a target="_blank" :href="V1_URL">文档</a>
+          <a target="_blank" href="/wangeditor5-for-vue3/">文档</a>
         </div>
       </div>
       <div class="i-tool">
@@ -12,7 +12,7 @@
         <div class="i-tool-dropdown">
           <div class="i-tool-dropdown__container">
             <div class="i-tool-dropdown__item">
-              <a target="_blank" :href="ELPLUS_URL">ElementPlus</a>
+              <a target="_blank" href="/wangeditor5-for-vue3/element-plus/">ElementPlus</a>
             </div>
           </div>
         </div>
@@ -23,19 +23,12 @@
 
 <script lang="ts">
   import { defineComponent } from 'vue'
-  import { V1_URL, ELPLUS_URL } from 'shared'
 
   export default defineComponent({
     name: 'IHeader',
     props: {
       subhead: {
         type: String
-      }
-    },
-    setup() {
-      return {
-        V1_URL,
-        ELPLUS_URL
       }
     }
   })

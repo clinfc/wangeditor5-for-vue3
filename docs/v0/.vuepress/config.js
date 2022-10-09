@@ -1,13 +1,11 @@
 import { defineUserConfig, defaultTheme } from 'vuepress'
 
-import { V0_PATH, V1_PATH } from 'shared'
-
 export default defineUserConfig({
   // 站点配置
   lang: 'zh-CN',
   title: 'wangeditor5-for-vue3 v0.x',
   description: '支持动态配置的 wangEditor5 for vue3 组件',
-  base: V0_PATH,
+  base: '/wangeditor5-for-vue3/v0/',
 
   theme: defaultTheme({
     // logo: 'https://www.wangeditor.com/v5/image/logo.png',
@@ -68,10 +66,10 @@ export default defineUserConfig({
             ]
           },
           {
-            text: 'version',
+            text: 'version 0.x',
             children: [
-              { text: 'v0.x', link: V0_PATH },
-              { text: 'v1.x', link: V1_PATH }
+              { text: 'v0.x', link: 'https://clinfc.github.io/wangeditor5-for-vue3/v0/' },
+              { text: 'v1.x', link: 'https://clinfc.github.io/wangeditor5-for-vue3/' }
             ]
           },
           { text: 'Github', link: 'https://github.com/clinfc/wangeditor5-for-vue3' }

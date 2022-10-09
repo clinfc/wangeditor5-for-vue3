@@ -6,7 +6,7 @@
   <CodeGroupItem title="NPM" active>
 
 ```sh:no-line-numbers
-npm install @wangeditor/editor wangeditor5-for-vue3
+npm install @wangeditor/editor wangeditor5-for-vue3@0.1.0
 ```
 
   </CodeGroupItem>
@@ -14,7 +14,7 @@ npm install @wangeditor/editor wangeditor5-for-vue3
   <CodeGroupItem title="YARN">
 
 ```sh:no-line-numbers
-yarn add @wangeditor/editor wangeditor5-for-vue3
+yarn add @wangeditor/editor wangeditor5-for-vue3@0.1.0
 ```
 
   </CodeGroupItem>
