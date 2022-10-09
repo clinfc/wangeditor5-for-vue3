@@ -13,7 +13,7 @@
     "elplus": "pnpm --filter ./example/elplus dev",
     "docs:v0": "pnpm --filter ./docs v0:dev",
     "docs:v1": "pnpm --filter ./docs v1:dev",
-    "publish": "pnpm publish --filter ./core --access=public"
+    "publish": "pnpm publish --filter ./core --access=public --no-git-checks"
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.30.0",
