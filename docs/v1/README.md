@@ -30,4 +30,3 @@ features:
 ### 交流
 
 - 提交 [issues](https://github.com/clinfc/wangeditor5-for-vue3/issues)
-- QQ 群：`343186156`
