@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-2dff5653","path":"/guide/locale.html","title":"\u591A\u8BED\u8A00/\u56FD\u9645\u5316","lang":"zh-CN","frontmatter":{},"excerpt":"","headers":[],"git":{"updatedTime":1671773321000,"contributors":[{"name":"clinfc","email":"1962109568@qq.com","commits":1}]},"filePathRelative":"guide/locale.md"}');export{e as data};
